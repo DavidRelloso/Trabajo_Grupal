@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ControladorTareasMain">
    <children>
+      <MenuBar fx:id="menuUsuario" layoutX="390.0" layoutY="187.0">
+        <menus>
+          <Menu fx:id="menuUserDiario" mnemonicParsing="false" text="Mi diario">
+            <items>
+              <MenuItem fx:id="diarioAbrir" mnemonicParsing="false" text="Abrir" />
+            </items>
+          </Menu>
+          <Menu fx:id="menuUserAmigos" mnemonicParsing="false" text="Amigos">
+            <items>
+              <MenuItem fx:id="amigosAbrir" mnemonicParsing="false" text="Abrir" />
+            </items>
+          </Menu>
+          <Menu fx:id="menuUserAjustes" mnemonicParsing="false" text="Ajustes">
+            <items>
+              <MenuItem fx:id="ajustesAbrir" mnemonicParsing="false" text="Abrir" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Separator layoutX="358.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="26.0" />
+      <Button fx:id="botonCerrarSesion" layoutX="500.0" layoutY="345.0" mnemonicParsing="false" text="Cerrar sesión" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="14.0" prefHeight="32.0" prefWidth="322.0" text="Notificaciones" />
+      <ListView fx:id="listaDiaria" layoutX="25.0" layoutY="171.0" prefHeight="142.0" prefWidth="322.0" />
+      <DatePicker fx:id="fecha" layoutX="18.0" layoutY="324.0" prefHeight="16.0" prefWidth="331.0" promptText="Elige una fecha" />
+      <Label layoutX="25.0" layoutY="131.0" prefHeight="32.0" prefWidth="322.0" text="Notificaciones del día" />
+      <ListView fx:id="notificacionesUser" layoutX="25.0" layoutY="46.0" prefHeight="83.0" prefWidth="322.0" />
+      <ImageView fx:id="avatar" fitHeight="150.0" fitWidth="200.0" layoutX="413.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/avatar.jpg" />
+         </image></ImageView>
+      
    </children>
-</StackPane>
+</AnchorPane>
