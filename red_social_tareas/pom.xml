@@ -88,7 +88,7 @@
 				<version>0.0.8</version>
 				<configuration>
 				<!--  CAMBIA esto si tu clase principal es otra  -->
-					<mainClass>main.TareasMain</mainClass>
+					<mainClass>main.Main</mainClass>
 					<addModules>javafx.controls,javafx.fxml,javafx.web</addModules>
 				</configuration>
 			</plugin>
