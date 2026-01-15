@@ -16,7 +16,6 @@ public class Categoria {
 
 	private String nombre;
 
-	// Getters y setters
 	public Long getId_categoria() {
 		return id_categoria;
 	}

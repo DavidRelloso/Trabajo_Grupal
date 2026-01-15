@@ -23,7 +23,6 @@ public class Dia {
 
 	private boolean es_publico;
 
-	// Getters y setters
 	public Long getId_dia() {
 		return id_dia;
 	}

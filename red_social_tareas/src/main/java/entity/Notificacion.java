@@ -24,7 +24,6 @@ public class Notificacion {
 
 	private boolean leida;
 
-	// Getters y setters
 	public Long getId_notificacion() {
 		return id_notificacion;
 	}

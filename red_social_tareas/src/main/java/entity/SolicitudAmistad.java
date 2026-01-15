@@ -23,7 +23,6 @@ public class SolicitudAmistad {
 
 	private LocalDate fecha_envio;
 
-	// Getters y setters
 	public Long getId_solicitud() {
 		return id_solicitud;
 	}

@@ -20,7 +20,6 @@ public class Amigo {
 
 	private LocalDate fecha_amistad;
 
-	// Getters y setters
 	public Usuario getUsuario1() {
 		return usuario1;
 	}

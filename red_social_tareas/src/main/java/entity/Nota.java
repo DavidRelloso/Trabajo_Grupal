@@ -22,7 +22,6 @@ public class Nota {
 
 	private LocalTime hora;
 
-	// Getters y setters
 	public Long getId_nota() {
 		return id_nota;
 	}

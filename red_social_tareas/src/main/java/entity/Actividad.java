@@ -22,9 +22,8 @@ public class Actividad {
 
 	private LocalTime hora_inicio;
 
-	private LocalTime hora_fin; // nullable
+	private LocalTime hora_fin;
 
-	// Getters y setters
 	public Long getId_actividad() {
 		return id_actividad;
 	}

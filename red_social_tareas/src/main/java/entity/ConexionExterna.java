@@ -20,7 +20,7 @@ public class ConexionExterna {
 
 	private String estado;
 
-	// Getters y setters
+	
 	public Long getId_conexion() {
 		return id_conexion;
 	}
