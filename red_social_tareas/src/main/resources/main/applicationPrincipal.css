@@ -1,0 +1,50 @@
+	
+	/* Fondo morado degradado */
+	/* Fondo morado degradado */
+	.root {
+	    -fx-background-color: linear-gradient(to bottom right, #6a00f4, #b86bff);
+	}
+	
+	/* Contenedor alineado a la izquierda con margen */
+	.left-container {
+	    -fx-padding: 0 0 0 40;
+	}
+	 /* top right bottom left */
+	
+	
+	/* Título */
+	.title {
+	    -fx-font-size: 32px;
+	    -fx-font-weight: bold;
+	    -fx-text-fill: white;
+	}
+	
+	/* Texto descriptivo */
+	.description {
+	    -fx-fill: white;
+	    -fx-font-size: 15px;
+	    -fx-text-alignment: left;
+	    -fx-opacity: 0.85;
+	}
+	
+	/* Botón principal */
+	.main-button {
+	    -fx-background-color: white;
+	    -fx-text-fill: #6a00f4;
+	    -fx-font-weight: bold;
+	    -fx-background-radius: 20;
+	    -fx-padding: 10 30;
+	}
+	
+	.login-button {
+		-fx-font-size: 16px;
+		-fx-padding: 12 40;
+		-fx-background-color: white;
+	    -fx-text-fill: #6a00f4;
+	    -fx-font-weight: bold;
+	    -fx-background-radius: 20;
+	    -fx-padding: 10 30;
+	}
+	
+
+
