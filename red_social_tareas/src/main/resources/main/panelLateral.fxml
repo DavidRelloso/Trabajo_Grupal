@@ -1,0 +1,121 @@
+<StackPane fx:id="offcanvas" maxWidth="300" prefWidth="300"
+	styleClass="offcanvas-panel" translateX="300"
+	StackPane.alignment="CENTER_RIGHT">
+
+
+
+	<children>
+
+		<VBox spacing="22" styleClass="offcanvas-content">
+
+			<padding>
+
+				<Insets bottom="26" left="20" right="20" top="26" />
+
+			</padding>
+
+
+
+			<Button fx:id="closeOffcanvas" alignment="CENTER_RIGHT"
+				prefHeight="46" prefWidth="260" styleClass="close-btn" text="X" />
+
+
+
+			<!-- PERFIL -->
+
+			<VBox alignment="CENTER" spacing="10">
+
+				<ImageView fx:id="imgPerfil" fitHeight="120"
+					fitWidth="120" preserveRatio="true">
+
+					<image>
+
+						<Image url="@imagenPerfil.png" />
+
+					</image>
+
+				</ImageView>
+
+
+
+				<Label fx:id="lblNombreUsuario" style="-fx-font-size: 20px;"
+					styleClass="off-item" text="Nombre de Usuario Aquí" />
+
+			</VBox>
+
+
+
+			<Region prefHeight="17" />
+
+
+
+			<!-- OPCIONES -->
+
+			<Label styleClass="off-item" text="Mi Diario" />
+
+			<Label styleClass="off-item" text="Amigos" />
+
+			<Label styleClass="off-item" text="Ajustes" />
+
+
+
+			<Region VBox.vgrow="ALWAYS" />
+
+
+
+			<!-- SPOTIFY -->
+
+			<HBox alignment="CENTER_LEFT" spacing="10">
+
+				<ImageView fitHeight="28" fitWidth="28"
+					preserveRatio="true">
+
+					<image>
+
+						<Image url="@imagenSpotify.png" />
+
+					</image>
+
+				</ImageView>
+
+				<Label styleClass="off-small" text="Spotify" />
+
+			</HBox>
+
+
+
+			<!-- STEAM -->
+
+			<HBox alignment="CENTER_LEFT" spacing="10">
+
+				<ImageView fitHeight="28" fitWidth="28"
+					preserveRatio="true">
+
+					<image>
+
+						<Image url="@imagenSteam.png" />
+
+					</image>
+
+				</ImageView>
+
+				<Label styleClass="off-small" text="Steam" />
+
+			</HBox>
+
+
+
+			<Region />
+
+
+
+			<Button fx:id="btnCerrarSesion" styleClass="logout-btn"
+				text="Cerrar sesión" />
+
+
+
+		</VBox>
+
+	</children>
+
+</StackPane>
