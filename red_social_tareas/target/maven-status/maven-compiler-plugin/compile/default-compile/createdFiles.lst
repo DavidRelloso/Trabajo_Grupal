@@ -1,3 +1,6 @@
-main\ControladorLogin.class
+reports\Persona.class
+reports\ReportGenerator.class
+main\ControladorRegistro.class
 main\Main.class
+main\ControladorLogin.class
 main\ControladorPrincipal.class
