@@ -1,0 +1,84 @@
+
+.root {
+    -fx-background-image: url("fondoAjustes.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+
+.tarjeta-ajustes {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-padding: 30 40;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.2, 0, 5);
+}
+
+
+.titulo {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.titulo-seccion {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.seccion {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-background-radius: 15;
+    -fx-padding: 20;
+}
+
+.etiqueta-campo {
+    -fx-text-fill: white;
+    -fx-opacity: 0.8;
+    -fx-font-size: 13px;
+}
+
+.campo-texto, .campo-password {
+    -fx-background-radius: 10;
+    -fx-background-color: rgba(255,255,255,0.85);
+    -fx-padding: 8;
+    -fx-pref-width: 300;
+}
+
+.boton-principal {
+    -fx-background-color: white;
+    -fx-text-fill: #6a00f4;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 10 30;
+}
+
+.boton-secundario {
+    -fx-background-color: rgba(255,255,255,0.25);
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+    -fx-padding: 8 20;
+    -fx-font-weight: bold;
+}
+
+.interruptor {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.interruptor .box {
+    -fx-background-color: rgba(255,255,255,0.25);
+    -fx-border-color: white;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 6 20;
+}
+
+.interruptor:selected .box {
+    -fx-background-color: white;
+}
+
+.interruptor:selected .mark {
+    -fx-background-color: #6a00f4;
+}

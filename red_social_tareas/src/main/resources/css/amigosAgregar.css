@@ -1,0 +1,97 @@
+.fondo-app {
+    -fx-background-image: url("fondoAmigos.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-padding: 30px;
+}
+
+.contenedor-amigos {
+    -fx-background-color: rgba(255, 255, 255, 0.75);
+    -fx-background-radius: 20px;
+    -fx-padding: 25px;
+    -fx-spacing: 15px;
+    -fx-max-width: 420px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 15, 0, 0, 4);
+}
+
+.titulo {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5B4BC4;
+}
+
+.amigo-item {
+    -fx-background-color: #D3D3FF;
+    -fx-background-radius: 12px;
+    -fx-padding: 12px;
+    -fx-spacing: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(91, 75, 196, 0.15), 6, 0, 0, 2);
+}
+
+.amigo-nombre {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2B2767;
+}
+
+.amigo-estado {
+    -fx-font-size: 13px;
+    -fx-text-fill: #4A448A;
+}
+
+.text-field {
+    -fx-background-radius: 8px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+}
+
+.boton-agregar {
+    -fx-background-color: #5B4BC4;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.boton-agregar:hover {
+    -fx-background-color: #483AA8;
+}
+
+.boton-rojo {
+    -fx-background-color: #D64545;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.boton-rojo:hover {
+    -fx-background-color: #B03030;
+}
+
+.boton-verde {
+    -fx-background-color: #3CB043;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.boton-verde:hover {
+    -fx-background-color: #2E8B39;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
