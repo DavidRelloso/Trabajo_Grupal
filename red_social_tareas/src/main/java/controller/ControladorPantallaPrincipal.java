@@ -9,7 +9,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 
-public class ControladorPaginaPrincipal {
+public class ControladorPantallaPrincipal {
 
     @FXML private Accordion notificacionesAccordion; 
     @FXML private Accordion recordatoriosAccordion;
