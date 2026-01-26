@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane prefHeight="500.0" prefWidth="1000.0" stylesheets="@/css/ajustes.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Region style="-fx-background-color: rgba(0,0,0,0.2);" />
+      <VBox alignment="TOP_CENTER" spacing="12.0" styleClass="tarjeta-ajustes">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@logo.png" />
+               </image>
+            </ImageView>
+            <Label styleClass="titulo" text="Ajustes de Usuario" />
+            <VBox spacing="20.0" styleClass="seccion">
+               <children>
+                  <Label styleClass="titulo-seccion" text="Información Personal" />
+                  <HBox alignment="CENTER_LEFT" prefWidth="500.0" spacing="10.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" spacing="3.0">
+                           <children>
+                              <Label styleClass="etiqueta-campo" text="Nombre de usuario" />
+                              <TextField prefWidth="300.0" promptText="Nuevo nombre" styleClass="campo-texto" />
+                           </children>
+                        </VBox>
+                        <Button styleClass="boton-secundario" text="Cambiar" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefWidth="500.0" spacing="10.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" spacing="3.0">
+                           <children>
+                              <Label styleClass="etiqueta-campo" text="Correo electrónico" />
+                              <TextField prefWidth="300.0" promptText="Nuevo correo" styleClass="campo-texto" />
+                           </children>
+                        </VBox>
+                        <Button styleClass="boton-secundario" text="Cambiar" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefWidth="500.0" spacing="10.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" spacing="3.0">
+                           <children>
+                              <Label styleClass="etiqueta-campo" text="Contraseña" />
+                              <PasswordField prefWidth="300.0" promptText="Nueva contraseña" styleClass="campo-password" />
+                           </children>
+                        </VBox>
+                        <Button styleClass="boton-secundario" text="Cambiar" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefWidth="500.0" spacing="10.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" spacing="3.0">
+                           <children>
+                              <Label styleClass="etiqueta-campo" text="Avatar" />
+                              <Button styleClass="boton-secundario" text="Seleccionar imagen" />
+                           </children>
+                        </VBox>
+                        <Button styleClass="boton-secundario" text="Cambiar" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" spacing="15.0" styleClass="seccion">
+               <children>
+                  <Label styleClass="titulo-seccion" text="Preferencias" />
+                  <CheckBox prefHeight="27.0" prefWidth="220.0" styleClass="interruptor" text="Desactivar sonidos" />
+                  <CheckBox styleClass="interruptor" text="Desactivar notificaciones" />
+                  <CheckBox prefHeight="27.0" prefWidth="216.0" styleClass="interruptor" text="Recordar sesión" />
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" spacing="15.0">
+               <children>
+                  <Button styleClass="boton-principal" text="Guardar cambios" />
+                  <Button styleClass="boton-secundario" text="Cancelar" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</StackPane>
