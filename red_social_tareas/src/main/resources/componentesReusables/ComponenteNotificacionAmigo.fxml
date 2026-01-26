@@ -6,7 +6,7 @@
 <TitledPane fx:id="tpPrincipalNoti"
 	xmlns:fx="http://javafx.com/fxml" animated="false" prefWidth="600.0"
 	text="NOMBRE_AMIGO"
-	fx:controller="controller.ControladorNotificaciones">
+	><!--  fx:controller="controller.ControladorNotificaciones"-->
 	<content>
 	
 		<VBox fillWidth="true" spacing="10">

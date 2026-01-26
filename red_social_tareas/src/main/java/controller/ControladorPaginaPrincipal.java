@@ -25,12 +25,12 @@ public class ControladorPaginaPrincipal {
     public void agregarNoti() {
         try {
 			
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/componentes/ComponenteNotificacionAmigo.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/componentesReusables/ComponenteNotificacionAmigo.fxml"));
             Parent nuevoComponente = loader.load();  
 
             TitledPane titledPane = (TitledPane) nuevoComponente;
             /*ControladorNotificaciones controller = loader.getController();
-            //controller.setInfoNoti("NombreAmigo", "TEXTO_NOTIFICACION");
+            controller.setInfoNoti("NombreAmigo", "TEXTO_NOTIFICACION");
             controller.setInfoNoti("amigo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum urna ac feugiat convallis. In consectetur mollis dolor id mollis. Nunc ipsum eros, auctor id felis vitae, ultricies eleifend nibh. Aliquam erat volutpat. Donec hendrerit ex sapien. Curabitur ligula enim, mattis id lacus id, posuere suscipit ipsum. Mauris a odio eu ante condimentum ornare vel a mauris. Nulla facilisis velit quis justo faucibus vehicula. Maecenas felis velit, hendrerit non tempor a, cursus non risus.\r\n"
             		+ "\r\n"
             		+ "Donec venenatis, diam egestas gravida convallis, velit nulla blandit ligula, in suscipit ante sapien vitae est. Integer eget eleifend enim, eu euismod lorem. Sed luctus ante a mollis facilisis. Mauris facilisis nibh eget vehicula faucibus. Fusce sed erat eros. Ut eleifend euismod vulputate. Nullam feugiat libero a luctus elementum. Vivamus quis rutrum urna, feugiat malesuada magna. Etiam nec finibus orci, non eleifend odio. Donec scelerisque justo a vulputate accumsan. Sed quis quam ut arcu dictum consequat vel in lacus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis at ligula nisl. Aliquam sed volutpat justo.\r\n"
