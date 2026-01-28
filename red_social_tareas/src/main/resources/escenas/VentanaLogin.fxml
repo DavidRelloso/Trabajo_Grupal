@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane stylesheets="@/css/loginPrincipal.css"
+	xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.ControladorLogin">
+
+	<!-- CONTENEDOR HORIZONTAL PRINCIPAL -->
+	<HBox spacing="0">
+
+		<!-- PANEL IZQUIERDO (FIJO) -->
+		<VBox alignment="CENTER_LEFT" prefWidth="420" spacing="30"
+			styleClass="left-container" HBox.hgrow="NEVER">
+
+			<!-- LOGO -->
+			<ImageView fitHeight="170" fitWidth="161"
+				preserveRatio="true">
+				<image>
+					<Image url="@/images/logo.png" />
+				</image>
+			</ImageView>
+
+			<!-- TÍTULO -->
+			<Label styleClass="title" text="Red Social">
+				<font>
+					<Font size="36" />
+				</font>
+			</Label>
+
+			<!-- DESCRIPCIÓN -->
+			<Text styleClass="description" wrappingWidth="350">
+				Bienvenido a la
+				primera red social pensada para quienes viven por eventos,
+				fechas y
+				planes.
+				Crea calendarios personalizados, sincroniza tus actividades
+				con amigos,
+				descubre eventos públicos
+				y mantén tu agenda viva y
+				conectada.
+			</Text>
+
+			<!-- BOTONES LOGIN / REGISTRO -->
+			<HBox alignment="CENTER_LEFT" spacing="20">
+				<!-- Botón que muestra el REGISTRO -->
+				<Button fx:id="btnRegistroPrin" onAction="#mostrarRegistro"
+					styleClass="main-button" text="Registro" />
+				<!-- Botón que muestra el LOGIN -->
+				<Button fx:id="btnLoginPrin" onAction="#mostrarLogin"
+					styleClass="login-button" text="Login" />
+			</HBox>
+
+		</VBox>
+
+		<!-- PANEL DERECHO (CONTENEDOR LOGIN/REGISTRO) -->
+		<StackPane fx:id="contenedorDerecha" alignment="CENTER"
+			styleClass="right-container" HBox.hgrow="ALWAYS">
+
+			<padding>
+				<Insets bottom="40" left="40" right="40" top="40" />
+			</padding>
+
+			<!-- 🔥 CONTENEDOR FIJO PARA AMBOS FORMULARIOS -->
+			<StackPane fx:id="formWrapper" prefWidth="480"
+				prefHeight="520" maxWidth="480" maxHeight="520">
+
+				<!-- =================== LOGIN =================== -->
+				<StackPane fx:id="paneLogin" styleClass="login-container"
+					prefWidth="480" prefHeight="520" maxWidth="480" maxHeight="520"
+					StackPane.alignment="CENTER">
+
+					<VBox alignment="CENTER" spacing="15" maxWidth="320">
+
+						<ImageView fx:id="avatarUsuario" fitHeight="120"
+							fitWidth="120" preserveRatio="true">
+							<image>
+								<Image url="@/images/avatar.png" />
+							</image>
+						</ImageView>
+
+						<TextField fx:id="usuarioLogin" promptText="Usuario" />
+						<PasswordField fx:id="contraseñaLogin"
+							promptText="Contraseña" />
+
+						<HBox alignment="CENTER" spacing="15">
+							<Button fx:id="btnAceptarLogin" text="Aceptar" />
+							<Button fx:id="btnIrARegistro" text="Registro"
+								onAction="#mostrarRegistro" />
+						</HBox>
+
+					</VBox>
+
+				</StackPane>
+
+				<!-- =================== REGISTRO =================== -->
+				<StackPane fx:id="paneRegistro"
+					styleClass="registro-container" prefWidth="480" prefHeight="520"
+					maxWidth="480" maxHeight="520" visible="false" managed="false"
+					StackPane.alignment="CENTER">
+
+					<VBox alignment="CENTER" spacing="12" maxWidth="340">
+
+						<TextField fx:id="correo" promptText="Correo" />
+						<TextField fx:id="nombreUsuario"
+							promptText="Nombre Usuario" />
+						<PasswordField fx:id="contraseñaRegistro"
+							promptText="Contraseña" />
+						<PasswordField fx:id="validarContraseña"
+							promptText="Validar Contraseña" />
+
+						<!-- BOTÓN CAMBIO AVATAR (IZQUIERDA) -->
+						<HBox alignment="CENTER_LEFT" spacing="0">
+							<Button fx:id="btnCambioAvatar" prefWidth="160"
+								text="Cambio avatar" />
+						</HBox>
+
+						<!-- FILA DE BOTONES: REGISTRO (IZQ) + LOGIN (DER) -->
+						<HBox spacing="15" maxWidth="Infinity">
+
+							<!-- REGISTRARSE A LA IZQUIERDA -->
+							<Button fx:id="btnRegistro" prefWidth="160"
+								text="Registrarse" HBox.hgrow="ALWAYS" />
+
+							<!-- LOGIN A LA DERECHA -->
+							<Button fx:id="btnVolverLogin" prefWidth="100"
+								text="Login" onAction="#mostrarLogin" HBox.hgrow="NEVER">
+								<font>
+									<Font size="14.0" />
+								</font>
+							</Button>
+
+						</HBox>
+
+					</VBox>
+
+				</StackPane>
+
+			</StackPane>
+
+		</StackPane>
+
+	</HBox>
+
+</StackPane>

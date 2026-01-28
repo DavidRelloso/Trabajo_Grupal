@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<!-- TARJETA NOTA -->
+<VBox styleClass="card" spacing="6.0" maxWidth="Infinity">
+	<children>
+		<!-- Fila superior: título / categoría / hora -->
+		<HBox spacing="8.0">
+			<children>
+				<Label styleClass="card-title" text="Título" />
+				<Label styleClass="card-title" text="Categoría" />
+				<Region HBox.hgrow="ALWAYS" />
+				<Label styleClass="card-hour" text="Hora" />
+			</children>
+		</HBox>
+
+		<!-- Texto (crece y hace crecer la tarjeta) -->
+		<Label styleClass="card-text"
+			text="Texto de la nota con más contenido. Esto se hace más grande y el panel crece automáticamente sin cortar nada."
+			wrapText="true" maxWidth="Infinity" />
+
+		<!-- Botón eliminar abajo a la derecha -->
+		<HBox alignment="BOTTOM_RIGHT">
+			<children>
+				<Button styleClass="delete-btn" text="Eliminar" />
+			</children>
+		</HBox>
+	</children>
+</VBox>
