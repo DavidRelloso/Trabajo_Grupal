@@ -10,27 +10,44 @@ import java.util.List;
 
 public class AmigoService {
 
-	public void save(Amigo amigo) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+    public void save(Amigo amigo) {
+        Session session = null;
+        Transaction tx = null;
 
-		session.save(amigo);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-		tx.commit();
-		session.close();
-	}
+            session.save(amigo);
 
-	public Amigo findById(Long u1, Long u2) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Amigo amigo = session.get(Amigo.class, new AmigoId(u1, u2));
-		session.close();
-		return amigo;
-	}
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 
-	public List<Amigo> findAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Amigo> lista = session.createQuery("FROM Amigo", Amigo.class).list();
-		session.close();
-		return lista;
-	}
+    public Amigo findById(Long u1, Long u2) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.get(Amigo.class, new AmigoId(u1, u2));
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public List<Amigo> findAll() {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM Amigo", Amigo.class).list();
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 }

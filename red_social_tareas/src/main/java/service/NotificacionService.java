@@ -9,27 +9,44 @@ import java.util.List;
 
 public class NotificacionService {
 
-	public void save(Notificacion notificacion) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+    public void save(Notificacion notificacion) {
+        Session session = null;
+        Transaction tx = null;
 
-		session.save(notificacion);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-		tx.commit();
-		session.close();
-	}
+            session.save(notificacion);
 
-	public Notificacion findById(Long id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Notificacion n = session.get(Notificacion.class, id);
-		session.close();
-		return n;
-	}
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 
-	public List<Notificacion> findAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Notificacion> lista = session.createQuery("FROM Notificacion", Notificacion.class).list();
-		session.close();
-		return lista;
-	}
+    public Notificacion findById(Long id) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.get(Notificacion.class, id);
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public List<Notificacion> findAll() {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM Notificacion", Notificacion.class).list();
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 }

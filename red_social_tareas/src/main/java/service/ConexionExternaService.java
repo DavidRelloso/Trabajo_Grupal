@@ -9,27 +9,44 @@ import java.util.List;
 
 public class ConexionExternaService {
 
-	public void save(ConexionExterna conexion) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+    public void save(ConexionExterna conexion) {
+        Session session = null;
+        Transaction tx = null;
 
-		session.save(conexion);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-		tx.commit();
-		session.close();
-	}
+            session.save(conexion);
 
-	public ConexionExterna findById(Long id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		ConexionExterna c = session.get(ConexionExterna.class, id);
-		session.close();
-		return c;
-	}
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e; 
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 
-	public List<ConexionExterna> findAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<ConexionExterna> lista = session.createQuery("FROM ConexionExterna", ConexionExterna.class).list();
-		session.close();
-		return lista;
-	}
+    public ConexionExterna findById(Long id) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.get(ConexionExterna.class, id);
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public List<ConexionExterna> findAll() {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM ConexionExterna", ConexionExterna.class).list();
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 }

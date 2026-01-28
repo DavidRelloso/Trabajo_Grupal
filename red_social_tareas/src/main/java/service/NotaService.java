@@ -9,27 +9,44 @@ import java.util.List;
 
 public class NotaService {
 
-	public void save(Nota nota) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+    public void save(Nota nota) {
+        Session session = null;
+        Transaction tx = null;
 
-		session.save(nota);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-		tx.commit();
-		session.close();
-	}
+            session.save(nota);
 
-	public Nota findById(Long id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Nota nota = session.get(Nota.class, id);
-		session.close();
-		return nota;
-	}
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 
-	public List<Nota> findAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Nota> lista = session.createQuery("FROM Nota", Nota.class).list();
-		session.close();
-		return lista;
-	}
+    public Nota findById(Long id) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.get(Nota.class, id);
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public List<Nota> findAll() {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM Nota", Nota.class).list();
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 }

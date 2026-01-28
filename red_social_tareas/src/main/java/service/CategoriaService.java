@@ -9,27 +9,44 @@ import java.util.List;
 
 public class CategoriaService {
 
-	public void save(Categoria categoria) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+    public void save(Categoria categoria) {
+        Session session = null;
+        Transaction tx = null;
 
-		session.save(categoria);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-		tx.commit();
-		session.close();
-	}
+            session.save(categoria);
 
-	public Categoria findById(Long id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Categoria categoria = session.get(Categoria.class, id);
-		session.close();
-		return categoria;
-	}
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 
-	public List<Categoria> findAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Categoria> lista = session.createQuery("FROM Categoria", Categoria.class).list();
-		session.close();
-		return lista;
-	}
+    public Categoria findById(Long id) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.get(Categoria.class, id);
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public List<Categoria> findAll() {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM Categoria", Categoria.class).list();
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 }

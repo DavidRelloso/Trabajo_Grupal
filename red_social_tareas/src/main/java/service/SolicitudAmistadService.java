@@ -9,27 +9,44 @@ import java.util.List;
 
 public class SolicitudAmistadService {
 
-	public void save(SolicitudAmistad solicitud) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+    public void save(SolicitudAmistad solicitud) {
+        Session session = null;
+        Transaction tx = null;
 
-		session.save(solicitud);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-		tx.commit();
-		session.close();
-	}
+            session.save(solicitud);
 
-	public SolicitudAmistad findById(Long id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		SolicitudAmistad solicitud = session.get(SolicitudAmistad.class, id);
-		session.close();
-		return solicitud;
-	}
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e; // puedes registrar o transformar la excepción si deseas
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 
-	public List<SolicitudAmistad> findAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<SolicitudAmistad> lista = session.createQuery("FROM SolicitudAmistad", SolicitudAmistad.class).list();
-		session.close();
-		return lista;
-	}
+    public SolicitudAmistad findById(Long id) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.get(SolicitudAmistad.class, id);
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public List<SolicitudAmistad> findAll() {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM SolicitudAmistad", SolicitudAmistad.class).list();
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 }

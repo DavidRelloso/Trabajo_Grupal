@@ -9,27 +9,44 @@ import java.util.List;
 
 public class DiaService {
 
-	public void save(Dia dia) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+    public void save(Dia dia) {
+        Session session = null;
+        Transaction tx = null;
 
-		session.save(dia);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-		tx.commit();
-		session.close();
-	}
+            session.save(dia);
 
-	public Dia findById(Long id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Dia dia = session.get(Dia.class, id);
-		session.close();
-		return dia;
-	}
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 
-	public List<Dia> findAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Dia> lista = session.createQuery("FROM Dia", Dia.class).list();
-		session.close();
-		return lista;
-	}
+    public Dia findById(Long id) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.get(Dia.class, id);
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public List<Dia> findAll() {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM Dia", Dia.class).list();
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 }

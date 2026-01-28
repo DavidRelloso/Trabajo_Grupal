@@ -9,27 +9,44 @@ import java.util.List;
 
 public class ActividadService {
 
-	public void save(Actividad actividad) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+    public void save(Actividad actividad) {
+        Session session = null;
+        Transaction tx = null;
 
-		session.save(actividad);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-		tx.commit();
-		session.close();
-	}
+            session.save(actividad);
 
-	public Actividad findById(Long id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Actividad actividad = session.get(Actividad.class, id);
-		session.close();
-		return actividad;
-	}
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 
-	public List<Actividad> findAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Actividad> lista = session.createQuery("FROM Actividad", Actividad.class).list();
-		session.close();
-		return lista;
-	}
+    public Actividad findById(Long id) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.get(Actividad.class, id);
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public List<Actividad> findAll() {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM Actividad", Actividad.class).list();
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 }

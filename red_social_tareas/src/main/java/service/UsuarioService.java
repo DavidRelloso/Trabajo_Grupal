@@ -9,47 +9,82 @@ import java.util.List;
 
 public class UsuarioService {
 
-	public void save(Usuario usuario) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+    public void save(Usuario usuario) {
+        Session session = null;
+        Transaction tx = null;
 
-		session.save(usuario);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-		tx.commit();
-		session.close();
-	}
+            session.save(usuario);
 
-	public void update(Usuario usuario) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;  // puedes registrar o transformar la excepción si deseas
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 
-		session.update(usuario);
+    public void update(Usuario usuario) {
+        Session session = null;
+        Transaction tx = null;
 
-		tx.commit();
-		session.close();
-	}
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-	public void delete(Usuario usuario) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+            session.update(usuario);
 
-		session.delete(usuario);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 
-		tx.commit();
-		session.close();
-	}
+    public void delete(Usuario usuario) {
+        Session session = null;
+        Transaction tx = null;
 
-	public Usuario findById(Long id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Usuario usuario = session.get(Usuario.class, id);
-		session.close();
-		return usuario;
-	}
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-	public List<Usuario> findAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Usuario> lista = session.createQuery("FROM Usuario", Usuario.class).list();
-		session.close();
-		return lista;
-	}
+            session.delete(usuario);
+
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public Usuario findById(Long id) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.get(Usuario.class, id);
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public List<Usuario> findAll() {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM Usuario", Usuario.class).list();
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 }
