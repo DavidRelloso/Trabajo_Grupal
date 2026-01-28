@@ -1,33 +1,35 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
 
 public class ControladorPrincipal {
 
-    @FXML
-    private Button registro;
+    @FXML private GridPane paneLogin;
+    @FXML private GridPane paneRegistro;
 
     @FXML
-    public void initialize() {
-        registro.setOnAction(e -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("loginn.fxml"));
-                Parent root = loader.load();
-
-                ControladorLogin registroController = loader.getController();
-
-                Stage stage = (Stage) registro.getScene().getWindow();
-                stage.setScene(new Scene(root));
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
+    private void initialize() {
+        // Mostrar login por defecto
+        mostrarLogin();
     }
-}
 
+    @FXML
+    private void mostrarLogin() {
+        paneLogin.setVisible(true);
+        paneLogin.setManaged(true);
+
+        paneRegistro.setVisible(false);
+        paneRegistro.setManaged(false);
+    }
+
+    @FXML
+    private void mostrarRegistro() {
+        paneLogin.setVisible(false);
+        paneLogin.setManaged(false);
+
+        paneRegistro.setVisible(true);
+        paneRegistro.setManaged(true);
+    }
+
+}
