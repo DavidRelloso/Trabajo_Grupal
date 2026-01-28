@@ -76,6 +76,26 @@ public class UsuarioService {
             if (session != null) session.close();
         }
     }
+    
+    public Usuario findByNombreAndContra(String nombre, String contra) {
+
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            return session.createQuery(
+                    "FROM Usuario u "
+                  + "WHERE u.nombre_usuario = :nombre AND u.contra_hash = :contra",
+                    Usuario.class)
+                    .setParameter("nombre", nombre)
+                    .setParameter("contra", contra)
+                    .uniqueResult();
+
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 
     public List<Usuario> findAll() {
         Session session = null;

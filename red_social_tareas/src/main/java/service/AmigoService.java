@@ -1,12 +1,14 @@
 package service;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import entity.Amigo;
 import entity.AmigoId;
-import util.HibernateUtil;
 
-import java.util.List;
+import util.HibernateUtil;
 
 public class AmigoService {
 
