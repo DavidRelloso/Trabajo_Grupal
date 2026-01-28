@@ -1,4 +1,4 @@
-package servidor;
+package server;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,13 +14,9 @@ public class ServidorTCP {
 
             while (true) {
                 Socket socket = servidor.accept();
-                //System.out.println("Cliente conectado");
-
-                //coger la IP del cliente que ha hecho la peticion
                 String clientIP = socket.getInetAddress().getHostAddress(); 
-               // System.out.println("Cliente conectado desde: " + clientIP);
-                
-                // Crear un nuevo hilo para manejar las peticiones de los clientes
+                System.out.println("Cliente conectado desde: " + clientIP);
+
                 Thread hilo = new Thread(new ManejadorCliente(socket));
                 hilo.start();
             }

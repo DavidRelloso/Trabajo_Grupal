@@ -16,7 +16,6 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/VentanaLogin.fxml"));
 			Parent root = loader.load();
 			Scene scene = new Scene(root,1300,700);
-			//scene.getStylesheets().add(getClass().getResource("applicationPrincipal.css").toExternalForm());
 			//scene.getStylesheets().add(getClass().getResource("applicationLogin.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();

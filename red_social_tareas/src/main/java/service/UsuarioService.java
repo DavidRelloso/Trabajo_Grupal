@@ -96,6 +96,48 @@ public class UsuarioService {
             if (session != null) session.close();
         }
     }
+    
+    public boolean existsByCorreo(String correo) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            Long count = session.createQuery(
+                    "SELECT COUNT(u.id_usuario) FROM Usuario u WHERE u.correo = :correo",
+                    Long.class
+            )
+            .setParameter("correo", correo)
+            .uniqueResult();
+
+            return count != null && count > 0;
+
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    
+    public boolean existsByNombre(String nombreUsuario) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            Long count = session.createQuery(
+                    "SELECT COUNT(u.id_usuario) FROM Usuario u WHERE u.nombre_usuario = :nombre",
+                    Long.class
+            )
+            .setParameter("nombre", nombreUsuario)
+            .uniqueResult();
+
+            return count != null && count > 0;
+
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
 
     public List<Usuario> findAll() {
         Session session = null;
