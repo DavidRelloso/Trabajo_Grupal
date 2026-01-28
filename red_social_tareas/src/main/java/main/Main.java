@@ -2,11 +2,9 @@ package main;
 	
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
-import util.HibernateUtil;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 
 public class Main extends Application {
@@ -19,11 +17,6 @@ public class Main extends Application {
 			//scene.getStylesheets().add(getClass().getResource("applicationLogin.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
-	        new Thread(() -> {
-	            HibernateUtil.getSessionFactory();
-	            System.out.println("Hibernate listo");
-	        }).start();
 			
 		} catch(Exception e) {
 			e.printStackTrace();
