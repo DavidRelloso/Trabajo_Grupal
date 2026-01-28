@@ -7,225 +7,150 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <StackPane stylesheets="@/css/loginPrincipal.css"
-           xmlns="http://javafx.com/javafx/25"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="controller.ControladorPrincipal">
+	xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.ControladorLogin">
 
-    <HBox spacing="0">
+	<!-- CONTENEDOR HORIZONTAL PRINCIPAL -->
+	<HBox spacing="0">
 
-        <!-- PANEL IZQUIERDO (FIJO) -->
-        <VBox alignment="TOP_LEFT" prefWidth="420" spacing="30" styleClass="left-container" HBox.hgrow="NEVER">
+		<!-- PANEL IZQUIERDO (FIJO) -->
+		<VBox alignment="CENTER_LEFT" prefWidth="420" spacing="30"
+			styleClass="left-container" HBox.hgrow="NEVER">
 
-            <HBox alignment="CENTER" spacing="10" />
+			<!-- LOGO -->
+			<ImageView fitHeight="170" fitWidth="161"
+				preserveRatio="true">
+				<image>
+					<Image url="@/images/logo.png" />
+				</image>
+			</ImageView>
 
-            <ImageView fitHeight="170" fitWidth="161" preserveRatio="true">
-                <image>
-                    <Image url="@/images/logo.png" />
-                </image>
-            </ImageView>
+			<!-- TÍTULO -->
+			<Label styleClass="title" text="Red Social">
+				<font>
+					<Font size="36" />
+				</font>
+			</Label>
 
-            <Label styleClass="title" text="Red Social">
-                <font>
-                    <Font size="36" />
-                </font>
-            </Label>
+			<!-- DESCRIPCIÓN -->
+			<Text styleClass="description" wrappingWidth="350">
+				Bienvenido a la
+				primera red social pensada para quienes viven por eventos,
+				fechas y
+				planes.
+				Crea calendarios personalizados, sincroniza tus actividades
+				con amigos,
+				descubre eventos públicos
+				y mantén tu agenda viva y
+				conectada.
+			</Text>
 
-            <Text styleClass="description" wrappingWidth="350">
-                Bienvenido a la primera red social pensada para quienes viven por eventos, fechas y planes.
-                Crea calendarios personalizados, sincroniza tus actividades con amigos, descubre eventos públicos
-                y mantén tu agenda viva y conectada.
-            </Text>
+			<!-- BOTONES LOGIN / REGISTRO -->
+			<HBox alignment="CENTER_LEFT" spacing="20">
+				<!-- Botón que muestra el REGISTRO -->
+				<Button fx:id="btnRegistroPrin" onAction="#mostrarRegistro"
+					styleClass="main-button" text="Registro" />
+				<!-- Botón que muestra el LOGIN -->
+				<Button fx:id="btnLoginPrin" onAction="#mostrarLogin"
+					styleClass="login-button" text="Login" />
+			</HBox>
 
-            <HBox alignment="CENTER_LEFT" spacing="20">
-                <!-- Botón que muestra el REGISTRO -->
-                <Button fx:id="btnRegistroPrin"
-                        onAction="#mostrarRegistro"
-                        styleClass="main-button"
-                        text="Registro" />
-                <!-- Botón que muestra el LOGIN -->
-                <Button fx:id="btnLoginPrin"
-                        onAction="#mostrarLogin"
-                        styleClass="login-button"
-                        text="Login" />
-            </HBox>
+		</VBox>
 
-        </VBox>
+		<!-- PANEL DERECHO (CONTENEDOR LOGIN/REGISTRO) -->
+		<StackPane fx:id="contenedorDerecha" alignment="CENTER"
+			styleClass="right-container" HBox.hgrow="ALWAYS">
 
-        <!-- PANEL DERECHO (CONTENEDOR LOGIN/REGISTRO) -->
-        <StackPane fx:id="contenedorDerecha"
-                   alignment="CENTER"
-                   styleClass="right-container"
-                   HBox.hgrow="ALWAYS">
+			<padding>
+				<Insets bottom="40" left="40" right="40" top="40" />
+			</padding>
 
-            <padding>
-                <Insets bottom="40" left="40" right="40" top="40" />
-            </padding>
+			<!-- 🔥 CONTENEDOR FIJO PARA AMBOS FORMULARIOS -->
+			<StackPane fx:id="formWrapper" prefWidth="480"
+				prefHeight="520" maxWidth="480" maxHeight="520">
 
-            <!-- =================== PANE LOGIN =================== -->
-            <GridPane fx:id="paneLogin"
-                      styleClass="login-container"
-                      prefHeight="300" prefWidth="450"
-                      alignment="CENTER">
+				<!-- =================== LOGIN =================== -->
+				<StackPane fx:id="paneLogin" styleClass="login-container"
+					prefWidth="480" prefHeight="520" maxWidth="480" maxHeight="520"
+					StackPane.alignment="CENTER">
 
-                <!-- COLUMNAS -->
-                <columnConstraints>
-                    <ColumnConstraints prefWidth="80" />
-                    <ColumnConstraints prefWidth="220" />
-                    <ColumnConstraints prefWidth="80" />
-                </columnConstraints>
+					<VBox alignment="CENTER" spacing="15" maxWidth="320">
 
-                <!-- FILAS -->
-                <rowConstraints>
-                    <RowConstraints prefHeight="40" />
-                    <RowConstraints prefHeight="40" />
-                    <RowConstraints prefHeight="40" />
-                    <RowConstraints prefHeight="40" />
-                    <RowConstraints prefHeight="40" />
-                    <RowConstraints prefHeight="40" />
-                </rowConstraints>
+						<ImageView fx:id="avatarUsuario" fitHeight="120"
+							fitWidth="120" preserveRatio="true">
+							<image>
+								<Image url="@/images/avatar.png" />
+							</image>
+						</ImageView>
 
-                <children>
+						<TextField fx:id="usuarioLogin" promptText="Usuario" />
+						<PasswordField fx:id="contraseñaLogin"
+							promptText="Contraseña" />
 
-                    <!-- AVATAR -->
-                    <ImageView fx:id="avatarUsuario"
-                               fitHeight="120" fitWidth="120"
-                               preserveRatio="true"
-                               GridPane.columnIndex="1"
-                               GridPane.halignment="CENTER">
-                        <image>
-                            <Image url="@/images/avatar.png" />
-                        </image>
-                    </ImageView>
+						<HBox alignment="CENTER" spacing="15">
+							<Button fx:id="btnAceptarLogin" text="Aceptar" />
+							<Button fx:id="btnIrARegistro" text="Registro"
+								onAction="#mostrarRegistro" />
+						</HBox>
 
-                    <!-- USUARIO -->
-                    <TextField fx:id="usuarioLogin"
-                               promptText="Usuario"
-                               GridPane.columnIndex="1"
-                               GridPane.rowIndex="2" />
+					</VBox>
 
-                    <!-- CONTRASEÑA -->
-                    <PasswordField fx:id="contraseñaLogin"
-                                   promptText="Contraseña"
-                                   GridPane.columnIndex="1"
-                                   GridPane.rowIndex="3" />
+				</StackPane>
 
-                    <!-- BOTÓN ACEPTAR LOGIN -->
-                    <Button fx:id="btnAceptarLogin"
-                            text="Aceptar"
-                            GridPane.columnIndex="1"
-                            GridPane.rowIndex="4"
-                            GridPane.halignment="CENTER">
-                        <font>
-                            <Font size="14" />
-                        </font>
-                    </Button>
+				<!-- =================== REGISTRO =================== -->
+				<StackPane fx:id="paneRegistro"
+					styleClass="registro-container" prefWidth="480" prefHeight="520"
+					maxWidth="480" maxHeight="520" visible="false" managed="false"
+					StackPane.alignment="CENTER">
 
-                    <!-- BOTÓN QUE CAMBIA A REGISTRO -->
-                    <Button fx:id="btnIrARegistro"
-                            text="Registro"
-                            onAction="#mostrarRegistro"
-                            GridPane.columnIndex="2"
-                            GridPane.rowIndex="5"
-                            GridPane.halignment="CENTER">
-                        <font>
-                            <Font size="14" />
-                        </font>
-                    </Button>
+					<VBox alignment="CENTER" spacing="12" maxWidth="340">
 
-                </children>
+						<TextField fx:id="correo" promptText="Correo" />
+						<TextField fx:id="nombreUsuario"
+							promptText="Nombre Usuario" />
+						<PasswordField fx:id="contraseñaRegistro"
+							promptText="Contraseña" />
+						<PasswordField fx:id="validarContraseña"
+							promptText="Validar Contraseña" />
 
-            </GridPane>
+						<!-- BOTÓN CAMBIO AVATAR (IZQUIERDA) -->
+						<HBox alignment="CENTER_LEFT" spacing="0">
+							<Button fx:id="btnCambioAvatar" prefWidth="160"
+								text="Cambio avatar" />
+						</HBox>
 
-            <!-- =================== PANE REGISTRO =================== -->
-            <GridPane fx:id="paneRegistro"
-                      alignment="CENTER"
-                      maxWidth="600"
-                      prefWidth="600"
-                      styleClass="registro-container"
-                      visible="false" managed="false">
+						<!-- FILA DE BOTONES: REGISTRO (IZQ) + LOGIN (DER) -->
+						<HBox spacing="15" maxWidth="Infinity">
 
-                <columnConstraints>
-                    <ColumnConstraints prefWidth="150" />
-                    <ColumnConstraints prefWidth="250" />
-                    <ColumnConstraints prefWidth="150" />
-                </columnConstraints>
+							<!-- REGISTRARSE A LA IZQUIERDA -->
+							<Button fx:id="btnRegistro" prefWidth="160"
+								text="Registrarse" HBox.hgrow="ALWAYS" />
 
-                <rowConstraints>
-                    <RowConstraints prefHeight="40" />
-                    <RowConstraints prefHeight="40" />
-                    <RowConstraints prefHeight="40" />
-                    <RowConstraints prefHeight="40" />
-                    <RowConstraints prefHeight="40" />
-                    <RowConstraints prefHeight="40" />
-                    <RowConstraints prefHeight="40" />
-                </rowConstraints>
+							<!-- LOGIN A LA DERECHA -->
+							<Button fx:id="btnVolverLogin" prefWidth="100"
+								text="Login" onAction="#mostrarLogin" HBox.hgrow="NEVER">
+								<font>
+									<Font size="14.0" />
+								</font>
+							</Button>
 
-                <children>
+						</HBox>
 
-                    <TextField fx:id="correo"
-                               promptText="Correo"
-                               GridPane.columnIndex="1"
-                               GridPane.rowIndex="1" />
+					</VBox>
 
-                    <TextField fx:id="nombreUsuario"
-                               promptText="Nombre Usuario"
-                               GridPane.columnIndex="1"
-                               GridPane.rowIndex="2" />
+				</StackPane>
 
-                    <PasswordField fx:id="contraseñaRegistro"
-                                   promptText="Contraseña"
-                                   GridPane.columnIndex="1"
-                                   GridPane.rowIndex="3" />
+			</StackPane>
 
-                    <PasswordField fx:id="validarContraseña"
-                                   promptText="Validar Contraseña"
-                                   GridPane.columnIndex="1"
-                                   GridPane.rowIndex="4" />
+		</StackPane>
 
-                    <Button fx:id="btnCambioAvatar"
-                            prefWidth="120"
-                            text="Cambio avatar"
-                            GridPane.columnIndex="1"
-                            GridPane.rowIndex="5" />
-
-                    <Button fx:id="btnRegistro"
-                            prefWidth="120"
-                            text="Registrarse"
-                            GridPane.columnIndex="1"
-                            GridPane.halignment="LEFT"
-                            GridPane.rowIndex="6" />
-
-                    <!-- BOTÓN QUE CAMBIA A LOGIN -->
-                    <Button fx:id="btnVolverLogin"
-                            prefHeight="13.0"
-                            prefWidth="64.0"
-                            text="Login"
-                            onAction="#mostrarLogin"
-                            GridPane.columnIndex="2"
-                            GridPane.halignment="CENTER"
-                            GridPane.rowIndex="6"
-                            GridPane.valignment="CENTER">
-                        <font>
-                            <Font size="14.0" />
-                        </font>
-                    </Button>
-
-                </children>
-
-            </GridPane>
-
-        </StackPane>
-
-    </HBox>
+	</HBox>
 
 </StackPane>
