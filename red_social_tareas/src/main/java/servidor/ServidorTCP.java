@@ -1,33 +1,19 @@
 package servidor;
 
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServidorTCP {
 
-    public static void main(String[] args) {
-    	
-        int puerto = 5000;
+    public static void main(String[] args) throws Exception {
+        ServerSocket server = new ServerSocket(5000);
+        System.out.println("Servidor escuchando en puerto 5000...");
 
-        try (ServerSocket servidor = new ServerSocket(puerto)) {
-            System.out.println("Servidor escuchando en el puerto " + puerto);
-
-            while (true) {
-                Socket socket = servidor.accept();
-                //System.out.println("Cliente conectado");
-
-                //coger la IP del cliente que ha hecho la peticion
-                String clientIP = socket.getInetAddress().getHostAddress(); 
-               // System.out.println("Cliente conectado desde: " + clientIP);
-                
-                // Crear un nuevo hilo para manejar las peticiones de los clientes
-                Thread hilo = new Thread(new ManejadorCliente(socket));
-                hilo.start();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        while (true) {
+            Socket socket = server.accept();
+            new Thread(new HiloCliente(socket)).start();
         }
     }
-   
 }
+
