@@ -7,19 +7,24 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.nio.file.Files;
 
-import entity.Usuario;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import service.UsuarioService;
+
+import shared.UserDTO;
 import shared.LoginDTO;
 import shared.Peticion;
 import shared.RegistroDTO;
@@ -28,241 +33,201 @@ import shared.Respuesta;
 public class ControladorLogin {
 
 	@FXML private StackPane rootLogin;
-    @FXML private StackPane paneLogin;
-    @FXML private StackPane paneRegistro;
+	@FXML private StackPane paneLogin;
+	@FXML private StackPane paneRegistro;
 
-    @FXML private TextField usuarioLogin;
-    @FXML private PasswordField contraseñaLogin;  
+	@FXML private TextField usuarioLogin;
+	@FXML private PasswordField contraseñaLogin;
 
-    @FXML private TextField correo;
-    @FXML private TextField nombreUsuario;
-    @FXML private PasswordField contraseñaRegistro;
-    @FXML private PasswordField validarContraseña;
-    @FXML private ImageView avatarUsuario;
-    
-    private byte[] avatarBytesSeleccionado;
-    
-    private UsuarioService usuarioService = new UsuarioService();
+	@FXML private TextField correo;
+	@FXML private TextField nombreUsuario;
+	@FXML private PasswordField contraseñaRegistro;
+	@FXML private PasswordField validarContraseña;
+	@FXML private ImageView avatarUsuario;
 
-    @FXML
-    private void initialize() {
-        ventanaInicial();
-    }
+	private byte[] avatarBytesSeleccionado;
 
-    @FXML
-    private void mostrarLogin() {
-        animarCambio(paneLogin, paneRegistro);
-    }
+	@SuppressWarnings("unused")
+	private UsuarioService usuarioService = new UsuarioService();
 
-    @FXML
-    private void mostrarRegistro() {
-        animarCambio(paneRegistro, paneLogin);
-    }
+	@FXML
+	private void initialize() {
+		ventanaInicial();
+	}
 
-    private void ventanaInicial() {
-        paneLogin.setOpacity(1);
-        paneLogin.setVisible(true);
-        paneLogin.setManaged(true);
+	@FXML
+	private void mostrarLogin() {
+		animarCambio(paneLogin, paneRegistro);
+	}
 
-        paneRegistro.setOpacity(0);
-        paneRegistro.setVisible(false);
-        paneRegistro.setManaged(false);
-    }
+	@FXML
+	private void mostrarRegistro() {
+		animarCambio(paneRegistro, paneLogin);
+	}
 
-    private void animarCambio(StackPane panelMostrar, StackPane panelOcultar) {
+	private void ventanaInicial() {
+		paneLogin.setOpacity(1);
+		paneLogin.setVisible(true);
+		paneLogin.setManaged(true);
 
-        if (panelMostrar.isVisible()) return;
+		paneRegistro.setOpacity(0);
+		paneRegistro.setVisible(false);
+		paneRegistro.setManaged(false);
+	}
 
-        panelMostrar.setVisible(true);
-        panelMostrar.setManaged(true);
-        panelMostrar.setOpacity(0);
+	private void animarCambio(StackPane panelMostrar, StackPane panelOcultar) {
 
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(250), panelOcultar);
-        fadeOut.setFromValue(1.0);
-        fadeOut.setToValue(0.0);
+		if (panelMostrar.isVisible())
+			return;
 
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(250), panelMostrar);
-        fadeIn.setFromValue(0.0);
-        fadeIn.setToValue(1.0);
+		panelMostrar.setVisible(true);
+		panelMostrar.setManaged(true);
+		panelMostrar.setOpacity(0);
 
-        fadeOut.setOnFinished(e -> {
-            panelOcultar.setVisible(false);
-            panelOcultar.setManaged(false);
-        });
+		FadeTransition fadeOut = new FadeTransition(Duration.millis(250), panelOcultar);
+		fadeOut.setFromValue(1.0);
+		fadeOut.setToValue(0.0);
 
-        ParallelTransition transicion = new ParallelTransition(fadeOut, fadeIn);
-        transicion.play();
-    }
-    
+		FadeTransition fadeIn = new FadeTransition(Duration.millis(250), panelMostrar);
+		fadeIn.setFromValue(0.0);
+		fadeIn.setToValue(1.0);
+
+		fadeOut.setOnFinished(e -> {
+			panelOcultar.setVisible(false);
+			panelOcultar.setManaged(false);
+		});
+
+		ParallelTransition transicion = new ParallelTransition(fadeOut, fadeIn);
+		transicion.play();
+	}
+
 	@FXML
 	private void onElegirAvatar() {
-		
+
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Seleccionar archivo"); 
+		fileChooser.setTitle("Seleccionar archivo");
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg"));
 		File archivo = fileChooser.showOpenDialog(rootLogin.getScene().getWindow());
-		
+
 		if (archivo != null) {
 			System.out.println("Archivo seleccionado: " + archivo.getAbsolutePath());
 			try {
-	            avatarBytesSeleccionado = Files.readAllBytes(archivo.toPath());
-			}catch (IOException e) {
+				avatarBytesSeleccionado = Files.readAllBytes(archivo.toPath());
+			} catch (IOException e) {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
 		}
 	}
 
-   /* @FXML
-    private void onAceptarLogin() {
-        String usuario = usuarioLogin.getText() != null ? usuarioLogin.getText().trim() : "";
-        String pass = contraseñaLogin.getText() != null ? contraseñaLogin.getText().trim() : "";
+	@FXML
+	private void onAceptarLogin() {
 
-        if (usuario.isEmpty() || pass.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING,
-                    "Campos incompletos",
-                    "Por favor, rellena usuario y contraseña.");
-            return;
-        }
+		String usuario = usuarioLogin.getText() != null ? usuarioLogin.getText().trim() : "";
+		String pass = contraseñaLogin.getText() != null ? contraseñaLogin.getText().trim() : "";
 
-        System.out.println(usuario + " " + pass);
-        
-        Usuario u = usuarioService.findByNombreAndContra(usuario, pass);
-
-        System.out.println(u);
-        
-        if (u != null) {
-			mostrarAlerta(Alert.AlertType.INFORMATION,
-					"Login correcto",
-					"Bienvenido, " + u.getNombre_usuario() + "!");
-		} else {
-			mostrarAlerta(Alert.AlertType.ERROR,
-					"Error de login",
-					"Usuario o contraseña incorrectos.");
-		}
-    }*/
-
-	/*  @FXML
-    private void onRegistrarse() {
-        String c = correo.getText() != null ? correo.getText().trim() : "";
-        String n = nombreUsuario.getText() != null ? nombreUsuario.getText().trim() : "";
-        String pass1 = contraseñaRegistro.getText() != null ? contraseñaRegistro.getText().trim() : "";
-        String pass2 = validarContraseña.getText() != null ? validarContraseña.getText().trim() : "";
-
-        if (c.isEmpty() || n.isEmpty() || pass1.isEmpty() || pass2.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING,
-                    "Campos incompletos",
-                    "Por favor, completa todos los campos del registro.");
-            return;
-        }
-
-        if (!pass1.equals(pass2)) {
-            mostrarAlerta(Alert.AlertType.ERROR,
-                    "Contraseñas no coinciden",
-                    "La contraseña y la validación de contraseña deben ser iguales.");
-            return;
-        }
-        
-        if (avatarUsuario.getImage() == null) {
-			mostrarAlerta(Alert.AlertType.WARNING,
-					"Avatar no seleccionado",
-					"Por favor, selecciona un avatar para tu perfil.");
+		if (usuario.isEmpty() || pass.isEmpty()) {
+			mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", "Rellena usuario y contraseña.");
 			return;
 		}
-        
-        usuarioService.save(new Usuario(n, c, pass1, avatarBytesSeleccionado));
-       
-        mostrarAlerta(Alert.AlertType.INFORMATION,
-                "Registro correcto",
-                "Registro realizado correctamente.");
-    }*/
-	
-    @FXML
-    private void onAceptarLogin() {
-    	
-      String usuario = usuarioLogin.getText().trim();
-      String pass = contraseñaLogin.getText().trim();
 
-      new Thread(() -> {
-        try {
-          Peticion req = new Peticion("LOGIN", new LoginDTO(usuario, pass));
-          Respuesta resp = enviar(req);
+		new Thread(() -> {
+			try {
+				Peticion req = new Peticion("LOGIN", new LoginDTO(usuario, pass));
+				Respuesta resp = enviar(req);
 
-          Platform.runLater(() -> {
-            if (resp.ok) mostrarAlerta(Alert.AlertType.INFORMATION, "Login", resp.message);
-            else mostrarAlerta(Alert.AlertType.ERROR, "Login", resp.message);
-          });
+				Platform.runLater(() -> {
+					if (resp.ok) {
+						try {
+							UserDTO user = (UserDTO) resp.data;
 
-        } catch (Exception e) {
-        	Platform.runLater(() ->
-            	mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage())
-          );
-        }
-      }).start();
-    }
+							FXMLLoader loader = new FXMLLoader(
+									getClass().getResource("/escenas/VentanaPantallaPrincipal.fxml"));
+							Parent root = loader.load();
 
-    
-    @FXML
-    private void onRegistrarse() {
-    	
-        String correoStr = correo.getText() != null ? correo.getText().trim() : "";
-        String nombreStr = nombreUsuario.getText() != null ? nombreUsuario.getText().trim() : "";
-        String contra1 = contraseñaRegistro.getText() != null ? contraseñaRegistro.getText().trim() : "";
-        String contra2 = validarContraseña.getText() != null ? validarContraseña.getText().trim() : "";
+							ControladorPantallaPrincipal controller = loader.getController();
+							controller.setUsuarioSesion(user);
 
-        if (correoStr.isEmpty() || nombreStr.isEmpty() || contra1.isEmpty() || contra2.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING,
-                    "Campos incompletos",
-                    "Por favor, completa todos los campos del registro.");
-            return;
-        }
+							Stage stage = (Stage) rootLogin.getScene().getWindow();
+							stage.setScene(new Scene(root));
+							stage.show();
 
-        if (!contra1.equals(contra2)) {
-            mostrarAlerta(Alert.AlertType.ERROR,
-                    "Contraseñas no coinciden",
-                    "La contraseña y la validación de contraseña deben ser iguales.");
-            return;
-        }
+						} catch (Exception ex) {
+							mostrarAlerta(Alert.AlertType.ERROR, "Error",
+									"No se pudo abrir la pantalla principal: " + ex.getMessage());
+						}
+					} else {
+						mostrarAlerta(Alert.AlertType.ERROR, "Login", resp.message);
+					}
+				});
 
-      new Thread(() -> {
-        try {
-          Peticion req = new Peticion("REGISTER",
-              new RegistroDTO(correoStr, nombreStr, contra1, avatarBytesSeleccionado));
-          Respuesta resp = enviar(req);
+			} catch (Exception e) {
+				Platform.runLater(() -> mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage()));
+			}
+		}).start();
+	}
 
-          Platform.runLater(() -> {
-            if (resp.ok) mostrarAlerta(Alert.AlertType.INFORMATION, "Registro", resp.message);
-            else mostrarAlerta(Alert.AlertType.ERROR, "Registro", resp.message);
-          });
+	@FXML
+	private void onRegistrarse() {
 
-        } catch (Exception e) {
-          Platform.runLater(() ->
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage())
-          );
-        }
-      }).start();
-    }
+		String correoStr = correo.getText() != null ? correo.getText().trim() : "";
+		String nombreStr = nombreUsuario.getText() != null ? nombreUsuario.getText().trim() : "";
+		String contra1 = contraseñaRegistro.getText() != null ? contraseñaRegistro.getText().trim() : "";
+		String contra2 = validarContraseña.getText() != null ? validarContraseña.getText().trim() : "";
 
+		if (correoStr.isEmpty() || nombreStr.isEmpty() || contra1.isEmpty() || contra2.isEmpty()) {
+			mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos",
+					"Por favor, completa todos los campos del registro.");
+			return;
+		}
 
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-    }
-    
-    private Respuesta enviar(Peticion req) throws Exception {
-    	  try (Socket s = new Socket("localhost", 5000);
-    	       ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
-    	       ObjectInputStream in = new ObjectInputStream(s.getInputStream())) {
+		if (!contra1.equals(contra2)) {
+			mostrarAlerta(Alert.AlertType.ERROR, "Contraseñas no coinciden",
+					"La contraseña y la validación de contraseña deben ser iguales.");
+			return;
+		}
 
-    	    out.writeObject(req);
-    	    out.flush();
+		new Thread(() -> {
+			try {
+				Peticion req = new Peticion("REGISTER",
+						new RegistroDTO(correoStr, nombreStr, contra1, avatarBytesSeleccionado));
+				Respuesta resp = enviar(req);
 
-    	    return (Respuesta) in.readObject();
-    	  }
-    	}
+				Platform.runLater(() -> {
+					if (resp.ok) {
+						mostrarAlerta(Alert.AlertType.INFORMATION, "Registro", resp.message);
+						mostrarLogin();
 
-    
+					} else {
+						mostrarAlerta(Alert.AlertType.ERROR, "Registro", resp.message);
+					}
+				});
+
+			} catch (Exception e) {
+				Platform.runLater(() -> mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage()));
+			}
+		}).start();
+
+	}
+
+	private Respuesta enviar(Peticion req) throws Exception {
+		try (Socket s = new Socket("DAM2-24", 5000);
+				ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+				ObjectInputStream in = new ObjectInputStream(s.getInputStream())) {
+
+			out.writeObject(req);
+			out.flush();
+
+			return (Respuesta) in.readObject();
+		}
+	}
+
+	private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+		Alert alert = new Alert(tipo);
+		alert.setTitle(titulo);
+		alert.setHeaderText(null);
+		alert.setContentText(mensaje);
+		alert.showAndWait();
+	}
+
 }

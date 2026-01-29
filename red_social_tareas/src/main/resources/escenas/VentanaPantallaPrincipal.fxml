@@ -16,27 +16,40 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="723.0" prefWidth="958.0" styleClass="root" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" 
-stylesheets="@../css/pantallaPrincipal.css" fx:controller="controller.ControladorPantallaPrincipal">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="723.0"
+	prefWidth="958.0" styleClass="root" xmlns="http://javafx.com/javafx/25"
+	xmlns:fx="http://javafx.com/fxml/1"
+	stylesheets="@../css/pantallaPrincipal.css"
+	fx:id="rootPrincipal"
+	fx:controller="controller.ControladorPantallaPrincipal">
 	<children>
-		<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20" StackPane.alignment="CENTER">
+		<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
+			spacing="20" StackPane.alignment="CENTER">
 			<children>
 				<!-- LATERAL IZQUIERDO -->
-				<VBox alignment="TOP_CENTER" prefHeight="723.0" prefWidth="271.0" spacing="10" styleClass="sidebar" HBox.hgrow="SOMETIMES">
+				<VBox alignment="TOP_CENTER" prefHeight="723.0"
+					prefWidth="271.0" spacing="10" styleClass="sidebar"
+					HBox.hgrow="SOMETIMES">
 					<children>
 						<!-- Imagen arriba -->
 						<StackPane>
 							<children>
-								<StackPane prefHeight="157.0" prefWidth="271.0" styleClass="imagen-redondeada">
-									<ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
+								<StackPane prefHeight="157.0" prefWidth="271.0"
+									styleClass="imagen-redondeada">
+									<ImageView fitHeight="120.0" fitWidth="160.0"
+										pickOnBounds="true" preserveRatio="true">
 										<StackPane.margin>
 											<Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
 										</StackPane.margin>
+										<!--  
 										<image>
-											<Image url="@../images/fondoPantallaPrincipal.png"/>
-										</image>
+											<Image url="@../images/fondoPantallaPrincipal.png" />
+										</image> -->
 									</ImageView>
-                           <Circle fill="DODGERBLUE" radius="96.0" stroke="BLACK" strokeType="INSIDE" />
+									<Circle fx:id="imgAvatarUsuario" fill="DODGERBLUE"
+										radius="96.0" stroke="BLACK" strokeType="INSIDE"
+										styleClass="avatar-circle" />
 								</StackPane>
 							</children>
 						</StackPane>
@@ -44,22 +57,25 @@ stylesheets="@../css/pantallaPrincipal.css" fx:controller="controller.Controlado
 						<Separator prefWidth="271.0" />
 
 						<!-- Botones centrales del menú -->
-						<VBox alignment="TOP_CENTER" prefHeight="451.0" prefWidth="271.0" spacing="10" VBox.vgrow="ALWAYS">
+						<VBox alignment="TOP_CENTER" prefHeight="451.0"
+							prefWidth="271.0" spacing="10" VBox.vgrow="ALWAYS">
 							<children>
-                        <Label text="BIENVENIDO">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label text="NOMBRE USUARIO">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Label>
-								<Button fx:id="btnVerDiario" prefHeight="50.0" prefWidth="200.0" styleClass="boton-secundario" text="MI DIARIO">
+								<Label text="BIENVENIDO">
+									<font>
+										<Font name="System Bold" size="24.0" />
+									</font>
+									<VBox.margin>
+										<Insets top="20.0" />
+									</VBox.margin>
+								</Label>
+								<Label fx:id="lblNombreUsuario" text="NOMBRE USUARIO">
+									<font>
+										<Font name="System Bold" size="24.0" />
+									</font>
+								</Label>
+								<Button fx:id="btnVerDiario" prefHeight="50.0"
+									prefWidth="200.0" styleClass="boton-secundario"
+									text="MI DIARIO">
 									<VBox.margin>
 										<Insets top="50.0" />
 									</VBox.margin>
@@ -67,7 +83,8 @@ stylesheets="@../css/pantallaPrincipal.css" fx:controller="controller.Controlado
 										<Font size="14.0" />
 									</font>
 								</Button>
-								<Button fx:id="btnVerAmigos" prefHeight="50.0" prefWidth="200.0" styleClass="boton-secundario" text="AMIGOS">
+								<Button fx:id="btnVerAmigos" prefHeight="50.0"
+									prefWidth="200.0" styleClass="boton-secundario" text="AMIGOS">
 									<VBox.margin>
 										<Insets bottom="5.0" top="5.0" />
 									</VBox.margin>
@@ -75,7 +92,8 @@ stylesheets="@../css/pantallaPrincipal.css" fx:controller="controller.Controlado
 										<Font size="14.0" />
 									</font>
 								</Button>
-								<Button fx:id="btnVerAjustes" prefHeight="50.0" prefWidth="200.0" styleClass="boton-secundario" text="AJUSTES">
+								<Button fx:id="btnVerAjustes" prefHeight="50.0"
+									prefWidth="200.0" styleClass="boton-secundario" text="AJUSTES">
 									<font>
 										<Font size="14.0" />
 									</font>
@@ -90,9 +108,11 @@ stylesheets="@../css/pantallaPrincipal.css" fx:controller="controller.Controlado
 							<children>
 								<HBox spacing="8">
 									<children>
-										<Button styleClass="boton-linkear" text="" HBox.hgrow="ALWAYS">
+										<Button styleClass="boton-linkear" text=""
+											HBox.hgrow="ALWAYS">
 											<graphic>
-												<ImageView fitHeight="25.0" fitWidth="25.0" preserveRatio="true">
+												<ImageView fitHeight="25.0" fitWidth="25.0"
+													preserveRatio="true">
 													<image>
 														<Image url="@Spotify_icon.png" />
 													</image>
@@ -101,7 +121,9 @@ stylesheets="@../css/pantallaPrincipal.css" fx:controller="controller.Controlado
 										</Button>
 									</children>
 								</HBox>
-								<Button fx:id="btnCerrarSesion" prefHeight="28.0" prefWidth="180.0" styleClass="boton-principal" text="CERRAR SESIÓN" />
+								<Button fx:id="btnCerrarSesion" prefHeight="28.0"
+									prefWidth="180.0" styleClass="boton-principal"
+									text="CERRAR SESIÓN" />
 							</children>
 							<VBox.margin>
 								<Insets top="10.0" />
@@ -112,11 +134,13 @@ stylesheets="@../css/pantallaPrincipal.css" fx:controller="controller.Controlado
 
 
 				<!-- CONTENIDO PRINCIPAL (DERECHA) -->
-				<VBox prefHeight="561.0" prefWidth="650.0" spacing="15" styleClass="tarjeta-ajustes" HBox.hgrow="ALWAYS">
+				<VBox prefHeight="561.0" prefWidth="650.0" spacing="15"
+					styleClass="tarjeta-ajustes" HBox.hgrow="ALWAYS">
 					<children>
 
 						<!-- SECCIÓN NOTIFICACIONES -->
-						<VBox maxHeight="400.0" minHeight="200.0" prefHeight="400.0" spacing="10" styleClass="seccion">
+						<VBox maxHeight="400.0" minHeight="200.0" prefHeight="400.0"
+							spacing="10" styleClass="seccion">
 							<children>
 
 								<!-- Título, fuera del ScrollPane -->
@@ -127,7 +151,8 @@ stylesheets="@../css/pantallaPrincipal.css" fx:controller="controller.Controlado
 								</Label>
 
 								<!-- ScrollPane: SOLO el Accordion dentro -->
-								<ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="scroll-pane" VBox.vgrow="NEVER">
+								<ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+									styleClass="scroll-pane" VBox.vgrow="NEVER">
 									<content>
 										<VBox fillWidth="true">
 											<children>
@@ -144,27 +169,33 @@ stylesheets="@../css/pantallaPrincipal.css" fx:controller="controller.Controlado
 						<Separator prefWidth="200.0" />
 
 						<!-- SECCIÓN RECORDATORIOS (altura fija + scroll interno) -->
-						<VBox maxHeight="Infinity" prefHeight="1000.0" spacing="10" styleClass="seccion">
+						<VBox maxHeight="Infinity" prefHeight="1000.0" spacing="10"
+							styleClass="seccion">
 							<children>
 
 								<!-- Cabecera: título + selector de fecha -->
 								<HBox prefHeight="45.0" prefWidth="620.0" spacing="10">
 									<children>
-										<Label styleClass="titulo-seccion" text="RECORDATORIOS DIARIOS">
+										<Label styleClass="titulo-seccion"
+											text="RECORDATORIOS DIARIOS">
 											<HBox.margin>
 												<Insets top="5.0" />
 											</HBox.margin>
 										</Label>
-										<StackPane alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+										<StackPane alignment="CENTER_RIGHT"
+											HBox.hgrow="ALWAYS">
 											<children>
-												<HBox alignment="CENTER_RIGHT" spacing="8" StackPane.alignment="CENTER_RIGHT">
+												<HBox alignment="CENTER_RIGHT" spacing="8"
+													StackPane.alignment="CENTER_RIGHT">
 													<children>
-														<Label styleClass="etiqueta-campo" text="SELECCIÓN DE FECHA:">
+														<Label styleClass="etiqueta-campo"
+															text="SELECCIÓN DE FECHA:">
 															<HBox.margin>
 																<Insets bottom="5.0" />
 															</HBox.margin>
 														</Label>
-														<DatePicker prefHeight="26.0" prefWidth="160.0" styleClass="date-picker">
+														<DatePicker prefHeight="26.0" prefWidth="160.0"
+															styleClass="date-picker">
 															<HBox.margin>
 																<Insets right="10.0" />
 															</HBox.margin>
@@ -180,21 +211,31 @@ stylesheets="@../css/pantallaPrincipal.css" fx:controller="controller.Controlado
 								</HBox>
 
 								<!-- ScrollPane SOLO para los recordatorios -->
-								<ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
+								<ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+									styleClass="scroll-pane" VBox.vgrow="ALWAYS">
 									<content>
 										<VBox fillWidth="true">
 											<children>
-												<Accordion fx:id="recordatoriosAccordion" prefWidth="620.0" VBox.vgrow="ALWAYS">
+												<Accordion fx:id="recordatoriosAccordion"
+													prefWidth="620.0" VBox.vgrow="ALWAYS">
 													<panes>
-														<TitledPane fx:id="course1_1TP1" animated="false" prefHeight="117.0" prefWidth="620.0" text="DÍA_RECORDATORIO">
+														<TitledPane fx:id="course1_1TP1"
+															animated="false" prefHeight="117.0" prefWidth="620.0"
+															text="DÍA_RECORDATORIO">
 															<content>
-																<VBox fillWidth="true" prefHeight="55.0" prefWidth="600.0" spacing="10">
+																<VBox fillWidth="true" prefHeight="55.0"
+																	prefWidth="600.0" spacing="10">
 																	<children>
-																		<Label fx:id="studentsCourse1_1Lbl1" styleClass="etiqueta-campo" text="TEXTO_NOTIFICACION" />
-																		<Separator prefHeight="8.0" prefWidth="600.0" />
+																		<Label fx:id="studentsCourse1_1Lbl1"
+																			styleClass="etiqueta-campo" text="TEXTO_NOTIFICACION" />
+																		<Separator prefHeight="8.0"
+																			prefWidth="600.0" />
 																		<StackPane alignment="CENTER_RIGHT">
 																			<children>
-																				<Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="26.0" prefWidth="30.0" styleClass="boton-eliminar" text="X" />
+																				<Button alignment="CENTER"
+																					contentDisplay="RIGHT" mnemonicParsing="false"
+																					prefHeight="26.0" prefWidth="30.0"
+																					styleClass="boton-eliminar" text="X" />
 																			</children>
 																		</StackPane>
 																	</children>
