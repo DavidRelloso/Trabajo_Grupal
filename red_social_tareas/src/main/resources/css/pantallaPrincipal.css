@@ -225,3 +225,13 @@
     -fx-background-color: #6a00f4;
     -fx-text-fill: white;
 }
+
+.avatar-circle {
+  /*   -fx-fill: transparent;*/
+    -fx-stroke: #d1d5db;
+    -fx-stroke-width: 1.5;
+
+    -fx-effect: null;
+}
+
+

@@ -1,7 +1,10 @@
+<<<<<<< HEAD
+=======
 # Eclipse
 .project
 .classpath
 .settings/
 
 # Maven
+>>>>>>> refs/remotes/origin/cambio_login_controlador_vista_y_css
 target/
