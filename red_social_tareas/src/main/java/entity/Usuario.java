@@ -27,8 +27,8 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nombre, String correo, String contra, byte[] avatar_img) {
-        this.nombre_usuario = nombre;
+    public Usuario(String nombre_usuario, String correo, String contra, byte[] avatar_img) {
+        this.nombre_usuario = nombre_usuario;
         this.correo = correo;
         this.contra_hash = contra;
         this.avatar_img = avatar_img;

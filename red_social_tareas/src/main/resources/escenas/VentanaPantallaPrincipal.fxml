@@ -22,7 +22,7 @@
 	xmlns:fx="http://javafx.com/fxml/1"
 	stylesheets="@../css/pantallaPrincipal.css"
 	fx:id="rootPrincipal"
-	fx:controller="controller.ControladorPantallaPrincipal">
+	fx:controller="controller.principal.ControladorPantallaPrincipal">
 	<children>
 		<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
 			spacing="20" StackPane.alignment="CENTER">
