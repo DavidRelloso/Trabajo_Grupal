@@ -124,7 +124,7 @@ public class UsuarioService {
         }
     }
 
-    // ✅ ENCONTRAR USUARIO POR NOMBRE
+    // ENCONTRAR USUARIO POR NOMBRE
     public Usuario findByNombre(String nombre) {
         Session session = null;
 
