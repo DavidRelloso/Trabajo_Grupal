@@ -6,68 +6,43 @@ import javax.persistence.*;
 @Table(name = "usuario")
 public class Usuario {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_usuario;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
+    private Long id_usuario;
 
-	@Column(unique = true, nullable = false)
-	private String nombre_usuario;
+    @Column(name = "nombre_usuario", unique = true, nullable = false)
+    private String nombre_usuario;
 
-	@Column(unique = true, nullable = false)
-	private String correo;
+    @Column(unique = true, nullable = false)
+    private String correo;
 
-	@Column(nullable = false)
-	private String contraseña_hash;
+    @Column(name = "contra_hash", nullable = false)
+    private String contra_hash;
 
-	private String avatar_url;
+    @Lob
+    @Column(name = "avatar_img")
+    private byte[] avatar_img;
 
-	private boolean modo_oscuro;
+    public Usuario() {
+    }
 
-	public Long getId_usuario() {
-		return id_usuario;
-	}
+    public Usuario(String nombre_usuario, String correo, String contra, byte[] avatar_img) {
+        this.nombre_usuario = nombre_usuario;
+        this.correo = correo;
+        this.contra_hash = contra;
+        this.avatar_img = avatar_img;
+    }
 
-	public void setId_usuario(Long id_usuario) {
-		this.id_usuario = id_usuario;
-	}
+    public Long getId_usuario() { return id_usuario; }
+    public String getNombre_usuario() { return nombre_usuario; }
+    public String getCorreo() { return correo; }
+    public String getContra_hash() { return contra_hash; }
+    public byte[] getAvatar_img() { return avatar_img; }
 
-	public String getNombre_usuario() {
-		return nombre_usuario;
-	}
-
-	public void setNombre_usuario(String nombre_usuario) {
-		this.nombre_usuario = nombre_usuario;
-	}
-
-	public String getCorreo() {
-		return correo;
-	}
-
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-
-	public String getContraseña_hash() {
-		return contraseña_hash;
-	}
-
-	public void setContraseña_hash(String contraseña_hash) {
-		this.contraseña_hash = contraseña_hash;
-	}
-
-	public String getAvatar_url() {
-		return avatar_url;
-	}
-
-	public void setAvatar_url(String avatar_url) {
-		this.avatar_url = avatar_url;
-	}
-
-	public boolean isModo_oscuro() {
-		return modo_oscuro;
-	}
-
-	public void setModo_oscuro(boolean modo_oscuro) {
-		this.modo_oscuro = modo_oscuro;
-	}
+    public void setId_usuario(Long id_usuario) { this.id_usuario = id_usuario; }
+    public void setNombre_usuario(String nombre_usuario) { this.nombre_usuario = nombre_usuario; }
+    public void setCorreo(String correo) { this.correo = correo; }
+    public void setContra_hash(String contra_hash) { this.contra_hash = contra_hash; }
+    public void setAvatar_img(byte[] avatar_img) { this.avatar_img = avatar_img; }
 }

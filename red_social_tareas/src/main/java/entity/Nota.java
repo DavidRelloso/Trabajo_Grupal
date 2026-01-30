@@ -22,43 +22,15 @@ public class Nota {
 
 	private LocalTime hora;
 
-	public Long getId_nota() {
-		return id_nota;
-	}
-
-	public void setId_nota(Long id_nota) {
-		this.id_nota = id_nota;
-	}
-
-	public Dia getDia() {
-		return dia;
-	}
-
-	public void setDia(Dia dia) {
-		this.dia = dia;
-	}
-
-	public String getTitulo() {
-		return titulo;
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getTexto() {
-		return texto;
-	}
-
-	public void setTexto(String texto) {
-		this.texto = texto;
-	}
-
-	public LocalTime getHora() {
-		return hora;
-	}
-
-	public void setHora(LocalTime hora) {
-		this.hora = hora;
-	}
+	public Long getId_nota() {return id_nota;}
+	public Dia getDia() {return dia;}
+	public String getTitulo() {return titulo;}
+	public String getTexto() {return texto;}
+	public LocalTime getHora() {return hora;}
+	
+	public void setId_nota(Long id_nota) {this.id_nota = id_nota;}
+	public void setDia(Dia dia) {this.dia = dia;}
+	public void setTitulo(String titulo) {this.titulo = titulo;}
+	public void setTexto(String texto) {this.texto = texto;}
+	public void setHora(LocalTime hora) {this.hora = hora;}
 }
