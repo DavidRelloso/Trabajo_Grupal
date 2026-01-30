@@ -1,4 +1,4 @@
-package controller.sesion;
+package controller.session;
 
 import java.io.File;
 import java.io.IOException;
@@ -151,13 +151,11 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
                         return;
                     }
 
-                    // ✅ guarda sesión global
                     Sesion.setUsuario(user);
 
-                    // ✅ abre pantalla principal (ella debe leer de Sesion)
                     try {
                         FXMLLoader loader = new FXMLLoader(
-                                getClass().getResource("/escenas/VentanaPantallaPrincipal.fxml")
+                                getClass().getResource("/escenas/principal/VentanaPantallaPrincipal.fxml")
                         );
                         Parent root = loader.load();
 

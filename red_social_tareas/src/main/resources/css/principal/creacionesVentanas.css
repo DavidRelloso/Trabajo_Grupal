@@ -1,0 +1,211 @@
+.fondo-app {
+    -fx-background-image: url("/images/fondoAmigos.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-padding: 30px;
+}
+
+/* Tarjetas / contenedores */
+.contenedor-amigos {
+    -fx-background-color: rgba(255, 255, 255, 0.75);
+    -fx-background-radius: 20px;
+    -fx-padding: 25px;
+    -fx-spacing: 15px;
+    -fx-max-width: 420px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 15, 0, 0, 4);
+}
+
+.contenedor-nota {
+    -fx-background-color: rgba(255, 255, 255, 0.82);
+    -fx-background-radius: 20px;
+    -fx-padding: 25px;
+    -fx-spacing: 15px;
+    -fx-max-width: 460px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 18, 0, 0, 4);
+}
+
+/* Barra/contendor de fecha */
+.contenedor-fecha {
+    -fx-background-color: rgba(255, 255, 255, 0.82);
+    -fx-background-radius: 16px;
+    -fx-padding: 14px;
+    -fx-spacing: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.20), 14, 0, 0, 3);
+}
+
+/* Texto */
+.titulo {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5B4BC4;
+}
+
+.amigo-item {
+    -fx-background-color: #D3D3FF;
+    -fx-background-radius: 12px;
+    -fx-padding: 12px;
+    -fx-spacing: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(91, 75, 196, 0.15), 6, 0, 0, 2);
+}
+
+.amigo-nombre {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2B2767;
+}
+
+.amigo-estado {
+    -fx-font-size: 13px;
+    -fx-text-fill: #4A448A;
+}
+
+/* Campos */
+.text-field {
+    -fx-background-radius: 8px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+}
+
+.campo {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #C6C2F7;
+    -fx-border-width: 2px;
+    -fx-padding: 10px;
+    -fx-font-size: 15px;
+    -fx-text-fill: #2B2767;
+}
+
+.campo-texto {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-border-color: #C6C2F7;
+    -fx-border-width: 2px;
+    -fx-font-size: 14px;
+    -fx-padding: 12px;
+    -fx-text-fill: #2B2767;
+}
+
+/* DatePicker integrado con .campo */
+.date-picker.campo {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #C6C2F7;
+    -fx-border-width: 2px;
+    -fx-padding: 2px;
+}
+
+.date-picker.campo > .text-field {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px;
+    -fx-font-size: 15px;
+    -fx-text-fill: #2B2767;
+}
+
+.date-picker.campo > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.date-picker.campo > .arrow-button > .arrow {
+    -fx-background-color: #5B4BC4;
+}
+
+/* Filas */
+.fila-horas {
+    -fx-spacing: 18px;
+}
+
+.fila-botones {
+    -fx-spacing: 12px;
+    -fx-padding: 10px 0 0 0;
+}
+
+/* Botones */
+.boton-agregar {
+    -fx-background-color: #5B4BC4;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.boton-agregar:hover {
+    -fx-background-color: #483AA8;
+}
+
+.boton-opcion {
+    -fx-background-color: #5B4BC4;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(91, 75, 196, 0.18), 6, 0, 0, 2);
+}
+
+.boton-opcion:hover {
+    -fx-background-color: #483AA8;
+}
+
+/* Botón + (fecha) */
+.boton-mas {
+    -fx-background-color: #5B4BC4;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10px;
+    -fx-padding: 8px 0 8px 0;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(91, 75, 196, 0.18), 6, 0, 0, 2);
+}
+
+.boton-mas:hover {
+    -fx-background-color: #483AA8;
+}
+
+.boton-rojo {
+    -fx-background-color: #D64545;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.boton-rojo:hover {
+    -fx-background-color: #B03030;
+}
+
+.boton-verde {
+    -fx-background-color: #3CB043;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.boton-verde:hover {
+    -fx-background-color: #2E8B39;
+}
+
+/* Scroll transparente */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

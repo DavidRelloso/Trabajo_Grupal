@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane stylesheets="@/css/ajustes.css"
+<StackPane stylesheets="@/css/principal/ajustes.css"
            xmlns="http://javafx.com/javafx/25"
            xmlns:fx="http://javafx.com/fxml/1"
            minWidth="0.0" minHeight="0.0" 

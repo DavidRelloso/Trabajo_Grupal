@@ -11,7 +11,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/VentanaLogin.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/login/VentanaLogin.fxml"));
 			Parent root = loader.load();
 			Scene scene = new Scene(root,1300,700);
 			//scene.getStylesheets().add(getClass().getResource("applicationLogin.css").toExternalForm());

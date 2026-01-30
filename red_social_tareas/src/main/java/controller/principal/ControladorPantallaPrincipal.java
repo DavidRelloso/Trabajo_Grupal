@@ -175,7 +175,7 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
 
     private void onVerAjustes() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/VentanaAjustes.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/principal/VentanaAjustes.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -196,7 +196,7 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
         try {
             Sesion.cerrarSesion();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/VentanaLogin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/login/VentanaLogin.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) rootPrincipal.getScene().getWindow();

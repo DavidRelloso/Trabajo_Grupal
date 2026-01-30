@@ -20,7 +20,7 @@
 	minHeight="-Infinity" minWidth="-Infinity" prefHeight="723.0"
 	prefWidth="958.0" styleClass="root" xmlns="http://javafx.com/javafx/25"
 	xmlns:fx="http://javafx.com/fxml/1"
-	stylesheets="@../css/pantallaPrincipal.css"
+	stylesheets="@/css/principal/pantallaPrincipal.css"
 	fx:id="rootPrincipal"
 	fx:controller="controller.principal.ControladorPantallaPrincipal">
 	<children>

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.geometry.Insets?>
 
+<!-- COLUMNA DE DIA -->
 <VBox maxWidth="300.0" minWidth="300.0" prefWidth="300.0"
 	spacing="6.0" styleClass="col" maxHeight="Infinity">
 	<children>
@@ -26,7 +27,7 @@
 				<VBox spacing="12.0">
 					<children>
 
-						<!-- AQUI VAN LAS TARJETAS DE LAS NOTAS -->
+						<!-- SECCION DONDE IRAN LAS NOTAS -->
 
 					</children>
 				</VBox>

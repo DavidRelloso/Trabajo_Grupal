@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane hgap="20.0" vgap="20.0" stylesheets="@/css/listaAmigos.css" styleClass="fondo-app" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane hgap="20.0" vgap="20.0" stylesheets="@/css/principal/listaAmigos.css" styleClass="fondo-app" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox spacing="15.0" styleClass="contenedor-amigos" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <children>

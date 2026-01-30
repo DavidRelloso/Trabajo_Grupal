@@ -4,23 +4,42 @@ import java.io.EOFException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Map;
 
-import server.handler.RespuestasCliente;
-import shared.dto.auth.LoginDTO;
-import shared.dto.auth.RegistroDTO;
-import shared.dto.user.CambioAvatarDTO;
-import shared.dto.user.CambioContraDTO;
-import shared.dto.user.CambioCorreoDTO;
-import shared.dto.user.CambioNombreDTO;
+import server.handler.ManejadorAcciones;
+import server.handler.session.ManejadorLogin;
+import server.handler.session.ManejadorRegistro;
+import server.handler.user.ManejadorCambioAvatar;
+import server.handler.user.ManejadorCambioContra;
+import server.handler.user.ManejadorCambioCorreo;
+import server.handler.user.ManejadorCambioNombre;
+import server.service.UsuarioService;
 import shared.protocol.Peticion;
 import shared.protocol.Respuesta;
 
-public class ManejadorCliente extends RespuestasCliente implements Runnable {
+public class ManejadorCliente implements Runnable {
 
     private final Socket socket;
 
+    private final Map<String, ManejadorAcciones<?>> handlers;
+
     public ManejadorCliente(Socket socket) {
         this.socket = socket;
+
+        UsuarioService usuarioService = new UsuarioService();
+
+        // Registro de acciones
+        this.handlers = Map.of(
+            "LOGIN", new ManejadorLogin(usuarioService),
+            "REGISTER", new ManejadorRegistro(usuarioService),
+            "CAMBIO_NOMBRE", new ManejadorCambioNombre(usuarioService),
+            "CAMBIO_CORREO", new ManejadorCambioCorreo(usuarioService),
+            "CAMBIO_CONTRA", new ManejadorCambioContra(usuarioService),
+            "CAMBIO_AVATAR", new ManejadorCambioAvatar(usuarioService)
+            // "REGISTER", new RegistroHandler(usuarioService),
+            // "CAMBIO_NOMBRE", new CambioNombreHandler(usuarioService),
+            // ...
+        );
     }
 
     @Override
@@ -51,23 +70,25 @@ public class ManejadorCliente extends RespuestasCliente implements Runnable {
         }
     }
 
-    // ====== MANEJAR PETICIÓN ======
     private Respuesta procesar(Peticion req) {
-        try {
-            return switch (req.action) {
-                case "LOGIN" -> login((LoginDTO) req.payload);
-                case "REGISTER" -> registro((RegistroDTO) req.payload);
-                case "CAMBIO_NOMBRE" -> cambioNombre((CambioNombreDTO) req.payload);
-                case "CAMBIO_CORREO" -> cambioCorreo((CambioCorreoDTO) req.payload);
-                case "CAMBIO_CONTRA" -> cambioContra((CambioContraDTO) req.payload);
-                case "CAMBIO_AVATAR" -> cambioAvatar((CambioAvatarDTO) req.payload); // ✅ AÑADIDO
-                default -> new Respuesta(false, "Acción no soportada: " + req.action);
-            };
+    	ManejadorAcciones<?> handler = handlers.get(req.action);
+        if (handler == null) return new Respuesta(false, "Acción no soportada: " + req.action);
 
-        } catch (ClassCastException e) {
-            return new Respuesta(false, "Payload incorrecto para acción " + req.action);
+        try {
+            if (req.payload == null || !handler.payloadType().isInstance(req.payload)) {
+                return new Respuesta(false, "Payload incorrecto para acción " + req.action);
+            }
+
+            return invoke(handler, req.payload);
+
         } catch (Exception e) {
             return new Respuesta(false, "Error interno: " + e.getMessage());
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T> Respuesta invoke(ManejadorAcciones<?> handler, Object payload) throws Exception {
+    	ManejadorAcciones<T> h = (ManejadorAcciones<T>) handler;
+        return h.handle((T) payload);
     }
 }
