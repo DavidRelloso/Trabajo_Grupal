@@ -7,8 +7,9 @@ import server.handler.ManejadorAcciones;
 import server.service.UsuarioService;
 import server.service.notes.DiaService;
 import server.service.notes.NotaService;
+import server.service.notes.VisibilidadNota; 
 import shared.dto.notes.CrearNotaDTO;
-import shared.dto.notes.CrearNotaRespuestaDTO;
+import shared.dto.notes.CrearDiaDTO;
 import shared.protocol.Respuesta;
 
 public class ManejadorCreacionNota implements ManejadorAcciones<CrearNotaDTO> {
@@ -29,14 +30,18 @@ public class ManejadorCreacionNota implements ManejadorAcciones<CrearNotaDTO> {
         Usuario u = usuarioService.findByNombre(dto.nombreUsuario);
         if (u == null) return new Respuesta(false, "Usuario no encontrado");
 
-        // Recuperamos si el dia seleccionado para la categoria seleccionada ya esta creado
-        // si -> no se crea el dia/columna, 
-        // no -> se crea el nuevo dia/columna
         DiaService.DiaGetOrCreateResult diaRes =
                 diaService.getOrCreateDia(u, dto.fecha, dto.categoria);
 
         Dia dia = diaRes.dia;
         boolean diaCreado = diaRes.creado;
+
+        VisibilidadNota visibilidadEnum;
+        try {
+            visibilidadEnum = VisibilidadNota.valueOf(dto.visibilidad);
+        } catch (Exception e) {
+            return new Respuesta(false, "Visibilidad inválida: " + dto.visibilidad);
+        }
 
         // Se crea la nota en el dia seleccionado
         Nota nota = notaService.crearNota(
@@ -45,14 +50,15 @@ public class ManejadorCreacionNota implements ManejadorAcciones<CrearNotaDTO> {
                 dto.texto,
                 dto.horaInicio,
                 dto.horaFin,
-                dto.visibilidad
+                visibilidadEnum   
         );
 
-        // Responder al cliente si tiene que crear un dia o no
-        CrearNotaRespuestaDTO out = new CrearNotaRespuestaDTO(
+        CrearDiaDTO out = new CrearDiaDTO(
                 diaCreado,
                 dia.getIdDia(),
-                nota.getIdNota()
+                nota.getIdNota(),
+                dto.fecha,
+                dto.categoria
         );
 
         return new Respuesta(true, "Nota creada correctamen", out);

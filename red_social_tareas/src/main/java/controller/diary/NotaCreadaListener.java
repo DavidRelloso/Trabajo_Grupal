@@ -1,8 +1,8 @@
 package controller.diary;
 
 import shared.dto.notes.CrearNotaDTO;
-import shared.dto.notes.CrearNotaRespuestaDTO;
+import shared.dto.notes.CrearDiaDTO;
 
 public interface NotaCreadaListener {
-    void onNotaCreada(CrearNotaRespuestaDTO resp, CrearNotaDTO notaEnviada);
+    void onNotaCreada(CrearDiaDTO resp, CrearNotaDTO notaEnviada);
 }

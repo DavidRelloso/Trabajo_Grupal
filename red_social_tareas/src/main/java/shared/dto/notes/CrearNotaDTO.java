@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import server.service.notes.VisibilidadNota;
-
 public class CrearNotaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,12 +18,13 @@ public class CrearNotaDTO implements Serializable {
 	public LocalTime horaInicio;
 	public LocalTime horaFin; 
 
-	public VisibilidadNota visibilidad; 
+	public String visibilidad; 
 
-	public CrearNotaDTO(String nombreUsuario, LocalDate fecha, String categoria, 
+	public CrearNotaDTO(
+			String nombreUsuario, LocalDate fecha, String categoria, 
 			String titulo, String texto,
 			LocalTime horaInicio, LocalTime horaFin, 
-			VisibilidadNota visibilidad) {
+			String visibilidad) {
 		
 		this.nombreUsuario = nombreUsuario;
 		this.categoria = categoria;

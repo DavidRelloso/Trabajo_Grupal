@@ -2,6 +2,7 @@ package controller.diary;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import shared.dto.notes.CrearDiaDTO;
 import shared.dto.notes.CrearNotaDTO;
 
 public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
@@ -49,14 +51,17 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
             ControladorCrearNota ctrl = loader.getController();
             ctrl.setListener((out, dto) -> {
 
-            	System.out.println(out.diaCreado);
-            	if (out.diaCreado) {
-                    crearColumnaDia(out.diaId, dto.fecha, dto.categoria);
+                if (out.diaCreado) {
+                    crearColumnaDia(out);
                 }
-                insertarBloqueNota(out.diaId, out.notaId, dto);
+
+                if (!contenedoresNotasPorDia.containsKey(out.idDia)) {
+                    crearColumnaDia(out);
+                }
+
+                insertarBloqueNota(out.idDia, out.idNota, dto);
             });
-            
-            
+
             Stage stage = new Stage();
             stage.initOwner(rootDiario.getScene().getWindow());
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -79,17 +84,23 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 	        );
 	        Node card = loader.load();
 
-	        /*ControladorColumnaDia c = loader.getController();
-	        c.setDatosDia(idNota, dto.fecha, dto.categoria);*/
+	       
+	        ControladorNota c = loader.getController();
+	        c.setDatosNota(idDia, idNota, dto);
 
 	        VBox contenedor = contenedoresNotasPorDia.get(idDia);
 	        if (contenedor == null) {
 	            mostrarAlerta(Alert.AlertType.ERROR, "Diario", "No existe contenedor para el día " + idDia);
 	            return;
 	        }
+	        
+	        System.out.println("Map keys: " + contenedoresNotasPorDia.keySet());
+	        System.out.println("Busco idDia=" + idDia);
 
+	        card.getProperties().put("horaInicio", dto.horaInicio);
 	        contenedor.getChildren().add(card);
-
+	        ordenarNotaPorHora(contenedor);
+	        
 	    } catch (Exception e) {
 	        mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo crear bloque nota: " + e.getMessage());
 	        e.printStackTrace();
@@ -97,8 +108,9 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 	}
 
 	// CREAR COLUMNA DIA
-	private void crearColumnaDia(Long idDia, LocalDate fecha, String categoria) {
-	    if (contenedoresNotasPorDia.containsKey(idDia)) return;
+	private void crearColumnaDia(CrearDiaDTO dto) {
+
+	    if (contenedoresNotasPorDia.containsKey(dto.idDia)) return;
 
 	    try {
 	        FXMLLoader loader = new FXMLLoader(
@@ -107,9 +119,9 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 	        Node columna = loader.load();
 
 	        ControladorColumnaDia ctrl = loader.getController();
-	        ctrl.setDatosDia(idDia, fecha, categoria);
+	        ctrl.setDatosDia(dto.idDia, dto.fecha, dto.categoria);
 
-	        contenedoresNotasPorDia.put(idDia, ctrl.getContenedorNotas());
+	        contenedoresNotasPorDia.put(dto.idDia, ctrl.getContenedorNotas());
 	        contenedorColumnas.getChildren().add(columna);
 
 	    } catch (Exception e) {
@@ -118,6 +130,25 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 	    }
 	}
 
+
+	// ORDENAR NOTAS POR HORA INICIO
+	private void ordenarNotaPorHora(VBox contenedor) {
+	    var ordenadas = contenedor.getChildren().stream()
+	        .sorted((a, b) -> {
+	            LocalTime ha = (LocalTime) a.getProperties().get("horaInicio");
+	            LocalTime hb = (LocalTime) b.getProperties().get("horaInicio");
+
+	            // nulls al final
+	            if (ha == null && hb == null) return 0;
+	            if (ha == null) return 1;
+	            if (hb == null) return -1;
+
+	            return ha.compareTo(hb);
+	        })
+	        .toList();
+
+	    contenedor.getChildren().setAll(ordenadas);
+	}
 
 	
 	// VUELVE PANTALLA INICIO
