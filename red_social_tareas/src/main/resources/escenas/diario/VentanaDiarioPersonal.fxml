@@ -16,10 +16,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="720.0" prefWidth="1280.0"
+<StackPane fx:id="rootDiario"
+		   prefHeight="720.0" prefWidth="1280.0"
            stylesheets="@/css/diario/diarioPersonal.css" styleClass="root"
            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="controller.diario.ControladorDiarioPersonal">
+           fx:controller="controller.diary.ControladorDiarioPersonal">
     <children>
         <VBox spacing="0.0" VBox.vgrow="ALWAYS">
             <children>
@@ -30,7 +31,7 @@
                         <Insets top="8.0" right="16.0" bottom="8.0" left="16.0"/>
                     </padding>
                     <children>
-                        <Button styleClass="logo-btn">
+                        <Button fx:id="btnLogoImg" styleClass="logo-btn">
                             <graphic>
                                 <ImageView fitHeight="54.0" fitWidth="226.0" preserveRatio="true">
                                     <image>
@@ -41,13 +42,7 @@
                         </Button>
                         <Region HBox.hgrow="ALWAYS"/>
                         <Button prefHeight="62.0" prefWidth="152.0"
-                                styleClass="tab-btn selected" text="Añadir Día">
-                            <font>
-                                <Font size="20.0"/>
-                            </font>
-                        </Button>
-                        <Button prefHeight="62.0" prefWidth="188.0"
-                                styleClass="tab-btn selected" text="Actividades">
+                                styleClass="tab-btn selected" text="Añadir Día" fx:id="btnAgregarDia">
                             <font>
                                 <Font size="20.0"/>
                             </font>
@@ -88,7 +83,6 @@
                     </padding>
                     <children>
 
-                        <!-- ESPACIO SUPERIOR SIN USAR PADDING -->
                         <Region prefHeight="24.0"/>
 
                         <!-- SCROLL PANE QUE CONTIENE LOS BLOQUES DE NOTAS -->
@@ -102,171 +96,15 @@
                             <content>
 
                                 <!-- HBOX CON LAS COLUMNAS DE DÍAS + ESPACIOS LATERALES -->
-                                <HBox fx:id="boxDias"
+                                <HBox fx:id="contenedorColumnas"
                                       spacing="16.0">
 
                                     <children>
 
                                         <!-- ESPACIO IZQUIERDO SIN USAR PADDING -->
-                                        <Region prefWidth="24.0"/>
+                                        <Region prefWidth="12.0"/>
 
                                         <!-- COLUMNA DÍA 1 -->
-                                        <VBox maxWidth="300.0" minWidth="300.0" prefWidth="300.0"
-                                              spacing="6.0" styleClass="col" maxHeight="Infinity">
-                                            <children>
-                                                <HBox spacing="8.0">
-                                                    <children>
-                                                        <Label styleClass="col-title" text="DÍA 1"/>
-                                                        <Region HBox.hgrow="ALWAYS"/>
-                                                        <Button styleClass="add-btn" text="+"/>
-                                                    </children>
-                                                </HBox>
-
-                                                <!-- SCROLL DE NOTAS (RELLENA TODA LA ALTURA) -->
-                                                <ScrollPane fitToWidth="true"
-                                                            hbarPolicy="NEVER"
-                                                            styleClass="list-scroll"
-                                                            VBox.vgrow="ALWAYS">
-                                                    <content>
-                                                        <!-- LISTA DE TARJETAS -->
-                                                        <VBox spacing="12.0">
-                                                            <children>
-
-                                                                <!-- TARJETA 1 -->
-                                                                <VBox styleClass="card" spacing="6.0"
-                                                                      maxWidth="Infinity">
-                                                                    <children>
-                                                                        <!-- Fila superior: título / categoría / hora -->
-                                                                        <HBox spacing="8.0">
-                                                                            <children>
-                                                                                <Label styleClass="card-title" text="Título"/>
-                                                                                <Label styleClass="card-title" text="Categoría"/>
-                                                                                <Region HBox.hgrow="ALWAYS"/>
-                                                                                <Label styleClass="card-hour" text="Hora"/>
-                                                                            </children>
-                                                                        </HBox>
-
-                                                                        <!-- Texto (crece y hace crecer la tarjeta) -->
-                                                                        <Label styleClass="card-text"
-                                                                               text="Texto de la nota con más contenido. Esto se hace más grande y el panel crece automáticamente sin cortar nada."
-                                                                               wrapText="true"
-                                                                               maxWidth="Infinity"/>
-
-                                                                        <!-- Botón eliminar abajo a la derecha -->
-                                                                        <HBox alignment="BOTTOM_RIGHT">
-                                                                            <children>
-                                                                                <Button styleClass="delete-btn" text="Eliminar"/>
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </children>
-                                                                </VBox>
-
-                                                                <!-- TARJETA 2 -->
-                                                                <VBox styleClass="card" spacing="6.0"
-                                                                      maxWidth="Infinity">
-                                                                    <children>
-                                                                        <HBox spacing="8.0">
-                                                                            <children>
-                                                                                <Label styleClass="card-title" text="Título 2"/>
-                                                                                <Label styleClass="card-title" text="Categoría 2"/>
-                                                                                <Region HBox.hgrow="ALWAYS"/>
-                                                                                <Label styleClass="card-hour" text="10:30"/>
-                                                                            </children>
-                                                                        </HBox>
-
-                                                                        <Label styleClass="card-text"
-                                                                               text="Un texto aún más largo que debería provocar que esta tarjeta aumente considerablemente su altura para mostrar todo el contenido sin problemas. Puedes escribir lo que quieras aquí."
-                                                                               wrapText="true"
-                                                                               maxWidth="Infinity"/>
-
-                                                                        <HBox alignment="BOTTOM_RIGHT">
-                                                                            <children>
-                                                                                <Button styleClass="delete-btn" text="Eliminar"/>
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </children>
-                                                                </VBox>
-
-                                                                <!-- TARJETA 3 -->
-                                                                <VBox styleClass="card" spacing="6.0"
-                                                                      maxWidth="Infinity">
-                                                                    <children>
-                                                                        <HBox spacing="8.0">
-                                                                            <children>
-                                                                                <Label styleClass="card-title" text="Título 3"/>
-                                                                                <Label styleClass="card-title" text="Categoría 3"/>
-                                                                                <Region HBox.hgrow="ALWAYS"/>
-                                                                                <Label styleClass="card-hour" text="12:00"/>
-                                                                            </children>
-                                                                        </HBox>
-
-                                                                        <Label styleClass="card-text"
-                                                                               text="Otra nota larga para probar cómo crece la tarjeta en altura y se adapta al contenido."
-                                                                               wrapText="true"
-                                                                               maxWidth="Infinity"/>
-
-                                                                        <HBox alignment="BOTTOM_RIGHT">
-                                                                            <children>
-                                                                                <Button styleClass="delete-btn" text="Eliminar"/>
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </children>
-                                                                </VBox>
-
-                                                            </children>
-                                                        </VBox>
-                                                    </content>
-                                                </ScrollPane>
-                                            </children>
-                                        </VBox>
-
-                                        <!-- SEGUNDA COLUMNA DE EJEMPLO (DÍA 2) -->
-                                        <VBox maxWidth="300.0" minWidth="300.0" prefWidth="300.0"
-                                              spacing="6.0" styleClass="col" maxHeight="Infinity">
-                                            <children>
-                                                <HBox spacing="8.0">
-                                                    <children>
-                                                        <Label styleClass="col-title" text="DÍA 2"/>
-                                                        <Region HBox.hgrow="ALWAYS"/>
-                                                        <Button styleClass="add-btn" text="+"/>
-                                                    </children>
-                                                </HBox>
-
-                                                <ScrollPane fitToWidth="true"
-                                                            hbarPolicy="NEVER"
-                                                            styleClass="list-scroll"
-                                                            VBox.vgrow="ALWAYS">
-                                                    <content>
-                                                        <VBox spacing="12.0">
-                                                            <children>
-                                                                <VBox styleClass="card" spacing="6.0"
-                                                                      maxWidth="Infinity">
-                                                                    <children>
-                                                                        <HBox spacing="8.0">
-                                                                            <children>
-                                                                                <Label styleClass="card-title" text="Título"/>
-                                                                                <Label styleClass="card-title" text="Categoría"/>
-                                                                                <Region HBox.hgrow="ALWAYS"/>
-                                                                                <Label styleClass="card-hour" text="Hora"/>
-                                                                            </children>
-                                                                        </HBox>
-                                                                        <Label styleClass="card-text"
-                                                                               text="Texto de ejemplo para la columna del Día 2."
-                                                                               wrapText="true"
-                                                                               maxWidth="Infinity"/>
-                                                                        <HBox alignment="BOTTOM_RIGHT">
-                                                                            <children>
-                                                                                <Button styleClass="delete-btn" text="Eliminar"/>
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </children>
-                                                                </VBox>
-                                                            </children>
-                                                        </VBox>
-                                                    </content>
-                                                </ScrollPane>
-                                            </children>
-                                        </VBox>
 
                                         <!-- ESPACIO DERECHO FLEXIBLE -->
                                         <Region HBox.hgrow="ALWAYS"/>

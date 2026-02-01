@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class Peticion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	public String action; // "LOGIN", "REGISTER", "SEARCH_USER"
+	public String accion; 
 	public Serializable payload;
 
 	public Peticion() {
 	}
 
-	public Peticion(String action, Serializable payload) {
-		this.action = action;
+	public Peticion(String accion, Serializable payload) {
+		this.accion = accion;
 		this.payload = payload;
 	}
 }

@@ -8,147 +8,242 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootLogin"
-           stylesheets="@/css/login/loginPrincipal.css"
-           xmlns="http://javafx.com/javafx/25"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="controller.session.ControladorLogin">
+<StackPane fx:id="rootLogin" 
+	maxHeight="Infinity" maxWidth="Infinity" 
+	prefHeight="848.0" prefWidth="1289.0"
+	styleClass="login-root" stylesheets="@/css/login/loginPrincipal.css"
+	xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.session.ControladorLogin">
 
-    <!-- CONTENEDOR HORIZONTAL PRINCIPAL -->
-    <HBox spacing="0">
+	<children>
 
-        <!-- PANEL IZQUIERDO (FIJO) -->
-        <VBox alignment="CENTER_LEFT"
-              prefWidth="420"
-              spacing="30"
-              styleClass="left-container"
-              HBox.hgrow="NEVER">
+		<Pane mouseTransparent="true" styleClass="bg-layer">
+			<StackPane.margin>
+				<!-- Ajusta left/right a tu gusto -->
+				<Insets bottom="0" left="80" right="80" top="60" />
+			</StackPane.margin>
 
-            <!-- LOGO -->
-            <ImageView fitHeight="170" fitWidth="161" preserveRatio="true">
-                <image>
-                    <Image url="@/images/logo.png"/>
-                </image>
-            </ImageView>
+			<children>
+				<Region styleClass="bg-grid" />
+				<Region styleClass="bg-blob blob-1" />
+				<Region styleClass="bg-blob blob-2" />
+				<Region styleClass="bg-blob blob-3" />
+			</children>
+		</Pane>
 
-            <!-- TÍTULO -->
-            <Label styleClass="title" text="Red Social">
-                <font>
-                    <Font size="36"/>
-                </font>
-            </Label>
+		<StackPane alignment="CENTER" maxHeight="Infinity"
+			maxWidth="Infinity">
+			<children>
 
-            <!-- DESCRIPCIÓN -->
-            <Text styleClass="description" wrappingWidth="350">
-                Bienvenido a la primera red social pensada para quienes viven por eventos,
-                fechas y planes.
-                Crea calendarios personalizados, sincroniza tus actividades con amigos,
-                descubre eventos públicos y mantén tu agenda viva y conectada.
-            </Text>
+				<HBox fillHeight="true" maxHeight="1.7976931348623157E308"
+					maxWidth="1.7976931348623157E308" spacing="22" styleClass="frame">
+					<padding>
+						<Insets bottom="30" left="38" right="38" top="30" />
+					</padding>
+					<StackPane prefHeight="821.0" prefWidth="925.0"
+						HBox.hgrow="SOMETIMES">
+						<children>
 
-            <!-- BOTONES LOGIN / REGISTRO -->
-            <HBox alignment="CENTER_LEFT" spacing="20">
-                <Button fx:id="btnRegistroPrin" styleClass="main-button" text="Registro"/>
-                <Button fx:id="btnLoginPrin" styleClass="login-button" text="Login"/>
-            </HBox>
+							<!-- PANEL IZQUIERDO -->
+							<VBox alignment="CENTER_LEFT" maxHeight="800"
+								minWidth="-Infinity" prefWidth="400.0" spacing="20"
+								styleClass="left-container" HBox.hgrow="ALWAYS">
 
-        </VBox>
 
-        <!-- PANEL DERECHO (CONTENEDOR LOGIN/REGISTRO) -->
-        <StackPane fx:id="contenedorDerecha"
-                   alignment="CENTER"
-                   styleClass="right-container"
-                   HBox.hgrow="ALWAYS">
+								<HBox alignment="CENTER_LEFT" spacing="14">
+									<children>
+										<ImageView fitHeight="70" fitWidth="70"
+											preserveRatio="true">
+											<image>
+												<Image url="@/images/logo.png" />
+											</image>
+										</ImageView>
 
-            <padding>
-                <Insets bottom="40" left="40" right="40" top="40"/>
-            </padding>
+										<VBox spacing="2">
+											<children>
+												<Label styleClass="title" text="Red Social" />
+												<Label styleClass="subtitle"
+													text="Tu agenda, pero compartida" />
+											</children>
+										</VBox>
+									</children>
+								</HBox>
 
-            <!-- CONTENEDOR FIJO PARA AMBOS FORMULARIOS -->
-            <StackPane fx:id="formWrapper"
-                       prefWidth="480" prefHeight="520"
-                       maxWidth="480" maxHeight="520">
+								<Label maxWidth="-Infinity" styleClass="description"
+									text="Crea calendarios personalizados, sincroniza planes con amigos y descubre eventos. Menos caos, más momentos."
+									wrapText="true" />
 
-                <!-- =================== LOGIN =================== -->
-                <StackPane fx:id="paneLogin"
-                           styleClass="login-container"
-                           prefWidth="480" prefHeight="520"
-                           maxWidth="480" maxHeight="520"
-                           StackPane.alignment="CENTER">
+								<VBox spacing="12" styleClass="left-extras">
+									<HBox spacing="10" styleClass="chips">
+										<children>
+											<Label styleClass="chip" text="Calendario" />
+											<Label styleClass="chip" text="Notas" />
+											<Label styleClass="chip" text="Planes" />
+											<Label styleClass="chip" text="Eventos" />
+										</children>
+									</HBox>
 
-                    <VBox alignment="CENTER" spacing="15" maxWidth="320">
+									<HBox spacing="12" styleClass="stats">
+										<children>
+											<VBox spacing="2" styleClass="stat-card"
+												HBox.hgrow="ALWAYS">
+												<children>
+													<Label styleClass="stat-title" text="Organiza" />
+													<Label styleClass="stat-value" text="tu semana" />
+												</children>
+											</VBox>
+											<VBox spacing="2" styleClass="stat-card"
+												HBox.hgrow="ALWAYS">
+												<children>
+													<Label styleClass="stat-title" text="Comparte" />
+													<Label styleClass="stat-value" text="con amigos" />
+												</children>
+											</VBox>
+											<VBox spacing="2" styleClass="stat-card"
+												HBox.hgrow="ALWAYS">
+												<children>
+													<Label styleClass="stat-title" text="Descubre" />
+													<Label styleClass="stat-value" text="eventos" />
+												</children>
+											</VBox>
+										</children>
+									</HBox>
 
-                        <ImageView fx:id="avatarUsuario"
-                                   fitHeight="120"
-                                   fitWidth="120"
-                                   preserveRatio="true">
-                            <image>
-                                <Image url="@/images/avatar.png"/>
-                            </image>
-                        </ImageView>
+									<VBox spacing="8" styleClass="quote-card">
+										<children>
+											<Label styleClass="quote"
+												text="“Hoy es un buen día para planear algo que te apetezca.”" />
+											<Label styleClass="quote-sub" text="— Tu yo del futuro" />
+										</children>
+									</VBox>
+								</VBox>
 
-                        <TextField fx:id="usuarioLogin" promptText="Usuario"/>
-                        <PasswordField fx:id="contraseñaLogin" promptText="Contraseña"/>
+								<HBox alignment="CENTER_LEFT" prefWidth="520.0"
+									spacing="14">
+									<children>
+										<Button fx:id="btnRegistroPrin"
+											styleClass="main-button" text="Registro">
+											<font>
+												<Font size="14" />
+											</font>
+										</Button>
+										<Button fx:id="btnLoginPrin" styleClass="login-button"
+											text="Login">
+											<font>
+												<Font size="14" />
+											</font>
+										</Button>
+									</children>
+								</HBox>
+								<StackPane.margin>
+									<Insets bottom="25.0" left="25.0" top="25.0" />
+								</StackPane.margin>
 
-                        <HBox alignment="CENTER" spacing="15">
-                            <Button fx:id="btnAceptarLogin" text="Aceptar"/>
-                            <!-- Importante: este id debe coincidir con el controller -->
-                            <Button fx:id="btnIrRegistro" text="Registro"/>
-                        </HBox>
+							</VBox>
+						</children>
+					</StackPane>
 
-                    </VBox>
-                </StackPane>
+					<!-- PANEL DERECHO -->
+					<StackPane fx:id="contenedorDerecha" alignment="CENTER"
+						maxHeight="1.7976931348623157E308" maxWidth="Infinity"
+						prefHeight="688.0" prefWidth="831.0" styleClass="right-container"
+						HBox.hgrow="ALWAYS">
 
-                <!-- =================== REGISTRO =================== -->
-                <StackPane fx:id="paneRegistro"
-                           styleClass="registro-container"
-                           prefWidth="480" prefHeight="520"
-                           maxWidth="480" maxHeight="520"
-                           visible="false" managed="false"
-                           StackPane.alignment="CENTER">
 
-                    <VBox alignment="CENTER" spacing="12" maxWidth="340">
+						<!-- LOGIN -->
+						<StackPane fx:id="paneLogin" maxHeight="800.0"
+							styleClass="login-container" StackPane.alignment="CENTER">
 
-                        <TextField fx:id="correo" promptText="Correo"/>
-                        <TextField fx:id="nombreUsuario" promptText="Nombre Usuario"/>
-                        <PasswordField fx:id="contraseñaRegistro" promptText="Contraseña"/>
-                        <PasswordField fx:id="validarContraseña" promptText="Validar Contraseña"/>
+							<VBox alignment="CENTER" maxWidth="500.0"
+								minWidth="-Infinity" prefHeight="700.0" prefWidth="300.0"
+								spacing="14" styleClass="form-inner">
+								<ImageView fx:id="avatarUsuario" fitHeight="125"
+									fitWidth="125" preserveRatio="true">
 
-                        <!-- BOTÓN CAMBIO AVATAR -->
-                        <HBox alignment="CENTER_LEFT" spacing="0">
-                            <Button fx:id="btnCambioAvatar" prefWidth="160" text="Cambio avatar"/>
-                        </HBox>
+									<image>
+										<Image url="@/images/avatar.png" />
+									</image>
+								</ImageView>
 
-                        <!-- FILA DE BOTONES -->
-                        <HBox spacing="15" maxWidth="Infinity">
+								<Label styleClass="form-title" text="Bienvenido" />
+								<Label styleClass="form-subtitle"
+									text="Inicia sesión para continuar" />
 
-                            <!-- Importante: este id debe coincidir con el controller -->
-                            <Button fx:id="btnRegistrarse"
-                                    prefWidth="160"
-                                    text="Registrarse"
-                                    HBox.hgrow="ALWAYS"/>
+								<TextField fx:id="usuarioLogin" promptText="Usuario" />
+								<PasswordField fx:id="contraseñaLogin"
+									promptText="Contraseña" />
 
-                            <Button fx:id="btnVolverLogin"
-                                    prefWidth="100"
-                                    text="Login"
-                                    HBox.hgrow="NEVER">
-                                <font>
-                                    <Font size="14.0"/>
-                                </font>
-                            </Button>
+								<HBox alignment="CENTER" spacing="12">
+									<children>
+										<Button fx:id="btnAceptarLogin"
+											styleClass="primary-action" text="Aceptar" />
+										<Button fx:id="btnIrRegistro"
+											styleClass="secondary-action" text="Registro" />
+									</children>
+								</HBox>
 
-                        </HBox>
+								<Label styleClass="form-hint"
+									text="Tip: prueba a crear tu primer día en el diario 👀" />
+							</VBox>
+						</StackPane>
 
-                    </VBox>
-                </StackPane>
+						<!-- REGISTRO -->
+						<StackPane fx:id="paneRegistro" managed="false"
+							maxHeight="800.0" styleClass="registro-container" visible="false"
+							StackPane.alignment="CENTER">
 
-            </StackPane>
-        </StackPane>
+							<VBox alignment="CENTER" maxWidth="500.0"
+								minWidth="-Infinity" prefHeight="700.0" prefWidth="300.0"
+								spacing="12" styleClass="form-inner">
+								<Label styleClass="form-title" text="Crear cuenta" />
+								<Label styleClass="form-subtitle"
+									text="Tardarás menos de un minuto" />
 
-    </HBox>
+								<TextField fx:id="correo" promptText="Correo" />
+								<TextField fx:id="nombreUsuario"
+									promptText="Nombre Usuario" />
+								<PasswordField fx:id="contraseñaRegistro"
+									promptText="Contraseña" />
+								<PasswordField fx:id="validarContraseña"
+									promptText="Validar Contraseña" />
+
+								<HBox alignment="CENTER_LEFT" maxWidth="Infinity"
+									spacing="0">
+									<children>
+										<Button fx:id="btnCambioAvatar" prefWidth="170"
+											styleClass="secondary-action" text="Cambio avatar" />
+									</children>
+								</HBox>
+
+								<HBox maxWidth="Infinity" spacing="12">
+									<children>
+										<Button fx:id="btnRegistrarse" prefWidth="170"
+											styleClass="primary-action" text="Registrarse"
+											HBox.hgrow="ALWAYS" />
+
+										<Button fx:id="btnVolverLogin" prefWidth="110"
+											styleClass="secondary-action" text="Login" HBox.hgrow="NEVER" />
+									</children>
+								</HBox>
+							</VBox>
+						</StackPane>
+						<HBox.margin>
+							<Insets bottom="25.0" right="25.0" top="25.0" />
+						</HBox.margin>
+					</StackPane>
+					<StackPane.margin>
+						<Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+					</StackPane.margin>
+
+				</HBox>
+			</children>
+		</StackPane>
+
+	</children>
 </StackPane>

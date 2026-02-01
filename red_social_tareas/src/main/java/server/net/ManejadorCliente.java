@@ -6,7 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Map;
 
+import entity.notes.Dia;
 import server.handler.ManejadorAcciones;
+import server.handler.notes.ManejadorCreacionNota;
 import server.handler.session.ManejadorLogin;
 import server.handler.session.ManejadorRegistro;
 import server.handler.user.ManejadorCambioAvatar;
@@ -14,6 +16,8 @@ import server.handler.user.ManejadorCambioContra;
 import server.handler.user.ManejadorCambioCorreo;
 import server.handler.user.ManejadorCambioNombre;
 import server.service.UsuarioService;
+import server.service.notes.DiaService;
+import server.service.notes.NotaService;
 import shared.protocol.Peticion;
 import shared.protocol.Respuesta;
 
@@ -27,6 +31,8 @@ public class ManejadorCliente implements Runnable {
         this.socket = socket;
 
         UsuarioService usuarioService = new UsuarioService();
+        NotaService notaService = new NotaService();
+        DiaService diaService = new DiaService();
 
         // Registro de acciones
         this.handlers = Map.of(
@@ -35,7 +41,8 @@ public class ManejadorCliente implements Runnable {
             "CAMBIO_NOMBRE", new ManejadorCambioNombre(usuarioService),
             "CAMBIO_CORREO", new ManejadorCambioCorreo(usuarioService),
             "CAMBIO_CONTRA", new ManejadorCambioContra(usuarioService),
-            "CAMBIO_AVATAR", new ManejadorCambioAvatar(usuarioService)
+            "CAMBIO_AVATAR", new ManejadorCambioAvatar(usuarioService),
+            "CREAR_NOTA", new ManejadorCreacionNota(usuarioService, notaService, diaService)
             // "REGISTER", new RegistroHandler(usuarioService),
             // "CAMBIO_NOMBRE", new CambioNombreHandler(usuarioService),
             // ...
@@ -71,12 +78,12 @@ public class ManejadorCliente implements Runnable {
     }
 
     private Respuesta procesar(Peticion req) {
-    	ManejadorAcciones<?> handler = handlers.get(req.action);
-        if (handler == null) return new Respuesta(false, "Acción no soportada: " + req.action);
+    	ManejadorAcciones<?> handler = handlers.get(req.accion);
+        if (handler == null) return new Respuesta(false, "Acción no soportada: " + req.accion);
 
         try {
             if (req.payload == null || !handler.payloadType().isInstance(req.payload)) {
-                return new Respuesta(false, "Payload incorrecto para acción " + req.action);
+                return new Respuesta(false, "Payload incorrecto para acción " + req.accion);
             }
 
             return invoke(handler, req.payload);

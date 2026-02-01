@@ -18,12 +18,12 @@
 			</children>
 		</HBox>
 
-		<!-- Texto (crece y hace crecer la tarjeta) -->
+		<!-- Texto -->
 		<Label styleClass="card-text"
 			text="Texto de la nota con más contenido. Esto se hace más grande y el panel crece automáticamente sin cortar nada."
 			wrapText="true" maxWidth="Infinity" />
 
-		<!-- Botón eliminar abajo a la derecha -->
+		<!-- Botón eliminar -->
 		<HBox alignment="BOTTOM_RIGHT">
 			<children>
 				<Button styleClass="delete-btn" text="Eliminar" />

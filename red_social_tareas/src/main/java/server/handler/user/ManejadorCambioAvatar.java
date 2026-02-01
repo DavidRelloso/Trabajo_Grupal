@@ -1,6 +1,6 @@
 package server.handler.user;
 
-import entity.Usuario;
+import entity.user.Usuario;
 import server.handler.ManejadorAcciones;
 import server.service.UsuarioService;
 import shared.dto.user.CambioAvatarDTO;
@@ -25,15 +25,15 @@ public class ManejadorCambioAvatar implements ManejadorAcciones<CambioAvatarDTO>
 		if (u == null)
 			return new Respuesta(false, "Usuario no encontrado");
 
-		u.setAvatar_img(payload.nuevoAvatar);
+		u.setAvatarImg(payload.nuevoAvatar);
 		usuarioService.update(u);
 
 		UserDTO user = new UserDTO(
-				u.getId_usuario(), 
-				u.getNombre_usuario(), 
+				u.getIdUsuario(), 
+				u.getNombreUsuario(), 
 				u.getCorreo(), 
-				u.getContra_hash(),
-				u.getAvatar_img()
+				u.getContraHash(),
+				u.getAvatarImg()
 		);
 
 		return new Respuesta(true, "Avatar cambiado correctamente", user);

@@ -3,7 +3,7 @@ package server.service;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import entity.Usuario;
+import entity.user.Usuario;
 import util.HibernateUtil;
 
 import java.util.List;
@@ -11,24 +11,30 @@ import java.util.List;
 public class UsuarioService {
 
     // GUARDAR USUARIO
-    public void save(Usuario usuario) {
-        Session session = null;
-        Transaction tx = null;
+	public void save(Usuario usuario) {
+	    Session session = null;
+	    Transaction tx = null;
 
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            tx = session.beginTransaction();
+	    try {
+	        session = HibernateUtil.getSessionFactory().openSession();
+	        tx = session.beginTransaction();
 
-            session.save(usuario);
+	        usuario.addCategoria("OCIO");
+	        usuario.addCategoria("TRABAJO");
+	        usuario.addCategoria("ESTUDIO");
 
-            tx.commit();
-        } catch (Exception e) {
-            if (tx != null) tx.rollback();
-            throw e;
-        } finally {
-            if (session != null) session.close();
-        }
-    }
+	        session.persist(usuario);  
+	        session.flush();           
+
+	        tx.commit();
+	    } catch (Exception e) {
+	        if (tx != null) tx.rollback();
+	        throw e;
+	    } finally {
+	        if (session != null) session.close();
+	    }
+	}
+
 
     // ACTUALIZAR USUARIO
     public void update(Usuario usuario) {

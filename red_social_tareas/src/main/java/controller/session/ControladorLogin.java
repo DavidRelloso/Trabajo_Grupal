@@ -6,12 +6,11 @@ import java.nio.file.Files;
 
 import client.Sesion;
 import controller.ControladorFuncionesCompartidas;
+import controller.sceneNavigator.NavegadorVentanas;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -55,6 +54,8 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
 
     @FXML
     private void initialize() {
+        System.out.println("LOGIN stylesheets = " + rootLogin.getStylesheets());
+        System.out.println("LOGIN styleClass  = " + rootLogin.getStyleClass());
         ventanaInicial();
 
         btnLoginPrin.setOnAction(e -> mostrarLogin());
@@ -75,6 +76,7 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
         animarCambio(paneRegistro, paneLogin);
     }
 
+    //aparece mostrando el registro
     private void ventanaInicial() {
         paneLogin.setOpacity(1);
         paneLogin.setVisible(true);
@@ -85,6 +87,7 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
         paneRegistro.setManaged(false);
     }
 
+    //animacion de cambio entre login y registro
     private void animarCambio(StackPane panelMostrar, StackPane panelOcultar) {
         if (panelMostrar.isVisible()) return;
 
@@ -151,22 +154,19 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
                         return;
                     }
 
+                    //para guardar datos de inicio de sesion
                     Sesion.setUsuario(user);
 
                     try {
-                        FXMLLoader loader = new FXMLLoader(
-                                getClass().getResource("/escenas/principal/VentanaPantallaPrincipal.fxml")
-                        );
-                        Parent root = loader.load();
-
                         Stage stage = (Stage) rootLogin.getScene().getWindow();
-                        stage.setScene(new Scene(root));
-                        stage.show();
-
+                        NavegadorVentanas.navegar("/escenas/principal/VentanaPantallaPrincipal.fxml");
+                        Scene sceneNueva = stage.getScene();
                     } catch (Exception ex) {
+                        ex.printStackTrace();
                         mostrarAlerta(Alert.AlertType.ERROR, "Error",
-                                "No se pudo abrir la pantalla principal: " + ex.getMessage());
+                            "No se pudo abrir la pantalla principal: " + ex.getMessage());
                     }
+
                 });
 
             } catch (Exception e) {

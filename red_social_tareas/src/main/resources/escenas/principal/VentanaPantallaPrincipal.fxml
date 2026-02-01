@@ -16,22 +16,27 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="723.0"
-	prefWidth="958.0" styleClass="root" xmlns="http://javafx.com/javafx/25"
+<StackPane fx:id="rootPrincipal"
+	maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity"
+	prefHeight="723.0" prefWidth="958.0"
+	styleClass="contenedor-root"
+	xmlns="http://javafx.com/javafx/25"
 	xmlns:fx="http://javafx.com/fxml/1"
 	stylesheets="@/css/principal/pantallaPrincipal.css"
-	fx:id="rootPrincipal"
-	fx:controller="controller.principal.ControladorPantallaPrincipal">
+	fx:controller="controller.main.ControladorPantallaPrincipal">
+
 	<children>
 		<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
 			spacing="20" StackPane.alignment="CENTER">
 			<children>
+
 				<!-- LATERAL IZQUIERDO -->
 				<VBox alignment="TOP_CENTER" prefHeight="723.0"
 					prefWidth="271.0" spacing="10" styleClass="sidebar"
 					HBox.hgrow="SOMETIMES">
 					<children>
+
 						<!-- Imagen arriba -->
 						<StackPane>
 							<children>
@@ -42,11 +47,8 @@
 										<StackPane.margin>
 											<Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
 										</StackPane.margin>
-										<!--  
-										<image>
-											<Image url="@../images/fondoPantallaPrincipal.png" />
-										</image> -->
 									</ImageView>
+
 									<Circle fx:id="imgAvatarUsuario" fill="DODGERBLUE"
 										radius="96.0" stroke="BLACK" strokeType="INSIDE"
 										styleClass="avatar-circle" />
@@ -68,11 +70,13 @@
 										<Insets top="20.0" />
 									</VBox.margin>
 								</Label>
+
 								<Label fx:id="lblNombreUsuario" text="NOMBRE USUARIO">
 									<font>
 										<Font name="System Bold" size="24.0" />
 									</font>
 								</Label>
+
 								<Button fx:id="btnVerDiario" prefHeight="50.0"
 									prefWidth="200.0" styleClass="boton-secundario"
 									text="MI DIARIO">
@@ -83,8 +87,10 @@
 										<Font size="14.0" />
 									</font>
 								</Button>
+
 								<Button fx:id="btnVerAmigos" prefHeight="50.0"
-									prefWidth="200.0" styleClass="boton-secundario" text="AMIGOS">
+									prefWidth="200.0" styleClass="boton-secundario"
+									text="AMIGOS">
 									<VBox.margin>
 										<Insets bottom="5.0" top="5.0" />
 									</VBox.margin>
@@ -92,8 +98,10 @@
 										<Font size="14.0" />
 									</font>
 								</Button>
+
 								<Button fx:id="btnVerAjustes" prefHeight="50.0"
-									prefWidth="200.0" styleClass="boton-secundario" text="AJUSTES">
+									prefWidth="200.0" styleClass="boton-secundario"
+									text="AJUSTES">
 									<font>
 										<Font size="14.0" />
 									</font>
@@ -103,7 +111,7 @@
 
 						<Separator prefWidth="180.0" />
 
-						<!-- Zona inferior (siempre abajo) -->
+						<!-- Zona inferior -->
 						<VBox spacing="8">
 							<children>
 								<HBox spacing="8">
@@ -121,6 +129,7 @@
 										</Button>
 									</children>
 								</HBox>
+
 								<Button fx:id="btnCerrarSesion" prefHeight="28.0"
 									prefWidth="180.0" styleClass="boton-principal"
 									text="CERRAR SESIÓN" />
@@ -129,9 +138,9 @@
 								<Insets top="10.0" />
 							</VBox.margin>
 						</VBox>
+
 					</children>
 				</VBox>
-
 
 				<!-- CONTENIDO PRINCIPAL (DERECHA) -->
 				<VBox prefHeight="561.0" prefWidth="650.0" spacing="15"
@@ -143,21 +152,18 @@
 							spacing="10" styleClass="seccion">
 							<children>
 
-								<!-- Título, fuera del ScrollPane -->
 								<Label styleClass="titulo-seccion" text="NOTIFICACIONES">
 									<VBox.margin>
 										<Insets bottom="8.0" />
 									</VBox.margin>
 								</Label>
 
-								<!-- ScrollPane: SOLO el Accordion dentro -->
 								<ScrollPane fitToWidth="true" hbarPolicy="NEVER"
 									styleClass="scroll-pane" VBox.vgrow="NEVER">
 									<content>
 										<VBox fillWidth="true">
 											<children>
 												<Accordion fx:id="notificacionesAccordion" />
-												<!-- AQUI DENTRO VAN LAS NOTIFICACIONES -->
 											</children>
 										</VBox>
 									</content>
@@ -168,7 +174,7 @@
 
 						<Separator prefWidth="200.0" />
 
-						<!-- SECCIÓN RECORDATORIOS (altura fija + scroll interno) -->
+						<!-- SECCIÓN RECORDATORIOS -->
 						<VBox maxHeight="Infinity" prefHeight="1000.0" spacing="10"
 							styleClass="seccion">
 							<children>
@@ -182,6 +188,7 @@
 												<Insets top="5.0" />
 											</HBox.margin>
 										</Label>
+
 										<StackPane alignment="CENTER_RIGHT"
 											HBox.hgrow="ALWAYS">
 											<children>
@@ -194,12 +201,16 @@
 																<Insets bottom="5.0" />
 															</HBox.margin>
 														</Label>
-														<DatePicker prefHeight="26.0" prefWidth="160.0"
+
+														<!-- ✅ fx:id añadido para que el controlador lo encuentre -->
+														<DatePicker fx:id="datePickerRecordatorios"
+															prefHeight="26.0" prefWidth="160.0"
 															styleClass="date-picker">
 															<HBox.margin>
 																<Insets right="10.0" />
 															</HBox.margin>
 														</DatePicker>
+
 													</children>
 													<StackPane.margin>
 														<Insets right="5.0" />
@@ -218,18 +229,18 @@
 											<children>
 												<Accordion fx:id="recordatoriosAccordion"
 													prefWidth="620.0" VBox.vgrow="ALWAYS">
+
+													<!-- (Opcional) puedes dejar panes de ejemplo o quitarlos.
+													     Si luego los cargas por código, no pasa nada. -->
 													<panes>
-														<TitledPane fx:id="course1_1TP1"
-															animated="false" prefHeight="117.0" prefWidth="620.0"
+														<TitledPane animated="false" prefHeight="117.0" prefWidth="620.0"
 															text="DÍA_RECORDATORIO">
 															<content>
 																<VBox fillWidth="true" prefHeight="55.0"
 																	prefWidth="600.0" spacing="10">
 																	<children>
-																		<Label fx:id="studentsCourse1_1Lbl1"
-																			styleClass="etiqueta-campo" text="TEXTO_NOTIFICACION" />
-																		<Separator prefHeight="8.0"
-																			prefWidth="600.0" />
+																		<Label styleClass="etiqueta-campo" text="TEXTO_NOTIFICACION" />
+																		<Separator prefHeight="8.0" prefWidth="600.0" />
 																		<StackPane alignment="CENTER_RIGHT">
 																			<children>
 																				<Button alignment="CENTER"
@@ -246,6 +257,7 @@
 															</padding>
 														</TitledPane>
 													</panes>
+
 												</Accordion>
 											</children>
 										</VBox>
@@ -257,6 +269,7 @@
 
 					</children>
 				</VBox>
+
 			</children>
 		</HBox>
 	</children>

@@ -1,5 +1,5 @@
 /* ========= FONDO GENERAL ========= */
-.root {
+.contenedor-root {
     -fx-background-image: url("/images/fondoPantallaPrincipal.png");   /* o png */
     -fx-background-size: cover;               /* ocupa toda la pantalla */
     -fx-background-repeat: no-repeat;
@@ -233,5 +233,3 @@
 
     -fx-effect: null;
 }
-
-

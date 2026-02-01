@@ -1,6 +1,6 @@
 package server.handler.user;
 
-import entity.Usuario;
+import entity.user.Usuario;
 import server.handler.ManejadorAcciones;
 import server.service.UsuarioService;
 import shared.dto.user.CambioNombreDTO;
@@ -23,7 +23,7 @@ public class ManejadorCambioNombre implements ManejadorAcciones<CambioNombreDTO>
 		if (u == null)
 			return new Respuesta(false, "Usuario no encontrado");
 
-		u.setNombre_usuario(payload.nombreNuevo);
+		u.setNombreUsuario(payload.nombreNuevo);
 		usuarioService.update(u);
 		return new Respuesta(true, "Nombre cambiado correctamente");
 	}

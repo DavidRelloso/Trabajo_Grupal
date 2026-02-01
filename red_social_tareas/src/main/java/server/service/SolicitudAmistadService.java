@@ -2,7 +2,8 @@ package server.service;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import entity.SolicitudAmistad;
+
+import entity.user.SolicitudAmistad;
 import util.HibernateUtil;
 
 import java.util.List;

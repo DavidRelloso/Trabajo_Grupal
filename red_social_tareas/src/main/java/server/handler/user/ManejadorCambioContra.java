@@ -1,6 +1,6 @@
 package server.handler.user;
 
-import entity.Usuario;
+import entity.user.Usuario;
 import server.handler.ManejadorAcciones;
 import server.service.UsuarioService;
 import shared.dto.user.CambioContraDTO;
@@ -20,7 +20,7 @@ public class ManejadorCambioContra implements ManejadorAcciones<CambioContraDTO>
 		if (u == null)
 			return new Respuesta(false, "Usuario no encontrado");
 
-		u.setContra_hash(payload.contraNueva);
+		u.setContraHash(payload.contraNueva);
 		usuarioService.update(u);
 		return new Respuesta(true, "Contraseña cambiada correctamente");
 	}

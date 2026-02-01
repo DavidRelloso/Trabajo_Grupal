@@ -170,6 +170,21 @@
     -fx-background-color: #e2ccff;
 }
 
+.column-delete-btn{
+	-fx-background-color: white;
+    -fx-text-fill: #6a00f4;
+    -fx-font-weight: bold;
+    -fx-background-radius: 22;
+    -fx-padding: 4 16;
+    -fx-font-size: 14px;
+}
+.column-delete-btn:hover {
+    -fx-background-color: rgba(227,50,65,0.4);
+}
+.column-delete-btn:pressed {
+	-fx-background-color: rgba(106, 0, 244, 0.3);
+}
+
 /* Botón eliminar de la tarjeta */
 .delete-btn {
 	

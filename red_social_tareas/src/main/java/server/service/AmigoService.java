@@ -5,9 +5,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import entity.Amigo;
-import entity.AmigoId;
-
+import entity.friend.Amigo;
+import entity.friend.AmigoId;
 import util.HibernateUtil;
 
 public class AmigoService {

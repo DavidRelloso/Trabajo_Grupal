@@ -22,7 +22,7 @@
            maxWidth="Infinity" maxHeight="Infinity"
            StackPane.alignment="CENTER"
            fx:id="rootAjustes"
-           fx:controller="controller.principal.ControladorAjustes">
+           fx:controller="controller.main.settings.ControladorAjustes">
 
     <children>
 

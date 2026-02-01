@@ -6,7 +6,7 @@
 <TitledPane fx:id="tpPrincipalNoti"
 	xmlns:fx="http://javafx.com/fxml" animated="false" prefWidth="600.0"
 	text="NOMBRE_AMIGO"
-	fx:controller="controller.ControladorNotificaciones">
+	fx:controller="controller.main.ControladorNotificaciones">
 	<content>
 	
 		<VBox fillWidth="true" spacing="10">
@@ -52,33 +52,3 @@
 </TitledPane>
 
 
-<!--
-VERSION SIN SCROLL PANE DENTRO DEL TITLED PANE
-
-<?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<TitledPane fx:id="tpPrincipalNoti" xmlns:fx="http://javafx.com/fxml" animated="false"
-           prefWidth="600.0" text="NOMBRE_AMIGO" fx:controller="controller.ControladorNotificaciones">
-    <content>
-        <VBox fillWidth="true" prefHeight="30.0" prefWidth="586.0" spacing="10">
-            <children>
-                <Label fx:id="lblTextoNoti" styleClass="etiqueta-campo" text="TEXTO_NOTIFICACION" />
-                <Separator />
-                <StackPane alignment="CENTER_RIGHT">
-                    <children>
-                        <Button fx:id="btnBorrarNoti" alignment="CENTER" contentDisplay="RIGHT"
-                                mnemonicParsing="false" prefHeight="26.0" prefWidth="30.0"
-                                styleClass="boton-eliminar" text="X" />
-                    </children>
-                </StackPane>
-            </children>
-        </VBox>
-    </content>
-    <padding>
-        <Insets left="10.0" right="10.0" top="10.0" />
-    </padding>
-</TitledPane>
--->

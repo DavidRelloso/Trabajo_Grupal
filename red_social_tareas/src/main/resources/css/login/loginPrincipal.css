@@ -1,106 +1,247 @@
-/* ============================================================
-   FONDO GENERAL
-   ============================================================ */
-.root {
-    -fx-background-color: linear-gradient(to bottom right, #6a00f4, #b86bff);
+/* ===== Fondo general ===== */
+.login-root{
     -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: linear-gradient(to bottom right, #6a00f4, #b86bff);
 }
 
-/* ============================================================
-   PANEL IZQUIERDO
-   ============================================================ */
-.left-container {
-    -fx-padding: 80 0 80 200;
-    -fx-spacing: 25;
+/* Capa decorativa */
+.bg-layer{
+    -fx-pref-width: 9999;
+    -fx-pref-height: 9999;
 }
 
-.title {
-    -fx-font-size: 36px;
-    -fx-font-weight: bold;
+.bg-grid{
+    -fx-pref-width: 9999;
+    -fx-pref-height: 9999;
+    -fx-opacity: 0.10;
+    -fx-background-size: 28 28;
+    -fx-background-image:
+        linear-gradient(to right, rgba(255,255,255,0.25) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.25) 1px, transparent 1px);
+}
+
+/* Blobs */
+.bg-blob{
+    -fx-background-radius: 1000;
+    -fx-opacity: 0.22;
+    -fx-effect: gaussian-blur(50);
+    -fx-background-color: white;
+}
+
+.blob-1{
+    -fx-pref-width: 560;
+    -fx-pref-height: 560;
+    -fx-translate-x: -520;
+    -fx-translate-y: -260;
+}
+
+.blob-2{
+    -fx-pref-width: 460;
+    -fx-pref-height: 460;
+    -fx-translate-x: 600;
+    -fx-translate-y: -210;
+}
+
+.blob-3{
+    -fx-pref-width: 780;
+    -fx-pref-height: 780;
+    -fx-translate-x: 280;
+    -fx-translate-y: 420;
+}
+
+/* Si aún existiera en el FXML, la ocultamos */
+.bg-watermark{
+    -fx-opacity: 0;
+}
+
+/* ===== Marco principal ===== */
+.frame{
+    -fx-background-color: rgba(255,255,255,0.075);
+    -fx-background-radius: 30;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.24), 26, 0.22, 0, 7);
+    -fx-padding: 0;
+}
+
+
+/* ===== Panel izquierdo ===== */
+.left-container{
+    -fx-background-color: rgba(0,0,0,0.12);
+    -fx-background-radius: 24;
+    -fx-padding: 30;
+}
+
+.title{
+    -fx-text-fill: white;
+    -fx-font-size: 38px;
+    -fx-font-weight: 800;
+}
+
+.subtitle{
+    -fx-text-fill: rgba(255,255,255,0.86);
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+}
+
+.description{
+    -fx-fill: rgba(255,255,255,0.84);
+    -fx-text-fill:white;
+    -fx-font-size: 15px;
+    -fx-line-spacing: 2px;
+}
+
+/* Chips */
+.chip{
+    -fx-text-fill: rgba(255,255,255,0.92);
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-background-radius: 999;
+    -fx-padding: 7 14;
+    -fx-font-weight: 800;
+    -fx-font-size: 13.5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 10, 0.15, 0, 2);
+}
+
+/* Stats */
+.stats .stat-card{
+    -fx-background-color: rgba(255,255,255,0.11);
+    -fx-background-radius: 16;
+    -fx-padding: 14 14;
+}
+
+.stat-title{
+    -fx-text-fill: rgba(255,255,255,0.78);
+    -fx-font-size: 12.5px;
+    -fx-font-weight: 800;
+}
+
+.stat-value{
+    -fx-text-fill: rgba(255,255,255,0.96);
+    -fx-font-size: 17px;
+    -fx-font-weight: 900;
+}
+
+/* Quote */
+.quote-card{
+    -fx-background-color: rgba(255,255,255,0.11);
+    -fx-background-radius: 16;
+    -fx-padding: 14 14;
+}
+
+.quote{
+    -fx-text-fill: rgba(255,255,255,0.92);
+    -fx-font-size: 13.5px;
+    -fx-font-style: italic;
+}
+
+.quote-sub{
+    -fx-text-fill: rgba(255,255,255,0.72);
+    -fx-font-size: 12.5px;
+    -fx-font-weight: 800;
+}
+
+/* ===== Panel derecho ===== */
+.right-container{
+    -fx-background-color: rgba(255,255,255,0.085);
+    -fx-background-radius: 24;
+    -fx-padding: 26;
+}
+
+/* Wrapper */
+.form-wrapper{
+    -fx-background-color: rgba(255,255,255,0.115);
+    -fx-background-radius: 24;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 18, 0.20, 0, 2);
+}
+
+/* Tarjetas login/registro */
+.login-container,
+.registro-container{
+    -fx-background-color: rgba(255,255,255,0.11);
+    -fx-background-radius: 18;
+    -fx-padding: 24;
+}
+
+/* Títulos formulario */
+.form-title{
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: 900;
+}
+
+.form-subtitle{
+    -fx-text-fill: rgba(255,255,255,0.78);
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+}
+
+.form-hint{
+    -fx-text-fill: rgba(255,255,255,0.68);
+    -fx-font-size: 12.5px;
+    -fx-padding: 8 0 0 0;
+}
+
+/* Inputs */
+.text-field,
+.password-field{
+    -fx-background-color: rgba(255,255,255,0.90);
+    -fx-background-radius: 12;
+    -fx-padding: 12 14;
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #3d008f;
+}
+
+.text-field:focused,
+.password-field:focused{
+    -fx-background-color: rgba(255,255,255,0.98);
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.35), 18, 0.25, 0, 0);
+}
+
+/* Botones */
+.button{
+    -fx-cursor: hand;
+    -fx-font-weight: 900;
+    -fx-font-size: 14px;
+    -fx-background-radius: 14;
+    -fx-padding: 11 18;
+}
+
+.main-button,
+.login-button{
+    -fx-font-size: 14px;
+    -fx-padding: 14 22;   /* más altos */
+    -fx-background-radius: 16;
+}
+
+
+.main-button{
+    -fx-background-color: white;
+    -fx-text-fill: #6a00f4;
+}
+.main-button:hover{
+    -fx-background-color: #f3e6ff;
+}
+
+.login-button{
+    -fx-background-color: rgba(255,255,255,0.18);
     -fx-text-fill: white;
 }
-
-.description {
-    -fx-fill: white;
-    -fx-font-size: 15px;
-    -fx-opacity: 0.85;
+.login-button:hover{
+    -fx-background-color: rgba(255,255,255,0.26);
 }
 
-.main-button {
+.primary-action{
     -fx-background-color: white;
     -fx-text-fill: #6a00f4;
-    -fx-font-weight: bold;
-    -fx-background-radius: 25;
-    -fx-padding: 12 35;
-    -fx-font-size: 15px;
+}
+.primary-action:hover{
+    -fx-background-color: #f3e6ff;
 }
 
-.main-button:hover {
-    -fx-background-color: #f3e8ff;
+.secondary-action{
+    -fx-background-color: rgba(255,255,255,0.18);
+    -fx-text-fill: white;
 }
-
-/* ============================================================
-   CONTENEDORES DE LOGIN / REGISTRO
-   ============================================================ */
-.login-container,
-.registro-container,
-.grid-pane,
-GridPane {
-    -fx-background-color: rgba(255,255,255,0.15);
-    -fx-background-radius: 20;
-    -fx-padding: 30;
-    -fx-hgap: 20;
-    -fx-vgap: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0.2, 0, 5);
-}
-
-/* ============================================================
-   CAMPOS DE TEXTO
-   ============================================================ */
-.text-field, .password-field {
-    -fx-background-color: rgba(255,255,255,0.85);
-    -fx-background-radius: 10;
-    -fx-padding: 10;
-    -fx-font-size: 14px;
-    -fx-text-fill: #3d008f;
-    -fx-font-weight: bold;
-    -fx-pref-width: 350;
-}
-
-.text-field:focused, .password-field:focused {
-    -fx-background-color: white;
-    -fx-effect: dropshadow(gaussian, rgba(106,0,244,0.4), 10, 0.2, 0, 0);
-}
-
-/* ============================================================
-   BOTONES GENERALES
-   ============================================================ */
-.button {
-    -fx-background-color: white;
-    -fx-text-fill: #6a00f4;
-    -fx-font-weight: bold;
-    -fx-background-radius: 20;
-    -fx-padding: 10 25;
-    -fx-font-size: 14px;
-    -fx-pref-width: 160;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0.2, 0, 2);
-    -fx-cursor: hand;
-}
-
-.button:hover {
-    -fx-background-color: #f3e8ff;
-}
-
-.button:pressed {
-    -fx-background-color: #e3d0ff;
-}
-
-/* ============================================================
-   AVATAR
-   ============================================================ */
-.avatar, Avatar {
-    -fx-border-color: white;
-    -fx-border-width: 3;
-    -fx-border-radius: 50%;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0.2, 0, 4);
+.secondary-action:hover{
+    -fx-background-color: rgba(255,255,255,0.26);
 }
