@@ -1,13 +1,18 @@
 package server.service.notes;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import entity.notes.Categoria;
 import entity.notes.Dia;
+import entity.notes.Nota;
 import entity.user.Usuario;
+import shared.dto.notes.DiaConNotasDTO;
+import shared.dto.notes.NotaDiarioDTO;
 import util.HibernateUtil;
 
 public class DiaService {
@@ -78,11 +83,7 @@ public class DiaService {
 			if (tx != null)
 				tx.rollback();
 
-			/*
-			 * 4️⃣ Si hubo condición de carrera (otro hilo creó el Dia antes), el
-			 * UniqueConstraint puede saltar aquí. En ese caso, volvemos a buscar y
-			 * devolvemos el existente.
-			 */
+
 			Session retrySession = null;
 			try {
 				retrySession = HibernateUtil.getSessionFactory().openSession();
@@ -113,5 +114,56 @@ public class DiaService {
 				session.close();
 		}
 	}
+	
+	
+	  public List<DiaConNotasDTO> cargarDiario(String nombreUsuario, NotaService notaService) {
+	        Session session = null;
+
+	        try {
+	            session = HibernateUtil.getSessionFactory().openSession();
+
+	            List<Dia> dias = session.createQuery("""
+	                    SELECT d
+	                    FROM Dia d
+	                    JOIN d.usuario u
+	                    JOIN FETCH d.categoria c
+	                    WHERE u.nombreUsuario = :nombreUsuario
+	                    ORDER BY d.fecha ASC, c.nombre ASC
+	                """, Dia.class)
+	                .setParameter("nombreUsuario", nombreUsuario)
+	                .list();
+
+	            List<DiaConNotasDTO> out = new ArrayList<>();
+
+	            for (Dia d : dias) {
+
+	                List<Nota> notas = notaService.findByDiaIdOrdenadas(session, d.getIdDia());
+
+	                List<NotaDiarioDTO> notasDTO = new ArrayList<>();
+	                for (Nota n : notas) {
+	                    notasDTO.add(new NotaDiarioDTO(
+	                        n.getIdNota(),
+	                        n.getTitulo(),
+	                        n.getTexto(),
+	                        n.getHoraInicio(),
+	                        n.getHoraFin(),
+	                        n.getVisibilidad() != null ? n.getVisibilidad().name() : null
+	                    ));
+	                }
+
+	                out.add(new DiaConNotasDTO(
+	                    d.getIdDia(),
+	                    d.getFecha(),
+	                    d.getCategoria().getNombre(), 
+	                    notasDTO
+	                ));
+	            }
+
+	            return out;
+
+	        } finally {
+	            if (session != null) session.close();
+	        }
+	    }
 
 }

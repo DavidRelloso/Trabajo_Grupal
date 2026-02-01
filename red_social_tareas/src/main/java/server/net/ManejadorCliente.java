@@ -8,6 +8,7 @@ import java.util.Map;
 
 import entity.notes.Dia;
 import server.handler.ManejadorAcciones;
+import server.handler.notes.ManejadorCargaDiario;
 import server.handler.notes.ManejadorCreacionNota;
 import server.handler.session.ManejadorLogin;
 import server.handler.session.ManejadorRegistro;
@@ -36,16 +37,19 @@ public class ManejadorCliente implements Runnable {
 
         // Registro de acciones
         this.handlers = Map.of(
+        	//Inicio sesion
             "LOGIN", new ManejadorLogin(usuarioService),
             "REGISTER", new ManejadorRegistro(usuarioService),
+            
+            //Cambio datos user
             "CAMBIO_NOMBRE", new ManejadorCambioNombre(usuarioService),
             "CAMBIO_CORREO", new ManejadorCambioCorreo(usuarioService),
             "CAMBIO_CONTRA", new ManejadorCambioContra(usuarioService),
             "CAMBIO_AVATAR", new ManejadorCambioAvatar(usuarioService),
+            
+            //Diario
+            "CARGAR_DIARIO", new ManejadorCargaDiario(usuarioService, diaService, notaService),
             "CREAR_NOTA", new ManejadorCreacionNota(usuarioService, notaService, diaService)
-            // "REGISTER", new RegistroHandler(usuarioService),
-            // "CAMBIO_NOMBRE", new CambioNombreHandler(usuarioService),
-            // ...
         );
     }
 

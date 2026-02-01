@@ -69,7 +69,6 @@ public class ControladorCrearNota extends ControladorFuncionesCompartidas {
             }
         });
 
-        // Quitar estilos de error al editar
         limpiarErrorAlEditar(txtTitulo);
         limpiarErrorAlEditar(txtHoraInicio);
         limpiarErrorAlEditar(txtHoraFin);
@@ -87,7 +86,6 @@ public class ControladorCrearNota extends ControladorFuncionesCompartidas {
         marcarBotonActivo(btnPublico, visibilidadNota == VisibilidadNota.PUBLICO);
         marcarBotonActivo(btnPrivado, visibilidadNota == VisibilidadNota.PRIVADO);
 
-        // Ya se puede guardar
         btnGuardar.setDisable(false);
     }
 
@@ -95,7 +93,7 @@ public class ControladorCrearNota extends ControladorFuncionesCompartidas {
         btn.setOpacity(activo ? 1.0 : 0.5);
     }
 
-    // == PETICION AL SERVIDOR ==
+    // PETICION AL SERVIDOR 
     private void peticionCrearNota() {
 
         ValidacionResultado resultado = validarFormulario();
@@ -168,7 +166,7 @@ public class ControladorCrearNota extends ControladorFuncionesCompartidas {
         }).start();
     }
 
-    //==== VALIDACON ======
+    // VALIDACON 
     private static class ValidacionResultado {
         final boolean ok;
         final String mensaje;

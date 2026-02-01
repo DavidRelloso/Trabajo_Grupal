@@ -1,235 +1,240 @@
-/* ========= FONDO GENERAL ========= */
-.contenedor-root {
-    -fx-background-image: url("/images/fondoPantallaPrincipal.png");   /* o png */
-    -fx-background-size: cover;               /* ocupa toda la pantalla */
+/* ---------- Fondo / tipografía global ---------- */
+.contenedor-root{
+    -fx-font-family: "Segoe UI", sans-serif;
+
+    /* mantenemos imagen */
+    -fx-background-image: url("/images/fondoPantallaPrincipal.png");
     -fx-background-repeat: no-repeat;
-    -fx-background-position: center center;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+
+    /* base morada como login/diario */
+    -fx-background-color: linear-gradient(to bottom right, #6a00f4, #b86bff);
 }
 
-
-/* ========= LATERAL IZQUIERDO (SIDEBAR) ========= */
-.sidebar {
-    -fx-background-color: rgba(0, 0, 0, 0.15);
-    -fx-background-radius: 20;
-    -fx-padding: 20 15;
-    -fx-spacing: 15;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 20, 0.25, 0, 6);
+/* Labels por defecto (para zonas “sobre fondo”) */
+.label{
+    -fx-text-fill: white;
 }
 
-.sidebar .separator .line {
-    -fx-background-color: rgba(255,255,255,0.25);
+.separator .line{
+    -fx-border-color: rgba(255,255,255,0.22);
 }
 
-/* ========= TARJETA CENTRAL (DERECHA) ========= */
-.tarjeta-ajustes {
-    -fx-background-color: rgba(255, 255, 255, 0.12);
+/* ---------- Sidebar izquierdo (tipo login: glass oscuro suave) ---------- */
+.sidebar{
+    -fx-background-color: rgba(0,0,0,0.12);
     -fx-background-radius: 24;
-    -fx-padding: 30 35;
-    -fx-spacing: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 22, 0.3, 0, 7);
+    -fx-padding: 26;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.24), 22, 0.22, 0, 5);
 }
 
-/* ========= SECCIONES (NOTIFICACIONES / RECORDATORIOS) ========= */
-.seccion {
-    /*-fx-background-color: rgba(255, 255, 255, 0.08);*/
-    -fx-background-color: rgba(0, 0, 0, 0.1);   /* MÁS OSCURO */
-    -fx-background-radius: 18;
-    -fx-padding: 18;
-    -fx-spacing: 12;
+/* Bloque superior (zona imagen) */
+.imagen-redondeada{
+    -fx-background-color: rgba(255,255,255,0.11);
+    -fx-background-radius: 22;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 18, 0.18, 0, 2);
 }
 
-
-/* ========= TÍTULOS ========= */
-.titulo {
-    -fx-font-size: 28px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
+.avatar-circle{
+    -fx-stroke: rgba(255,255,255,0.75);
+    -fx-stroke-width: 4;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 18, 0.22, 0, 4);
 }
 
-.titulo-seccion {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-    -fx-opacity: 0.9;
-}
-
-/* ========= TEXTOS / LABELS ========= */
-.etiqueta-campo {
-    -fx-text-fill: white;
-    -fx-opacity: 0.85;
+/* ---------- Botones (igual filosofía login/diario) ---------- */
+.button{
+    -fx-cursor: hand;
+    -fx-font-weight: 900;
     -fx-font-size: 14px;
+    -fx-background-radius: 16;
+    -fx-padding: 12 18;
 }
 
-/* Labels en general (por si no llevan clase) */
-.label {
-    -fx-text-fill: white;
-}
-
-/* ========= BOTONES ========= */
-.boton-principal {
+.boton-principal{
     -fx-background-color: white;
     -fx-text-fill: #6a00f4;
-    -fx-font-weight: bold;
+    -fx-font-weight: 900;
+    -fx-font-size: 14px;
     -fx-background-radius: 22;
-    -fx-padding: 8 25;
-    -fx-cursor: hand;
+    -fx-padding: 12 24;
+    -fx-effect: dropshadow(gaussian, rgba(106,0,244,0.35), 14, 0.25, 0, 2);
 }
 
-.boton-principal:hover {
+.boton-principal:hover{
     -fx-background-color: #f3e6ff;
+    -fx-effect: dropshadow(gaussian, rgba(106,0,244,0.55), 18, 0.35, 0, 3);
 }
 
-.boton-principal:pressed {
+.boton-principal:pressed{
     -fx-background-color: #e2ccff;
 }
 
-/* Botones secundarios (menú lateral, X, etc.) */
-.boton-secundario {
-    -fx-background-color: rgba(255,255,255,0.25);
+.boton-secundario{
+    -fx-background-color: rgba(255,255,255,0.22);
     -fx-text-fill: white;
-    -fx-background-radius: 16px;
-    -fx-padding: 6 18;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
+    -fx-font-weight: 800;
+    -fx-font-size: 14px;
+    -fx-background-radius: 18;
+    -fx-padding: 12 22;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.15, 0, 2);
 }
 
-/* Botones de links, spoty, steam (menú lateral, X, etc.) */
-.boton-linkear {
-    -fx-background-color: rgba(255,255,255,0);
-    -fx-text-fill: white;
-    -fx-background-radius: 100px 100px 100px 100px;
-    /*-fx-padding: 6 18;*/
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
+.boton-secundario:hover{
+    -fx-background-color: rgba(255,255,255,0.38);
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.35), 12, 0.25, 0, 0);
 }
 
-/* boton para eliminar notificaciones / notas */
-.boton-eliminar {
-    -fx-background-color: rgba(255,255,255,0.25);
-    -fx-text-fill: white;
-    -fx-background-radius: 16px;
-    -fx-padding: 6 18;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-}
-
-.boton-eliminar:hover {
-    -fx-background-color: rgba(227, 50, 65,0.4);
-}
-
-.boton-secundario:hover {
-    -fx-background-color: rgba(255,255,255,0.4);
-}
-
-.boton-secundario:pressed {
+.boton-secundario:pressed{
     -fx-background-color: rgba(255,255,255,0.55);
 }
 
-/* Versión "seleccionada" para el botón activo del menú lateral (AJUSTES) */
-.boton-secundario-activo {
-    -fx-background-color: white;
-    -fx-text-fill: #6a00f4;
+.boton-eliminar{
+    -fx-background-color: rgba(106,0,244,0.30);
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+    -fx-background-radius: 999;
+    -fx-padding: 4 10;
 }
 
-/* ========= SCROLLPANE ========= */
-.scroll-pane {
+.boton-eliminar:hover{
+    -fx-background-color: rgba(227,50,65,0.45);
+}
+
+.boton-eliminar:pressed{
+    -fx-background-color: rgba(227,50,65,0.65);
+}
+
+
+/* icon button */
+.boton-linkear{
+    -fx-background-color: transparent;
+    -fx-padding: 6;
+}
+.boton-linkear:hover{
+    -fx-background-color: rgba(255,255,255,0.18);
+    -fx-background-radius: 14;
+}
+
+/* ---------- CONTENIDO DERECHO ---------- */
+.tarjeta-ajustes{
+    -fx-background-color: rgba(201,201,255,0.88); 
+    -fx-background-radius: 18;
+    -fx-padding: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.15, 0, 0);
+}
+/* cada sección interna pasa a ser una “card” blanca */
+.seccion{
+    -fx-background-color: rgba(255,255,255,0.14);
+    -fx-background-radius: 18;
+    -fx-padding: 16;
+}
+
+/* Dentro de cards blancas: texto morado (importantísimo para parecerse al diario) */
+.tarjeta-ajustes .label,
+.seccion .label{
+    -fx-text-fill: #3d008f;
+}
+
+/* Títulos de sección (morado como col-title/card-title del diario) */
+.titulo-seccion{
+    -fx-text-fill: #3d008f;
+    -fx-font-size: 18px;
+    -fx-font-weight: 900;
+}
+
+/* Etiquetas auxiliares */
+.etiqueta-campo{
+    -fx-text-fill: rgba(61,0,143,0.80);
+    -fx-font-size: 12.5px;
+    -fx-font-weight: 800;
+}
+
+/* ---------- ScrollPane (igual diario) ---------- */
+.scroll-pane{
     -fx-background-color: transparent;
     -fx-padding: 0;
 }
-
-.scroll-pane > .viewport {
+.scroll-pane > .viewport{
     -fx-background-color: transparent;
 }
 
-/* Barras de scroll discretas */
 .scroll-bar:vertical,
-.scroll-bar:horizontal {
+.scroll-bar:horizontal{
     -fx-background-color: transparent;
 }
-
-.scroll-bar .thumb {
-    -fx-background-color: rgba(255,255,255,0.45);
+.scroll-bar .thumb{
+    -fx-background-color: rgba(106, 0, 244, 0.45);
     -fx-background-radius: 5;
 }
 
-/* ========= ACCORDION / TITLED PANE ========= */
-.accordion {
+/* ---------- DatePicker (igual inputs del login) ---------- */
+.date-picker{
+    -fx-background-color: rgba(255,255,255,0.90);
+    -fx-background-radius: 12;
+    -fx-padding: 6 10;
+    -fx-font-weight: 800;
+    -fx-text-fill: #3d008f;
+}
+.date-picker:focused{
+    -fx-background-color: rgba(255,255,255,0.98);
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.35), 18, 0.25, 0, 0);
+}
+.date-picker .text-field{
+    -fx-background-color: transparent;
+    -fx-text-fill: #3d008f;
+    -fx-font-weight: 800;
+}
+.date-picker .arrow-button{
     -fx-background-color: transparent;
 }
-
-/* Cabecera del TitledPane */
-.titled-pane > .title {
-    -fx-background-color: rgba(255, 255, 255, 0.16);
-    -fx-background-radius: 10 10 0 0;
-    -fx-padding: 8 12;
-}
-
-/* Texto del título del TitledPane */
-.titled-pane > .title > .text {
-    -fx-fill: white;
-    -fx-font-weight: bold;
-    -fx-font-size: 14px
-}
-
-/* Flecha */
-.titled-pane > .title > .arrow-button .arrow {
-    -fx-background-color: white;
-}
-
-/* Contenido del TitledPane */
-.titled-pane > *.content {
-    -fx-background-color: rgba(255, 255, 255, 0.07);
-    -fx-background-radius: 0 0 10 10;
-    -fx-padding: 10;
-}
-
-/* ========= SEPARADORES ========= */
-.separator .line {
-    -fx-background-color: rgba(255,255,255,0.4);
-    -fx-pref-height: 1;
-}
-
-/* ========= DATEPICKER ========= */
-.date-picker {
+.date-picker .arrow-button:hover{
+    -fx-background-color: rgba(106,0,244,0.10);
     -fx-background-radius: 10;
-    -fx-background-color: rgba(255,255,255,0.9);
-    -fx-padding: 0 5 0 5;
 }
 
-.date-picker > .arrow-button {
-    -fx-background-color: transparent;
+/* ---------- Accordion / TitledPane ---------- */
+.titled-pane > .title{
+    -fx-background-color: white;
+    -fx-background-radius: 16 16 0 0;
+    -fx-padding: 12 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 10, 0.18, 0, 2);
 }
 
-.date-picker > .arrow-button .arrow {
-    -fx-background-color: #6a00f4;
+/* Texto del título en morado del sistema */
+.titled-pane > .title .text{
+    -fx-fill: #3d008f;
+    -fx-font-weight: 900;
+    -fx-font-size: 15px;
 }
 
-.date-picker .popup {
-    -fx-background-color: rgba(0, 0, 0, 0.8);  /* Fondo oscuro del calendario */
-    -fx-background-radius: 10; /* Bordes redondeados */
-    -fx-padding: 10px;
+/* Contenido BLANCO */
+.titled-pane > .content{
+    -fx-background-color: rgba(255,255,255,0.96);
+    -fx-background-radius: 0 0 16 16;
+    -fx-padding: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 10, 0.18, 0, 2);
 }
 
-/* Cambiar el estilo de los botones de fecha */
-.date-picker .cell {
-    -fx-background-color: transparent;
-    -fx-text-fill: #6a00f4;
+.titled-pane > .content .label{
+    -fx-text-fill: rgba(61, 0, 143, 0.75); 
+    -fx-font-weight: normal;             
+    -fx-font-size: 13.5px;
 }
 
-.date-picker .cell:hover {
-    -fx-background-color: #6a00f4; /* Fondo al pasar el mouse */
-    -fx-text-fill: white;
+.titled-pane .scroll-bar .thumb{
+    -fx-background-color: rgba(201,201,255,0.88);
+    -fx-background-radius: 6;
 }
 
-.date-picker .cell:focused {
-    -fx-background-color: #6a00f4;
-    -fx-text-fill: white;
+.titled-pane .scroll-bar .thumb:hover{
+    -fx-background-color: rgba(106, 0, 244, 0.65);
 }
 
-.avatar-circle {
-  /*   -fx-fill: transparent;*/
-    -fx-stroke: #d1d5db;
-    -fx-stroke-width: 1.5;
-
-    -fx-effect: null;
+.titled-pane .scroll-bar{
+    -fx-background-color: rgba(106, 0, 244, 0.10);
 }
+
+
+

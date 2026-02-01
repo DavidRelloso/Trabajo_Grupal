@@ -47,7 +47,6 @@
     -fx-background-color: transparent;
 }
 
-/* 🔥 Fondo de imagen para TODO el área de notas, sin corte inferior */
 .scroll-dias .content {
     -fx-background-color: transparent;
     -fx-padding: 0;
@@ -105,7 +104,7 @@
     -fx-background-radius: 16;
     -fx-padding: 6 18;
     -fx-font-weight: bold;
-    -fx-font-size: 20px;     /* 👈 fijamos tamaño para que NO cambie en hover */
+    -fx-font-size: 20px;    
     -fx-opacity: 0.95;
 }
 

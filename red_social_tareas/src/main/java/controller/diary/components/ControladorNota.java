@@ -1,4 +1,4 @@
-package controller.diary;
+package controller.diary.components;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

@@ -44,6 +44,8 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
     
     @FXML private Button btnVerDiario;
     @FXML private Button btnVerAmigos;
+    @FXML private Button btnVerPeticiones;
+    @FXML private Button btnAgregar;
     @FXML private Button btnVerAjustes;
     @FXML private Button btnCerrarSesion;
 
@@ -53,9 +55,11 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
     private void initialize() {
 
         // Botones
-        btnVerDiario.setOnAction(e -> onVerDiario());
-        btnVerAmigos.setOnAction(e -> onVerAmigos());
-        btnVerAjustes.setOnAction(e -> onVerAjustes());
+        btnVerDiario.setOnAction(e -> verDiario());
+        btnVerAmigos.setOnAction(e -> verAmigos());
+        btnAgregar.setOnAction(e -> agregarAmigo());
+        btnVerPeticiones.setOnAction(e -> verPeticiones());
+        btnVerAjustes.setOnAction(e -> verAjustes());
         btnCerrarSesion.setOnAction(e -> onCerrarSesion());
 
 		try {
@@ -195,8 +199,8 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
         return tp;
     }
 
-    // ====== BOTONES PANEL IZQUIERDO ======
-    private void onVerDiario() {
+    // BOTON VER DIARIO
+    private void verDiario() {
 
         try {
             Stage stage = (Stage) rootPrincipal.getScene().getWindow();
@@ -209,11 +213,68 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
         }
     }
 
-    private void onVerAmigos() {
-        mostrarAlerta(Alert.AlertType.INFORMATION, "AMIGOS", "Aquí abrirías la pantalla de Amigos.");
+    // BOTON VER AMIGOS
+    private void verAmigos() {
+    	 try {
+             FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/principal/VentanaListaAmigos.fxml"));
+             Parent root = loader.load();
+
+             Stage stage = new Stage();
+             stage.initOwner(rootPrincipal.getScene().getWindow());
+             stage.initModality(Modality.APPLICATION_MODAL);
+             stage.setScene(new Scene(root));
+             stage.setResizable(false);
+             stage.sizeToScene();
+             stage.showAndWait();
+
+         } catch (IOException e) {
+             e.printStackTrace();
+             mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir Amigos: " + e.getMessage());
+         }
+    }
+    
+    private void agregarAmigo() {
+    	
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/principal/VentanaAgregarAmigo.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.initOwner(rootPrincipal.getScene().getWindow());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.sizeToScene();
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir Amigos: " + e.getMessage());
+        }
+    }
+    
+    
+    private void verPeticiones() {
+    	
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/principal/VentanaPeticionAmigo.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.initOwner(rootPrincipal.getScene().getWindow());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.sizeToScene();
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir Amigos: " + e.getMessage());
+        }
     }
 
-    private void onVerAjustes() {
+    private void verAjustes() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/principal/VentanaAjustes.fxml"));
             Parent root = loader.load();

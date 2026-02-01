@@ -9,7 +9,13 @@
 
 <!-- TARJETA NOTA -->
 
-<VBox maxWidth="Infinity" spacing="6.0" styleClass="card" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.diary.ControladorNota">
+<VBox 
+maxWidth="Infinity" 
+spacing="6.0" 
+styleClass="card" 
+xmlns="http://javafx.com/javafx/25" 
+xmlns:fx="http://javafx.com/fxml/1" 
+fx:controller="controller.diary.components.ControladorNota">
 
     <children>
         <!-- Fila superior: título / categoría / hora -->

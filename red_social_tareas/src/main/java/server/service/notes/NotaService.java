@@ -49,52 +49,6 @@ public class NotaService {
 				session.close();
 		}
 	}
-	
-
-	public void save(Nota nota) {
-		Session session = null;
-		Transaction tx = null;
-
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = session.beginTransaction();
-
-			session.save(nota);
-
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null)
-				tx.rollback();
-			throw e;
-		} finally {
-			if (session != null)
-				session.close();
-		}
-	}
-
-	public Nota findById(Long id) {
-		Session session = null;
-
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			return session.get(Nota.class, id);
-		} finally {
-			if (session != null)
-				session.close();
-		}
-	}
-
-	public List<Nota> findAll() {
-		Session session = null;
-
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			return session.createQuery("FROM Nota", Nota.class).list();
-		} finally {
-			if (session != null)
-				session.close();
-		}
-	}
 
 	public boolean existsNotaEnFecha(String nombreUsuario, LocalDate fecha) {
 		Session session = null;
@@ -109,7 +63,9 @@ public class NotaService {
 					    JOIN d.usuario u
 					    WHERE u.nombreUsuario = :nombreUsuario
 					      AND d.fecha = :fecha
-					""", Integer.class).setParameter("nombreUsuario", nombreUsuario).setParameter("fecha", fecha)
+					""", Integer.class)
+					.setParameter("nombreUsuario", nombreUsuario)
+					.setParameter("fecha", fecha)
 					.setMaxResults(1).uniqueResult();
 
 			return one != null;
@@ -119,6 +75,18 @@ public class NotaService {
 				session.close();
 		}
 	}
+	
+	
+    public List<Nota> findByDiaIdOrdenadas(Session session, Long idDia) {
+        return session.createQuery("""
+                SELECT n
+                FROM Nota n
+                WHERE n.dia.idDia = :idDia
+                ORDER BY n.horaInicio ASC
+            """, Nota.class)
+            .setParameter("idDia", idDia)
+            .list();
+    }
 
 	
 }
