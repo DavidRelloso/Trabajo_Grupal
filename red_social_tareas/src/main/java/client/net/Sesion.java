@@ -9,7 +9,7 @@ public final class Sesion {
     public static final ClienteTCP tcp = new ClienteTCP();
 
     //ip y puerto del servidor
-    public static final String HOST = "DAM2-24";
+    public static final String HOST = "10.216.74.13";
     public static final int PORT = 5000;
 
     private static final ObjectProperty<UserDTO> usuario = new SimpleObjectProperty<>();

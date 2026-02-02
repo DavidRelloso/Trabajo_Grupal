@@ -68,6 +68,7 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
         btnRegistrarse.setOnAction(e -> onRegistrarse());
         btnCambioAvatar.setOnAction(e -> onElegirAvatar());
         
+        //asegura guardado de conexion 
         new Thread(() -> {
             try {
                 Sesion.asegurarConexion();

@@ -23,6 +23,7 @@ public class ControladorAgregarAmigo extends ControladorFuncionesCompartidas {
 	    
 	}
 
+	// ENVIAR PETICION AMISTAD
 	private void enviarPeticionAmigo() {
 
         String nombreUsuario = Sesion.getUsuario().nombreUsuario; 

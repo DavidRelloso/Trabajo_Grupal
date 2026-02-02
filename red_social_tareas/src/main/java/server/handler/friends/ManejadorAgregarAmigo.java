@@ -86,7 +86,12 @@ public class ManejadorAgregarAmigo implements ManejadorAcciones<AgregarAmigoDTO>
         s.setFecha_envio(LocalDate.now());
 
         solicitudAmistadService.save(s);
-
+        System.out.println(
+        	    "PUSH_CHECK toName=[" + toName + "] " +
+        	    "online=" + RegistroClientes.isOnline(toName) +
+        	    " | usuarioLogueado=[" + usuarioLogueado + "]" +
+        	    " | fromName=[" + fromName + "]"
+        	);
         // 7) notificación push (si el receptor está online)
         if (RegistroClientes.isOnline(toName)) {
             Respuesta push = new Respuesta(

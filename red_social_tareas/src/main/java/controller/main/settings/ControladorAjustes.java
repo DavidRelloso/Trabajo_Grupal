@@ -234,7 +234,7 @@ public class ControladorAjustes extends ControladorFuncionesCompartidas {
         return tf.getText().trim();
     }
 
-    // ===== CERRAR VENTANA ====
+    // CERRAR VENTANA 
     @FXML
     private void onCancelar(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

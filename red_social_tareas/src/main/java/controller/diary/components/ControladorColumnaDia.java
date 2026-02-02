@@ -36,8 +36,11 @@ public class ControladorColumnaDia {
         actualizarTitulo();
     }
 
+	public void agregarNota(Node bloqueNota) {
+		notasVBox.getChildren().add(bloqueNota);
+	}
+    
     public VBox getContenedorNotas() { return notasVBox;}
-    public void agregarNota(Node bloqueNota) { notasVBox.getChildren().add(bloqueNota);}
     public Long getIdDia() { return idDia;}
     public LocalDate getFecha() { return fecha;}
     public String getCategoria() { return categoria;}

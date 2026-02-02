@@ -66,7 +66,7 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
 			for (int i = 0; i < 10; i++) {
 
 				FXMLLoader loader = new FXMLLoader(
-						getClass().getResource("/componentesReusables/ComponenteNotificacionAmigo.fxml"));
+						getClass().getResource("/componentesReusables/principal/ComponenteNotificacionAmigo.fxml"));
 				Parent nuevoComponente = loader.load();
 
 				TitledPane titledPane = (TitledPane) nuevoComponente;

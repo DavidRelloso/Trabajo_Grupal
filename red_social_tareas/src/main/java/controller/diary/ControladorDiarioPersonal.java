@@ -167,7 +167,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 	private void insertarBloqueNota(Long idDia, Long idNota, CrearNotaDTO dto) {
 	    try {
 	        FXMLLoader loader = new FXMLLoader(
-	            getClass().getResource("/componentesReusables/ComponenteNotaDiario.fxml")
+	            getClass().getResource("/componentesReusables/notas/ComponenteNotaDiario.fxml")
 	        );
 	        Node card = loader.load();
 
@@ -201,19 +201,17 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 
 	    try {
 	        FXMLLoader loader = new FXMLLoader(
-	            getClass().getResource("/componentesReusables/ComponenteColumnaDia.fxml")
+	            getClass().getResource("/componentesReusables/notas/ComponenteColumnaDia.fxml")
 	        );
 	        Node columna = loader.load();
 	        
 	        columna.getProperties().put("fecha", dto.fecha);
 	        columna.getProperties().put("categoria", dto.categoria);
 
-	        columna.getProperties().put("categoria", dto.categoria);
-	        
-	        ControladorColumnaDia ctrl = loader.getController();
-	        ctrl.setDatosDia(dto.idDia, dto.fecha, dto.categoria);
+	        ControladorColumnaDia c = loader.getController();
+	        c.setDatosDia(dto.idDia, dto.fecha, dto.categoria);
 
-	        contenedoresNotasPorDia.put(dto.idDia, ctrl.getContenedorNotas());
+	        contenedoresNotasPorDia.put(dto.idDia, c.getContenedorNotas());
 	        contenedorColumnas.getChildren().add(columna);
 	        
 	        ordenarColumnasPorFecha("CERCANAS PRIMERO");
