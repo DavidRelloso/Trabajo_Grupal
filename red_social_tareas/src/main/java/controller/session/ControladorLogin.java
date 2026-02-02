@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import client.Sesion;
+import client.net.Sesion;
 import controller.ControladorFuncionesCompartidas;
 import controller.sceneNavigator.NavegadorVentanas;
 import javafx.animation.FadeTransition;
@@ -34,7 +34,7 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
     @FXML private StackPane paneRegistro;
 
     @FXML private TextField usuarioLogin;
-    @FXML private PasswordField contraseñaLogin;
+    @FXML private PasswordField contraLogin;
 
     @FXML private TextField correo;
     @FXML private TextField nombreUsuario;
@@ -66,6 +66,20 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
         btnAceptarLogin.setOnAction(e -> onAceptarLogin());
         btnRegistrarse.setOnAction(e -> onRegistrarse());
         btnCambioAvatar.setOnAction(e -> onElegirAvatar());
+        
+        
+        new Thread(() -> {
+            try {
+                if (!Sesion.tcp.isConectado()) {
+                    Sesion.conectar("192.168.1.132", 5000);
+                }
+            } catch (Exception e) {
+                Platform.runLater(() ->
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage())
+                );
+            }
+        }).start();
+        
     }
 
     private void mostrarLogin() {
@@ -111,7 +125,7 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
         new ParallelTransition(fadeOut, fadeIn).play();
     }
 
-    // ====== ELEGIR AVATAR ======
+    // ELEGIR AVATAR 
     private void onElegirAvatar() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar archivo");
@@ -129,10 +143,10 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
         }
     }
 
-    // ====== LOGEARSE ======
+    // LOGEARSE
     private void onAceptarLogin() {
         String usuario = usuarioLogin.getText() != null ? usuarioLogin.getText().trim() : "";
-        String pass = contraseñaLogin.getText() != null ? contraseñaLogin.getText().trim() : "";
+        String pass = contraLogin.getText() != null ? contraLogin.getText().trim() : "";
 
         if (usuario.isBlank() || pass.isBlank()) {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", "Rellena usuario y contraseña.");
@@ -141,7 +155,11 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
 
         new Thread(() -> {
             try {
-                Respuesta resp = enviar(new Peticion("LOGIN", new LoginDTO(usuario, pass)));
+            	
+            	if (!Sesion.tcp.isConectado()) {
+            	    Sesion.conectar("192.168.1.132", 5000);
+            	}
+            	Respuesta resp = enviar(new Peticion("LOGIN", new LoginDTO(usuario, pass)));
 
                 Platform.runLater(() -> {
                     if (!resp.ok) {
@@ -177,7 +195,7 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
         }).start();
     }
 
-    // ====== REGISTRARSE ======
+    // REGISTRARSE 
     private void onRegistrarse() {
         String correoStr = correo.getText() != null ? correo.getText().trim() : "";
         String nombreStr = nombreUsuario.getText() != null ? nombreUsuario.getText().trim() : "";
@@ -198,10 +216,14 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
 
         new Thread(() -> {
             try {
-                Respuesta resp = enviar(new Peticion(
-                        "REGISTER",
-                        new RegistroDTO(correoStr, nombreStr, contra1, avatarBytesSeleccionado)
-                ));
+            	
+            	if (!Sesion.tcp.isConectado()) {
+            	    Sesion.conectar("192.168.1.132", 5000);
+            	}
+            	Respuesta resp = enviar(new Peticion(
+            	    "REGISTER",
+            	    new RegistroDTO(correoStr, nombreStr, contra1, avatarBytesSeleccionado)
+            	));
 
                 Platform.runLater(() -> {
                     if (resp.ok) {

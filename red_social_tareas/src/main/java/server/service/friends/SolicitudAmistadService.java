@@ -1,4 +1,4 @@
-package server.service;
+package server.service.friends;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -10,6 +10,33 @@ import java.util.List;
 
 public class SolicitudAmistadService {
 
+	
+	public boolean existePendienteEntre(Long u1, Long u2) {
+	    Session session = null;
+	    try {
+	        session = HibernateUtil.getSessionFactory().openSession();
+
+	        String hql =
+	            "SELECT 1 " +
+	            "FROM SolicitudAmistad s " +
+	            "WHERE s.estado = :estado " +
+	            "AND ( (s.emisor.idUsuario = :u1 AND s.receptor.idUsuario = :u2) " +
+	            "   OR (s.emisor.idUsuario = :u2 AND s.receptor.idUsuario = :u1) )";
+
+	        return session.createQuery(hql)
+	                .setParameter("estado", "PENDIENTE")
+	                .setParameter("u1", u1)
+	                .setParameter("u2", u2)
+	                .setMaxResults(1)
+	                .uniqueResult() != null;
+
+	    } finally {
+	        if (session != null) session.close();
+	    }
+	}
+
+
+	
     public void save(SolicitudAmistad solicitud) {
         Session session = null;
         Transaction tx = null;
@@ -23,7 +50,7 @@ public class SolicitudAmistadService {
             tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
-            throw e; // puedes registrar o transformar la excepción si deseas
+            throw e; 
         } finally {
             if (session != null) session.close();
         }

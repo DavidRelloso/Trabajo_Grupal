@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import client.Sesion;
+import client.net.Sesion;
 import controller.ControladorFuncionesCompartidas;
 import controller.diary.components.ControladorColumnaDia;
 import controller.diary.components.ControladorNota;

@@ -16,9 +16,9 @@ public class ManejadorLogin implements ManejadorAcciones<LoginDTO> {
     }
 
     @Override
-    public Respuesta handle(LoginDTO payload) {
+    public Respuesta handle(LoginDTO dto) {
     	
-        Usuario u = usuarioService.findByNombreAndContra(payload.usuario, payload.password);
+        Usuario u = usuarioService.findByNombreAndContra(dto.nombreUsuario, dto.contra);
         if (u == null) return new Respuesta(false, "Usuario o contraseña incorrectos");
 
         UserDTO user = new UserDTO(

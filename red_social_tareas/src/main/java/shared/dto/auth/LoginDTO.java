@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class LoginDTO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	public String usuario;
-	public String password;
+	public String nombreUsuario;
+	public String contra;
 
-	public LoginDTO(String usuario, String password) {
-		this.usuario = usuario;
-		this.password = password;
+	public LoginDTO(String nombreUsuario, String contra) {
+		this.nombreUsuario = nombreUsuario;
+		this.contra = contra;
 	}
 }

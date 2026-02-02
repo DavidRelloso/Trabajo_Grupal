@@ -22,28 +22,21 @@ public class Amigo {
 	private Usuario usuario2;
 
 	private LocalDate fecha_amistad;
+	
+    protected Amigo() {} 
 
-	public Usuario getUsuario1() {
-		return usuario1;
-	}
+    public Amigo(Usuario u1, Usuario u2) {
+        this.usuario1 = u1;
+        this.usuario2 = u2;
+        this.fecha_amistad = LocalDate.now();
+    }
+    
+	public Usuario getUsuario1() {return usuario1;}
+	public Usuario getUsuario2() {return usuario2;}
+	public LocalDate getFecha_amistad() {return fecha_amistad;}
 
-	public void setUsuario1(Usuario usuario1) {
-		this.usuario1 = usuario1;
-	}
-
-	public Usuario getUsuario2() {
-		return usuario2;
-	}
-
-	public void setUsuario2(Usuario usuario2) {
-		this.usuario2 = usuario2;
-	}
-
-	public LocalDate getFecha_amistad() {
-		return fecha_amistad;
-	}
-
-	public void setFecha_amistad(LocalDate fecha_amistad) {
-		this.fecha_amistad = fecha_amistad;
-	}
+	public void setUsuario1(Usuario usuario1) {this.usuario1 = usuario1;}
+	public void setUsuario2(Usuario usuario2) {this.usuario2 = usuario2;}
+	public void setFecha_amistad(LocalDate fecha_amistad) {this.fecha_amistad = fecha_amistad;}
+	
 }

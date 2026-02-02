@@ -23,52 +23,29 @@ public class Notificacion {
 	private LocalDate fecha;
 
 	private boolean leida;
+	
+    public Notificacion() {}
 
-	public Long getId_notificacion() {
-		return id_notificacion;
-	}
+    public Notificacion(Usuario usuario, String tipo, String mensaje) {
+        this.usuario = usuario;
+        this.tipo = tipo;
+        this.mensaje = mensaje;
+        this.fecha = LocalDate.now();
+        this.leida = false;
+    }
+    
+	public Long getId_notificacion() {return id_notificacion;}
+	public Usuario getUsuario() {return usuario;}
+	public String getTipo() {return tipo;}
+	public String getMensaje() {return mensaje;}
+	public LocalDate getFecha() {return fecha;}
+	public boolean isLeida() {return leida;}
 
-	public void setId_notificacion(Long id_notificacion) {
-		this.id_notificacion = id_notificacion;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	public String getMensaje() {
-		return mensaje;
-	}
-
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
-	}
-
-	public LocalDate getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
-	}
-
-	public boolean isLeida() {
-		return leida;
-	}
-
-	public void setLeida(boolean leida) {
-		this.leida = leida;
-	}
+	public void setId_notificacion(Long id_notificacion) {this.id_notificacion = id_notificacion;}
+	public void setUsuario(Usuario usuario) {this.usuario = usuario;}
+	public void setTipo(String tipo) {this.tipo = tipo;}
+	public void setMensaje(String mensaje) {this.mensaje = mensaje;}
+	public void setFecha(LocalDate fecha) {this.fecha = fecha;}
+	public void setLeida(boolean leida) {this.leida = leida;}
+	
 }

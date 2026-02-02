@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.Sesion;
+import client.net.Sesion;
 import controller.ControladorFuncionesCompartidas;
 import controller.sceneNavigator.NavegadorVentanas;
 import javafx.fxml.FXML;

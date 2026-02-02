@@ -176,7 +176,7 @@
 									text="Inicia sesión para continuar" />
 
 								<TextField fx:id="usuarioLogin" promptText="Usuario" />
-								<PasswordField fx:id="contraseñaLogin"
+								<PasswordField fx:id="contraLogin"
 									promptText="Contraseña" />
 
 								<HBox alignment="CENTER" spacing="12">

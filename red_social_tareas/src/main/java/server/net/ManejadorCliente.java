@@ -8,6 +8,7 @@ import java.util.Map;
 
 import entity.notes.Dia;
 import server.handler.ManejadorAcciones;
+import server.handler.friends.ManejadorAgregarAmigo;
 import server.handler.notes.ManejadorCargaDiario;
 import server.handler.notes.ManejadorCreacionNota;
 import server.handler.session.ManejadorLogin;
@@ -17,8 +18,12 @@ import server.handler.user.ManejadorCambioContra;
 import server.handler.user.ManejadorCambioCorreo;
 import server.handler.user.ManejadorCambioNombre;
 import server.service.UsuarioService;
+import server.service.friends.AmigoService;
+import server.service.friends.SolicitudAmistadService;
 import server.service.notes.DiaService;
 import server.service.notes.NotaService;
+import shared.dto.auth.LoginDTO;
+import shared.dto.user.UserDTO;
 import shared.protocol.Peticion;
 import shared.protocol.Respuesta;
 
@@ -27,11 +32,17 @@ public class ManejadorCliente implements Runnable {
     private final Socket socket;
 
     private final Map<String, ManejadorAcciones<?>> handlers;
-
+    
+    private String usuarioLogueado = null;
+    
     public ManejadorCliente(Socket socket) {
         this.socket = socket;
 
         UsuarioService usuarioService = new UsuarioService();
+
+        SolicitudAmistadService solicitudAmistadService = new SolicitudAmistadService();
+        AmigoService amigoService = new AmigoService();
+        
         NotaService notaService = new NotaService();
         DiaService diaService = new DiaService();
 
@@ -46,6 +57,9 @@ public class ManejadorCliente implements Runnable {
             "CAMBIO_CORREO", new ManejadorCambioCorreo(usuarioService),
             "CAMBIO_CONTRA", new ManejadorCambioContra(usuarioService),
             "CAMBIO_AVATAR", new ManejadorCambioAvatar(usuarioService),
+            
+            //Amigos
+            "AGREGAR_AMIGO", new ManejadorAgregarAmigo(usuarioService, solicitudAmistadService, amigoService),
             
             //Diario
             "CARGAR_DIARIO", new ManejadorCargaDiario(usuarioService, diaService, notaService),
@@ -67,7 +81,19 @@ public class ManejadorCliente implements Runnable {
                     continue;
                 }
 
+                System.out.println(
+                        "SOCKET=" + socket +
+                        " | accion=" + req.accion +
+                        " | usuarioLogueado=" + usuarioLogueado
+                    );
+                
                 Respuesta resp = procesar(req);
+                //Registrar conexion del usuario al logearse
+                if ("LOGIN".equals(req.accion) && resp.ok && req.payload instanceof LoginDTO login) {
+                    usuarioLogueado = login.nombreUsuario;
+                    RegistroClientes.registrar(usuarioLogueado, out);
+                }
+                
                 out.writeObject(resp);
                 out.flush();
             }
@@ -77,12 +103,13 @@ public class ManejadorCliente implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            RegistroClientes.desregistrar(usuarioLogueado);
             try { socket.close(); } catch (Exception ignored) {}
         }
     }
 
     private Respuesta procesar(Peticion req) {
-    	ManejadorAcciones<?> handler = handlers.get(req.accion);
+        ManejadorAcciones<?> handler = handlers.get(req.accion);
         if (handler == null) return new Respuesta(false, "Acción no soportada: " + req.accion);
 
         try {
@@ -90,16 +117,18 @@ public class ManejadorCliente implements Runnable {
                 return new Respuesta(false, "Payload incorrecto para acción " + req.accion);
             }
 
-            return invoke(handler, req.payload);
+            return invoke(handler, req.payload, usuarioLogueado);
 
         } catch (Exception e) {
             return new Respuesta(false, "Error interno: " + e.getMessage());
         }
     }
 
+
     @SuppressWarnings("unchecked")
-    private static <T> Respuesta invoke(ManejadorAcciones<?> handler, Object payload) throws Exception {
-    	ManejadorAcciones<T> h = (ManejadorAcciones<T>) handler;
-        return h.handle((T) payload);
+    private static <T> Respuesta invoke(ManejadorAcciones<?> handler, Object payload, String usuarioLogueado) throws Exception {
+        ManejadorAcciones<T> h = (ManejadorAcciones<T>) handler;
+        return h.handle((T) payload, usuarioLogueado);
     }
+
 }

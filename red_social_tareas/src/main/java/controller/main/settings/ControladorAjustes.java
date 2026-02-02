@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.util.function.BiFunction;
 
-import client.Sesion;
+import client.net.Sesion;
 import controller.ControladorFuncionesCompartidas;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

@@ -19,47 +19,28 @@ public class SolicitudAmistad {
 	@JoinColumn(name = "id_receptor")
 	private Usuario receptor;
 
-	private String estado; // pendiente / aceptada / rechazada
+	private String estado; 
 
 	private LocalDate fecha_envio;
+	
+    public SolicitudAmistad() {} 
 
-	public Long getId_solicitud() {
-		return id_solicitud;
-	}
+    public SolicitudAmistad(Usuario emisor, Usuario receptor, String estado) {
+        this.emisor = emisor;
+        this.receptor = receptor;
+        this.estado = estado;
+        this.fecha_envio = LocalDate.now();
+    }
 
-	public void setId_solicitud(Long id_solicitud) {
-		this.id_solicitud = id_solicitud;
-	}
-
-	public Usuario getEmisor() {
-		return emisor;
-	}
-
-	public void setEmisor(Usuario emisor) {
-		this.emisor = emisor;
-	}
-
-	public Usuario getReceptor() {
-		return receptor;
-	}
-
-	public void setReceptor(Usuario receptor) {
-		this.receptor = receptor;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public LocalDate getFecha_envio() {
-		return fecha_envio;
-	}
-
-	public void setFecha_envio(LocalDate fecha_envio) {
-		this.fecha_envio = fecha_envio;
-	}
+	public Long getId_solicitud() {return id_solicitud; }
+	public Usuario getEmisor() {return emisor; }
+	public Usuario getReceptor() {return receptor; }
+	public String getEstado() {return estado; }
+	public LocalDate getFecha_envio() {return fecha_envio; }
+	
+	public void setId_solicitud(Long id_solicitud) {this.id_solicitud = id_solicitud; }
+	public void setEmisor(Usuario emisor) {this.emisor = emisor; }
+	public void setReceptor(Usuario receptor) {this.receptor = receptor; }
+	public void setEstado(String estado) {this.estado = estado; }
+	public void setFecha_envio(LocalDate fecha_envio) {this.fecha_envio = fecha_envio; }
 }

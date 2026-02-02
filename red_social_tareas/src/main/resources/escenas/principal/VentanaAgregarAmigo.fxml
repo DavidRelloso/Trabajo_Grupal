@@ -11,16 +11,18 @@
 <GridPane hgap="20.0" vgap="20.0" 
 	stylesheets="@/css/principal/amigosAgregar.css" styleClass="fondo-app" 
 	xmlns="http://javafx.com/javafx" 
-	xmlns:fx="http://javafx.com/fxml">
+	xmlns:fx="http://javafx.com/fxml"
+	fx:id="rootAgregarAmigo"
+	fx:controller="controller.main.friends.ControladorAgregarAmigo">
    <children>
       <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="15.0" styleClass="contenedor-amigos">
          <children>
-            <Label text="Agregar usuario" styleClass="titulo" />
-            <TextField promptText="Nombre usuario" prefWidth="360.0" />
+            <Label  text="Agregar usuario" styleClass="titulo" />
+            <TextField fx:id="txtNombreAmigo" promptText="Nombre usuario" prefWidth="360.0" />
             <HBox alignment="CENTER_RIGHT">
                <children>
                   <Region />
-                  <Button text="Agregar" styleClass="boton-agregar" />
+                  <Button fx:id="btnAgregar" text="Agregar" styleClass="boton-agregar" />
                </children>
             </HBox>
          </children>

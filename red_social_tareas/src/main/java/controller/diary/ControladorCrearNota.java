@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import client.Sesion;
+import client.net.Sesion;
 import controller.ControladorFuncionesCompartidas;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
