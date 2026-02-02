@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://hibernate.org/hibernate-configuration-3.0.dtd">
-
 <hibernate-configuration>
     <session-factory>
 
@@ -21,17 +17,18 @@
         <property name="hibernate.format_sql">true</property>
 
         
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <mapping class="entity.Usuario"/>
-        <mapping class="entity.Categoria"/>
-        <mapping class="entity.Dia"/>
-        <mapping class="entity.Actividad"/>
-        <mapping class="entity.Nota"/>
-        <mapping class="entity.Amigo"/>
-        <mapping class="entity.SolicitudAmistad"/>
-        <mapping class="entity.Notificacion"/>
-        <mapping class="entity.ConexionExterna"/>
+        <mapping class="entity.user.Usuario"/>
+        <mapping class="entity.user.SolicitudAmistad"/>
+        <mapping class="entity.user.Notificacion"/>
+        
+        <mapping class="entity.notes.Categoria"/>
+        <mapping class="entity.notes.Dia"/>
+        <mapping class="entity.notes.Nota"/>
+        
+        <mapping class="entity.friend.Amigo"/>
+
 
     </session-factory>
 </hibernate-configuration>

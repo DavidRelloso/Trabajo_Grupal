@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="rootPrincipal" styleClass="contenedor-root" stylesheets="@/css/principal/pantallaPrincipal.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.main.ControladorPantallaPrincipal">
+
+	<children>
+
+		<!-- Contenedor principal -->
+		<HBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" spacing="20" StackPane.alignment="CENTER">
+
+			<children>
+
+				<!-- LATERAL IZQUIERDO -->
+				<VBox alignment="TOP_CENTER" maxHeight="Infinity" maxWidth="340" minWidth="240" prefWidth="280" spacing="10" styleClass="sidebar" HBox.hgrow="NEVER">
+
+					<children>
+
+						<!-- Imagen arriba -->
+						<StackPane>
+							<children>
+								<StackPane maxWidth="Infinity" prefHeight="157.0" styleClass="imagen-redondeada">
+
+									<ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
+										<StackPane.margin>
+											<Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+										</StackPane.margin>
+									</ImageView>
+
+									<Circle fx:id="imgAvatarUsuario" fill="DODGERBLUE" radius="96.0" stroke="BLACK" strokeType="INSIDE" styleClass="avatar-circle" />
+								</StackPane>
+							</children>
+						</StackPane>
+
+						<Separator maxWidth="Infinity" />
+
+						<!-- Botones centrales del menú -->
+						<VBox alignment="TOP_CENTER" maxWidth="Infinity" spacing="10" VBox.vgrow="ALWAYS">
+
+							<children>
+								<Label text="BIENVENIDO">
+									<font>
+										<Font name="System Bold" size="24.0" />
+									</font>
+									<VBox.margin>
+										<Insets top="20.0" />
+									</VBox.margin>
+								</Label>
+
+								<Label fx:id="lblNombreUsuario" text="NOMBRE USUARIO">
+									<font>
+										<Font name="System Bold" size="24.0" />
+									</font>
+								</Label>
+
+								<!-- Botones: mejor que crezcan al ancho del sidebar -->
+								<Button fx:id="btnVerDiario" maxWidth="Infinity" prefHeight="50.0" styleClass="boton-principal" text="MI DIARIO">
+									<VBox.margin>
+										<Insets top="50.0" />
+									</VBox.margin>
+									<font>
+										<Font size="14.0" />
+									</font>
+								</Button>
+
+								<Button fx:id="btnVerAmigos" maxWidth="Infinity" prefHeight="50.0" styleClass="boton-principal" text="AMIGOS">
+									<VBox.margin>
+										<Insets bottom="5.0" top="5.0" />
+									</VBox.margin>
+									<font>
+										<Font size="14.0" />
+									</font>
+								</Button>
+
+								<Button fx:id="btnVerPeticiones" maxWidth="Infinity" prefHeight="50.0" styleClass="boton-principal" text="PETICIONES">
+									<VBox.margin>
+										<Insets bottom="5.0" top="5.0" />
+									</VBox.margin>
+									<font>
+										<Font size="14.0" />
+									</font>
+								</Button>
+
+								<Button fx:id="btnAgregar" maxWidth="Infinity" prefHeight="50.0" styleClass="boton-principal" text="AGREGAR">
+									<VBox.margin>
+										<Insets bottom="5.0" top="5.0" />
+									</VBox.margin>
+									<font>
+										<Font size="14.0" />
+									</font>
+								</Button>
+
+								<Button fx:id="btnVerAjustes" maxWidth="Infinity" prefHeight="50.0" styleClass="boton-principal" text="AJUSTES">
+									<font>
+										<Font size="14.0" />
+									</font>
+								</Button>
+
+							</children>
+						</VBox>
+
+						<Separator maxWidth="Infinity" />
+
+						<!-- Zona inferior -->
+						<VBox maxWidth="Infinity" spacing="8">
+							<children>
+								<HBox maxWidth="Infinity" spacing="8">
+									<children>
+										<Button styleClass="boton-linkear" text="" HBox.hgrow="ALWAYS">
+											<graphic>
+												<ImageView fitHeight="25.0" fitWidth="25.0" preserveRatio="true">
+													<image>
+														<Image url="@Spotify_icon.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</Button>
+									</children>
+								</HBox>
+
+								<Button fx:id="btnCerrarSesion" maxWidth="Infinity" prefHeight="34.0" styleClass="boton-secundario" text="CERRAR SESIÓN" />
+							</children>
+							<VBox.margin>
+								<Insets top="10.0" />
+							</VBox.margin>
+						</VBox>
+
+					</children>
+				</VBox>
+
+				<!-- CONTENIDO PRINCIPAL (DERECHA) -->
+				<VBox maxHeight="Infinity" maxWidth="Infinity" spacing="15" styleClass="tarjeta-ajustes" HBox.hgrow="ALWAYS">
+
+					<children>
+
+						<!-- SECCIÓN NOTIFICACIONES -->
+						<VBox maxHeight="500.0" maxWidth="Infinity" minWidth="150.0" spacing="10" styleClass="seccion" VBox.vgrow="NEVER">
+
+
+							<children>
+
+								<Label styleClass="titulo-seccion" text="NOTIFICACIONES">
+									<VBox.margin>
+										<Insets bottom="8.0" />
+									</VBox.margin>
+								</Label>
+
+								<ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="scroll-pane" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
+									<content>
+										<VBox fillWidth="true" maxWidth="Infinity">
+											<children>
+												<Accordion fx:id="notificacionesAccordion" maxWidth="Infinity" />
+											</children>
+										</VBox>
+									</content>
+								</ScrollPane>
+
+							</children>
+						</VBox>
+
+						<Separator maxWidth="Infinity" />
+
+						<!-- SECCIÓN RECORDATORIOS (crece) -->
+						<VBox maxWidth="Infinity" spacing="10" styleClass="seccion" VBox.vgrow="ALWAYS">
+
+							<children>
+
+								<!-- Cabecera responsive: FlowPane envuelve en pantallas estrechas -->
+								<FlowPane hgap="12" maxWidth="Infinity" prefWrapLength="520" vgap="8">
+									<children>
+
+										<Label styleClass="titulo-seccion" text="RECORDATORIOS DIARIOS" />
+
+										<HBox alignment="CENTER_LEFT" spacing="8">
+											<children>
+												<Label styleClass="etiqueta-campo" text="SELECCIÓN DE FECHA:" />
+												<DatePicker fx:id="datePickerRecordatorios" prefHeight="26.0" prefWidth="160.0" styleClass="date-picker" />
+											</children>
+										</HBox>
+
+									</children>
+								</FlowPane>
+
+								<!-- ScrollPane SOLO para los recordatorios -->
+								<ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="scroll-pane" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
+									<content>
+										<VBox fillWidth="true" maxWidth="Infinity">
+											<children>
+												<Accordion fx:id="recordatoriosAccordion" maxWidth="Infinity" VBox.vgrow="ALWAYS">
+
+													<panes>
+														<TitledPane animated="false" maxWidth="Infinity" text="DÍA_RECORDATORIO">
+															<content>
+																<VBox fillWidth="true" maxWidth="Infinity" spacing="10">
+																	<children>
+																		<Label styleClass="etiqueta-campo" text="TEXTO_NOTIFICACION" />
+																		<Separator maxWidth="Infinity" />
+																		<StackPane alignment="CENTER_RIGHT" maxWidth="Infinity">
+																			<children>
+																				<Button alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="30.0" styleClass="boton-eliminar" text="X" />
+																			</children>
+																		</StackPane>
+																	</children>
+																</VBox>
+															</content>
+															<padding>
+																<Insets left="10.0" right="10.0" />
+															</padding>
+														</TitledPane>
+													</panes>
+
+												</Accordion>
+											</children>
+										</VBox>
+									</content>
+								</ScrollPane>
+
+							</children>
+						</VBox>
+
+					</children>
+				</VBox>
+
+			</children>
+		</HBox>
+
+	</children>
+</StackPane>

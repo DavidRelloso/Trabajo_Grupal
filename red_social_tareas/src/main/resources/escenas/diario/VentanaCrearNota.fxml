@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane fx:id="rootCrearNota" hgap="20.0"
+	styleClass="fondo-app" stylesheets="@/css/diario/crearNota.css"
+	vgap="20.0" xmlns="http://javafx.com/javafx/25"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.diary.ControladorCrearNota">
+
+	<!-- Borde/margen general de la ventana -->
+	<padding>
+		<Insets bottom="28" left="28" right="28" top="28" />
+	</padding>
+
+	<children>
+
+		<VBox maxWidth="520" spacing="14.0" styleClass="contenedor-nota"
+			GridPane.columnIndex="0" GridPane.hgrow="ALWAYS"
+			GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
+
+			<children>
+
+				<Label styleClass="titulo" text="Crear nota" />
+
+				<!-- FECHA -->
+				<HBox alignment="CENTER_LEFT" maxWidth="Infinity"
+					spacing="12.0" styleClass="contenedor-fecha">
+
+					<children>
+						<!-- DatePicker -->
+						<DatePicker fx:id="dpFecha" maxWidth="Infinity"
+							promptText="Selecciona la fecha" styleClass="campo"
+							HBox.hgrow="ALWAYS" />
+
+
+						<ComboBox fx:id="cbCategoria" prefWidth="200"
+							promptText="Categoria" styleClass="campo" />
+					</children>
+				</HBox>
+
+				<!-- Título -->
+				<TextField fx:id="txtTitulo" maxWidth="Infinity"
+					promptText="TÍTULO" styleClass="campo" />
+
+				<HBox maxWidth="Infinity" spacing="18.0"
+					styleClass="fila-horas">
+
+					<!-- Establecer hora inicio y hora fin -->
+					<children>
+						<TextField fx:id="txtHoraInicio" maxWidth="Infinity"
+							promptText="Hora inicio" styleClass="campo" HBox.hgrow="ALWAYS" />
+
+						<TextField fx:id="txtHoraFin" maxWidth="Infinity"
+							promptText="Hora fin (opcional)" styleClass="campo"
+							HBox.hgrow="ALWAYS" />
+					</children>
+				</HBox>
+
+				<!-- Texto nota -->
+				<TextArea fx:id="txtTexto" maxWidth="Infinity"
+					prefHeight="160.0" promptText="TEXTO" styleClass="campo-texto"
+					wrapText="true" VBox.vgrow="ALWAYS" />
+
+				<Label styleClass="subTitulo" text="Estado de publicación" />
+
+				<HBox alignment="CENTER_LEFT" maxWidth="Infinity"
+					styleClass="fila-botones">
+					<children>
+						<Button fx:id="btnCompartir" styleClass="boton-opcion"
+							text="compartir" />
+
+						<Button fx:id="btnPublico" styleClass="boton-opcion"
+							text="público" />
+
+						<Button fx:id="btnPrivado" styleClass="boton-opcion"
+							text="privado" />
+
+						<Region HBox.hgrow="ALWAYS" />
+					</children>
+				</HBox>
+
+				<Button fx:id="btnGuardar" mnemonicParsing="false"
+					styleClass="boton-opcion" text="Guardar" />
+
+			</children>
+		</VBox>
+
+	</children>
+	<columnConstraints>
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

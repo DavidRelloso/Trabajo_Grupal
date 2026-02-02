@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane hgap="20.0" vgap="20.0" 
+	stylesheets="@/css/principal/listaAmigos.css" 
+	styleClass="fondo-app" 
+	xmlns="http://javafx.com/javafx/25" 
+	xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox spacing="15.0" styleClass="contenedor-amigos" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <children>
+                <Label text="Amigos" styleClass="titulo" />
+                <VBox spacing="10.0">
+                    <children>
+                        <HBox spacing="10.0" styleClass="amigo-item">
+                            <children>
+                                <Label text="Juan Pérez" styleClass="amigo-nombre" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button text="Ver" styleClass="boton-agregar" />
+                                <Button text="Eliminar" styleClass="boton-agregar" />
+                            </children>
+                        </HBox>
+                        <HBox spacing="10.0" styleClass="amigo-item">
+                            <children>
+                                <Label text="María López" styleClass="amigo-nombre" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button text="Ver" styleClass="boton-agregar" />
+                                <Button text="Eliminar" styleClass="boton-agregar" />
+                            </children>
+                        </HBox>
+                        <HBox spacing="10.0" styleClass="amigo-item">
+                            <children>
+                                <Label text="Carlos Ruiz" styleClass="amigo-nombre" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button text="Ver" styleClass="boton-agregar" />
+                                <Button text="Eliminar" styleClass="boton-agregar" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+    </rowConstraints>
+</GridPane>
