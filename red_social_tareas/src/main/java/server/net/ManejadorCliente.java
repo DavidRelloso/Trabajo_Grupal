@@ -94,8 +94,11 @@ public class ManejadorCliente implements Runnable {
                     RegistroClientes.registrar(usuarioLogueado, out);
                 }
                 
-                out.writeObject(resp);
-                out.flush();
+                synchronized (out) {
+                    out.writeObject(resp);
+                    out.flush();
+                }
+
             }
 
         } catch (EOFException e) {

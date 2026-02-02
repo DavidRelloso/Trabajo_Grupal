@@ -54,6 +54,7 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
 
     @FXML
     private void initialize() {
+    	
         System.out.println("LOGIN stylesheets = " + rootLogin.getStylesheets());
         System.out.println("LOGIN styleClass  = " + rootLogin.getStyleClass());
         ventanaInicial();
@@ -67,18 +68,16 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
         btnRegistrarse.setOnAction(e -> onRegistrarse());
         btnCambioAvatar.setOnAction(e -> onElegirAvatar());
         
-        
         new Thread(() -> {
             try {
-                if (!Sesion.tcp.isConectado()) {
-                    Sesion.conectar("192.168.1.132", 5000);
-                }
+                Sesion.asegurarConexion();
             } catch (Exception e) {
                 Platform.runLater(() ->
                     mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage())
                 );
             }
         }).start();
+
         
     }
 
@@ -156,9 +155,6 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
         new Thread(() -> {
             try {
             	
-            	if (!Sesion.tcp.isConectado()) {
-            	    Sesion.conectar("192.168.1.132", 5000);
-            	}
             	Respuesta resp = enviar(new Peticion("LOGIN", new LoginDTO(usuario, pass)));
 
                 Platform.runLater(() -> {
@@ -216,10 +212,6 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
 
         new Thread(() -> {
             try {
-            	
-            	if (!Sesion.tcp.isConectado()) {
-            	    Sesion.conectar("192.168.1.132", 5000);
-            	}
             	Respuesta resp = enviar(new Peticion(
             	    "REGISTER",
             	    new RegistroDTO(correoStr, nombreStr, contra1, avatarBytesSeleccionado)
