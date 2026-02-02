@@ -23,7 +23,7 @@
 			<center>
 				<!-- Card -->
 				<VBox spacing="15" styleClass="contenedor-amigos"
-					prefWidth="550" prefHeight="800"
+					prefWidth="550" prefHeight="600"
 					BorderPane.alignment="CENTER">
 
 					<children>
