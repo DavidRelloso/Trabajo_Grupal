@@ -1,3 +1,4 @@
+/* Fondo */
 .fondo-app {
     -fx-background-image: url("/images/fondoAmigos.png");
     -fx-background-size: cover;
@@ -9,23 +10,63 @@
 .contenedor-amigos {
     -fx-background-color: rgba(255, 255, 255, 0.75);
     -fx-background-radius: 20px;
+
     -fx-padding: 25px;
     -fx-spacing: 15px;
-    -fx-max-width: 420px;
+
+    /*-fx-min-width: 360px;   
+    -fx-max-width: 900px; */   
+
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 15, 0, 0, 4);
 }
 
+
+/* Título */
 .titulo {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-text-fill: #5B4BC4;
 }
 
+/* Marco interior del scroll (como el rectángulo blanco con borde) */
+.marco-scroll {
+    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-background-radius: 6px;
+
+    -fx-border-color: rgba(0,0,0,0.18);
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+
+    -fx-padding: 10px;
+}
+
+/* ScrollPane: transparente para que se vea el marco */
+.scroll-amigos {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-amigos > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical,
+.scroll-bar:horizontal{
+    -fx-background-color: transparent;
+}
+.scroll-bar .thumb{
+    -fx-background-color: rgba(106, 0, 244, 0.45);
+    -fx-background-radius: 5;
+}
+
+/* Contenido del scroll */
 .lista-amigos {
     -fx-background-color: transparent;
     -fx-padding: 0;
 }
 
+/* Tarjeta de cada amigo */
 .amigo-item {
     -fx-background-color: #D3D3FF;
     -fx-background-radius: 10px;
@@ -33,17 +74,20 @@
     -fx-spacing: 10px;
 }
 
+/* Nombre */
 .amigo-nombre {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: #2B2767;
 }
 
+/* Estado si lo usas */
 .amigo-estado {
     -fx-font-size: 13px;
     -fx-text-fill: #4A448A;
 }
 
+/* Botones */
 .boton-agregar {
     -fx-background-color: #5B4BC4;
     -fx-text-fill: #FFFFFF;

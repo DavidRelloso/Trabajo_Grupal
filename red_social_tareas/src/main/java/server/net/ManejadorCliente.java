@@ -1,6 +1,7 @@
 package server.net;
 
 import java.io.EOFException;
+import java.io.Flushable;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -12,6 +13,8 @@ import server.handler.friends.ManejadorAceptarSolicitud;
 import server.handler.friends.ManejadorAgregarAmigo;
 import server.handler.friends.ManejadorRechazarSolicitud;
 import server.handler.friends.ManejadorSolicitudesPendientes;
+import server.handler.friends.ManejadorObtenerAmigos;
+import server.handler.friends.ManejadorEliminarAmigo;
 import server.handler.notes.ManejadorCargaDiario;
 import server.handler.notes.ManejadorCreacionNota;
 import server.handler.session.ManejadorLogin;
@@ -62,11 +65,13 @@ public class ManejadorCliente implements Runnable {
 		handlers.put("CAMBIO_AVATAR", new ManejadorCambioAvatar(usuarioService));
 
 		// Amigos
+		handlers.put("OBTENER_AMIGOS", new ManejadorObtenerAmigos(usuarioService, amigoService));
 		handlers.put("AGREGAR_AMIGO", new ManejadorAgregarAmigo(usuarioService, solicitudAmistadService, amigoService));
+		handlers.put("ELIMINAR_AMIGO", new ManejadorEliminarAmigo(usuarioService, amigoService));
 		handlers.put("OBTENER_SOLICITUDES_PENDIENTES", new ManejadorSolicitudesPendientes(usuarioService, solicitudAmistadService));
 		handlers.put("ACEPTAR_SOLICITUD_AMISTAD", new ManejadorAceptarSolicitud(usuarioService, solicitudAmistadService));
 		handlers.put("RECHAZAR_SOLICITUD_AMISTAD", new ManejadorRechazarSolicitud(usuarioService, solicitudAmistadService));
-
+		
 		// Diario
 		handlers.put("CARGAR_DIARIO", new ManejadorCargaDiario(usuarioService, diaService, notaService));
 		handlers.put("CREAR_NOTA", new ManejadorCreacionNota(usuarioService, notaService, diaService));

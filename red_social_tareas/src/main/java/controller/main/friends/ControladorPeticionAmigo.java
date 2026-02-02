@@ -1,5 +1,6 @@
 package controller.main.friends;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -56,7 +57,7 @@ public class ControladorPeticionAmigo extends ControladorFuncionesCompartidas{
 
 	            System.out.println("ACTUALIZAR resp.ok=" + resp.ok + " msg=" + resp.message);
 
-	            if (resp.ok && resp.data instanceof java.util.List<?> list) {
+	            if (resp.ok && resp.data instanceof List<?> list) {
 	                System.out.println("ACTUALIZAR size=" + list.size());
 
 	                for (Object o : list) {
@@ -81,8 +82,8 @@ public class ControladorPeticionAmigo extends ControladorFuncionesCompartidas{
 	        FXMLLoader loader = new FXMLLoader(
 	            getClass().getResource("/componentesReusables/amigos/ComponenteTarjetaPeticion.fxml")
 	        );
-	        Node tarjetaAmigo = loader.load();
-	        seccionPeticiones.getChildren().add(0, tarjetaAmigo);
+	        Node tarjetaPeticion = loader.load();
+	        seccionPeticiones.getChildren().add(0, tarjetaPeticion);
 
 	        ControladorTarjetaPeticion c = loader.getController();
 	        c.setDatos(dto.getFromUsername());

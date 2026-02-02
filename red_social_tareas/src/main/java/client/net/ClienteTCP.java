@@ -28,7 +28,6 @@ public class ClienteTCP {
     private final ConcurrentLinkedQueue<SolicitudAmistadDTO> pendientes = new ConcurrentLinkedQueue<>();
     private final BlockingQueue<Respuesta> respuestas = new LinkedBlockingQueue<>();
     private final List<Consumer<SolicitudAmistadDTO>> solicitudListeners = new CopyOnWriteArrayList<>();
-   // private final Queue<SolicitudAmistadDTO> pendientes = new ConcurrentLinkedQueue<>();
 
     public synchronized void conectar(String host, int port) throws Exception {
         cerrar();
@@ -62,7 +61,6 @@ public class ClienteTCP {
     public void removeSolicitudListener(Consumer<SolicitudAmistadDTO> listener) {
         solicitudListeners.remove(listener);
     }
-
 
     private void iniciarLector() {
         readerThread = new Thread(() -> {

@@ -124,7 +124,7 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
         }
     }
 
-    // ====== NOTIFICACIONES ======
+    // NOTIFICACIONES 
     private void cargarNotificaciones() {
         notificacionesAccordion.getPanes().clear();
 
