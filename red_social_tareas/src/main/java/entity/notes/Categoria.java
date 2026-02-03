@@ -7,7 +7,9 @@ import entity.user.Usuario;
 @Entity
 @Table(
     name = "categoria",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"id_usuario", "nombre"})
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "nombre")
+    }
 )
 public class Categoria {
 

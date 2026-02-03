@@ -12,8 +12,7 @@ import java.util.List;
 @Table(
     name = "dia",
     uniqueConstraints = {
-        @UniqueConstraint(name = "uk_dia_usuario_fecha_categoria",
-                columnNames = {"id_usuario", "fecha", "id_categoria"})
+        @UniqueConstraint(columnNames = {"id_usuario", "fecha", "id_categoria"})
     }
 )
 public class Dia {

@@ -29,91 +29,101 @@ public class DiaService {
 
 	// COMPROBAR SI EXISTE EL DIA/COLUMNA PARA CREARLO O NO 
 	public DiaGetOrCreateResult getOrCreateDia(Usuario u, LocalDate fecha, String categoriaNombre) {
-		Session session = null;
-		Transaction tx = null;
+	    Session session = null;
+	    Transaction tx = null;
 
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = session.beginTransaction();
+	    try {
+	        session = HibernateUtil.getSessionFactory().openSession();
+	        tx = session.beginTransaction();
 
-			// Se busca el dia/fecha de un usuario y de una categoria especifica
-			// para comprobar si en ese dia con esa categoria el usuario ya tiene una nota/dia/columna
-			Dia dia = session.createQuery("""
-					    SELECT d
-					    FROM Dia d
-					    JOIN d.categoria c
-					    WHERE d.usuario = :usuario
-					      AND d.fecha = :fecha
-					      AND c.nombre = :categoria
-					""", Dia.class)
-					.setParameter("usuario", u)
-					.setParameter("fecha", fecha)
-					.setParameter("categoria", categoriaNombre)
-					.uniqueResult();
+	        // 1) Buscar dia existente (sin uniqueResult)
+	        List<Dia> dias = session.createQuery("""
+	                SELECT d
+	                FROM Dia d
+	                JOIN d.categoria c
+	                WHERE d.usuario = :usuario
+	                  AND d.fecha = :fecha
+	                  AND c.nombre = :categoria
+	            """, Dia.class)
+	            .setParameter("usuario", u)
+	            .setParameter("fecha", fecha)
+	            .setParameter("categoria", categoriaNombre)
+	            .setMaxResults(1)
+	            .getResultList();
 
-			// si el dia existe se manda que no se cree el dia (columna)
-			if (dia != null) {
-				tx.commit();
-				return new DiaGetOrCreateResult(dia, false);
-			}
+	        Dia dia = dias.isEmpty() ? null : dias.get(0);
 
-			// si no existe se compruba si existe la categoria para guardarla en ella
-			Categoria categoria = session.createQuery("""
-					    SELECT c
-					    FROM Categoria c
-					    WHERE c.nombre = :nombre
-					""", Categoria.class).setParameter("nombre", categoriaNombre).uniqueResult();
+	        if (dia != null) {
+	            tx.commit();
+	            return new DiaGetOrCreateResult(dia, false);
+	        }
 
-			if (categoria == null) {
-				throw new IllegalStateException("Categoría no existe: " + categoriaNombre);
-			}
+	        // 2) Buscar categoria (sin uniqueResult)
+	        List<Categoria> cats = session.createQuery("""
+	                SELECT c
+	                FROM Categoria c
+	                WHERE c.nombre = :nombre
+	            """, Categoria.class)
+	            .setParameter("nombre", categoriaNombre)
+	            .setMaxResults(1)
+	            .getResultList();
 
-			// se setea la info para crear el dia
-			Dia nuevoDia = new Dia();
-				nuevoDia.setUsuario(u);
-				nuevoDia.setFecha(fecha);
-				nuevoDia.setCategoria(categoria);
+	        Categoria categoria = cats.isEmpty() ? null : cats.get(0);
 
-			session.persist(nuevoDia);
+	        if (categoria == null) {
+	            throw new IllegalStateException("Categoría no existe: " + categoriaNombre);
+	        }
 
-			tx.commit();
-			return new DiaGetOrCreateResult(nuevoDia, true);
+	        // 3) Crear dia
+	        Dia nuevoDia = new Dia();
+	        nuevoDia.setUsuario(u);
+	        nuevoDia.setFecha(fecha);
+	        nuevoDia.setCategoria(categoria);
 
-		} catch (Exception e) {
-			if (tx != null)
-				tx.rollback();
+	        session.persist(nuevoDia);
 
+	        tx.commit();
+	        return new DiaGetOrCreateResult(nuevoDia, true);
 
-			Session retrySession = null;
-			try {
-				retrySession = HibernateUtil.getSessionFactory().openSession();
+	    } catch (Exception e) {
+	        if (tx != null) tx.rollback();
 
-				Dia dia = retrySession.createQuery("""
-						    SELECT d
-						    FROM Dia d
-						    JOIN d.categoria c
-						    WHERE d.usuario = :usuario
-						      AND d.fecha = :fecha
-						      AND c.nombre = :categoria
-						""", Dia.class).setParameter("usuario", u).setParameter("fecha", fecha)
-						.setParameter("categoria", categoriaNombre).uniqueResult();
+	        // Retry: intentar leerlo (sin uniqueResult)
+	        Session retrySession = null;
+	        try {
+	            retrySession = HibernateUtil.getSessionFactory().openSession();
 
-				if (dia != null) {
-					return new DiaGetOrCreateResult(dia, false);
-				}
+	            List<Dia> retryDias = retrySession.createQuery("""
+	                    SELECT d
+	                    FROM Dia d
+	                    JOIN d.categoria c
+	                    WHERE d.usuario = :usuario
+	                      AND d.fecha = :fecha
+	                      AND c.nombre = :categoria
+	                """, Dia.class)
+	                .setParameter("usuario", u)
+	                .setParameter("fecha", fecha)
+	                .setParameter("categoria", categoriaNombre)
+	                .setMaxResults(1)
+	                .getResultList();
 
-				throw e;
+	            Dia dia = retryDias.isEmpty() ? null : retryDias.get(0);
 
-			} finally {
-				if (retrySession != null)
-					retrySession.close();
-			}
+	            if (dia != null) {
+	                return new DiaGetOrCreateResult(dia, false);
+	            }
 
-		} finally {
-			if (session != null)
-				session.close();
-		}
+	            throw e;
+
+	        } finally {
+	            if (retrySession != null) retrySession.close();
+	        }
+
+	    } finally {
+	        if (session != null) session.close();
+	    }
 	}
+
 	
 	
 	  public List<DiaConNotasDTO> cargarDiario(String nombreUsuario, NotaService notaService) {
