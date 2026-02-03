@@ -1,14 +1,13 @@
 package entity.notes;
 
 import javax.persistence.*;
-
 import entity.user.Usuario;
 
 @Entity
 @Table(
     name = "categoria",
     uniqueConstraints = {
-        @UniqueConstraint(columnNames = "nombre")
+        @UniqueConstraint(columnNames = {"id_usuario", "nombre"})
     }
 )
 public class Categoria {

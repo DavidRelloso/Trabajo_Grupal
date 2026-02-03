@@ -8,7 +8,12 @@ import util.HibernateUtil;
 public class ServidorTCP {
 
     public static void main(String[] args) {
-
+    	
+    	// Cerrar Hibernate al apagar el servidor
+        Runtime.getRuntime().addShutdownHook(
+                new Thread(HibernateUtil::shutdown)
+        );
+    	
     	// Inicializar Hibernate
         try {
             HibernateUtil.getSessionFactory();

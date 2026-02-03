@@ -49,8 +49,4 @@ public class ManejadorObtenerAmigos implements ManejadorAcciones<Void> {
         return Void.class;
     }
 
-	@Override
-	public Respuesta handle(Void dto) throws Exception {
-		return null;
-	}
 }

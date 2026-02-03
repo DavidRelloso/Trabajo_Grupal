@@ -9,39 +9,45 @@ import shared.protocol.Respuesta;
 
 public class ManejadorCambioAvatar implements ManejadorAcciones<CambioAvatarDTO> {
 
-	private final UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
-	public ManejadorCambioAvatar(UsuarioService usuarioService) {
-		this.usuarioService = usuarioService;
-	}
+    public ManejadorCambioAvatar(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
-	@Override
-	public Respuesta handle(CambioAvatarDTO payload) throws Exception {
-		if (payload == null || payload.nuevoAvatar == null || payload.nuevoAvatar.length == 0) {
-			return new Respuesta(false, "Avatar inválido");
-		}
+    @Override
+    public Respuesta handle(CambioAvatarDTO payload, String usuarioLogueado) throws Exception {
 
-		Usuario u = usuarioService.findByNombre(payload.nombreUsuario);
-		if (u == null)
-			return new Respuesta(false, "Usuario no encontrado");
+        if (usuarioLogueado == null || usuarioLogueado.isBlank()) {
+            return new Respuesta(false, "NO_LOGUEADO", null);
+        }
 
-		u.setAvatarImg(payload.nuevoAvatar);
-		usuarioService.update(u);
+        if (payload == null || payload.nuevoAvatar == null || payload.nuevoAvatar.length == 0) {
+            return new Respuesta(false, "Avatar inválido", null);
+        }
 
-		UserDTO user = new UserDTO(
-				u.getIdUsuario(), 
-				u.getNombreUsuario(), 
-				u.getCorreo(), 
-				u.getContraHash(),
-				u.getAvatarImg()
-		);
+        Usuario u = usuarioService.findByNombre(usuarioLogueado);
+        if (u == null) {
+            return new Respuesta(false, "Usuario no encontrado", null);
+        }
 
-		return new Respuesta(true, "Avatar cambiado correctamente", user);
-	}
+        u.setAvatarImg(payload.nuevoAvatar);
+        usuarioService.update(u);
 
-	@Override
-	public Class<CambioAvatarDTO> payloadType() {
-		return CambioAvatarDTO.class;
-	}
+        // Recomendado: no mandar contraHash
+        UserDTO user = new UserDTO(
+                u.getIdUsuario(),
+                u.getNombreUsuario(),
+                u.getCorreo(),
+                null,              // o elimina este campo del DTO si puedes
+                u.getAvatarImg()
+        );
 
+        return new Respuesta(true, "Avatar cambiado correctamente", user);
+    }
+
+    @Override
+    public Class<CambioAvatarDTO> payloadType() {
+        return CambioAvatarDTO.class;
+    }
 }

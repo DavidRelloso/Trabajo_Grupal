@@ -7,7 +7,7 @@ import server.handler.ManejadorAcciones;
 import server.service.UsuarioService;
 import server.service.notes.DiaService;
 import server.service.notes.NotaService;
-import server.service.notes.VisibilidadNota; 
+import server.service.notes.VisibilidadNota;
 import shared.dto.notes.CrearNotaDTO;
 import shared.dto.notes.CrearDiaDTO;
 import shared.protocol.Respuesta;
@@ -19,16 +19,22 @@ public class ManejadorCreacionNota implements ManejadorAcciones<CrearNotaDTO> {
     private final DiaService diaService;
 
     public ManejadorCreacionNota(UsuarioService usuarioService, NotaService notaService, DiaService diaService) {
-        this.notaService = notaService;
         this.usuarioService = usuarioService;
+        this.notaService = notaService;
         this.diaService = diaService;
     }
 
     @Override
-    public Respuesta handle(CrearNotaDTO dto) throws Exception {
+    public Respuesta handle(CrearNotaDTO dto, String usuarioLogueado) throws Exception {
 
-        Usuario u = usuarioService.findByNombre(dto.nombreUsuario);
-        if (u == null) return new Respuesta(false, "Usuario no encontrado");
+        if (usuarioLogueado == null || usuarioLogueado.isBlank()) {
+            return new Respuesta(false, "NO_LOGUEADO", null);
+        }
+
+        Usuario u = usuarioService.findByNombre(usuarioLogueado);
+        if (u == null) {
+            return new Respuesta(false, "Usuario no encontrado", null);
+        }
 
         DiaService.DiaGetOrCreateResult diaRes =
                 diaService.getOrCreateDia(u, dto.fecha, dto.categoria);
@@ -40,17 +46,16 @@ public class ManejadorCreacionNota implements ManejadorAcciones<CrearNotaDTO> {
         try {
             visibilidadEnum = VisibilidadNota.valueOf(dto.visibilidad);
         } catch (Exception e) {
-            return new Respuesta(false, "Visibilidad inválida: " + dto.visibilidad);
+            return new Respuesta(false, "Visibilidad inválida: " + dto.visibilidad, null);
         }
 
-        // Se crea la nota en el dia seleccionado
         Nota nota = notaService.crearNota(
                 dia,
                 dto.titulo,
                 dto.texto,
                 dto.horaInicio,
                 dto.horaFin,
-                visibilidadEnum   
+                visibilidadEnum
         );
 
         CrearDiaDTO out = new CrearDiaDTO(
@@ -61,7 +66,7 @@ public class ManejadorCreacionNota implements ManejadorAcciones<CrearNotaDTO> {
                 dto.categoria
         );
 
-        return new Respuesta(true, "Nota creada correctamen", out);
+        return new Respuesta(true, "Nota creada correctamente", out);
     }
 
     @Override

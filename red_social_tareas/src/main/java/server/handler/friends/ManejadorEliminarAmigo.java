@@ -62,9 +62,4 @@ public class ManejadorEliminarAmigo implements ManejadorAcciones<AmigoDTO> {
         return AmigoDTO.class;
     }
 
-	@Override
-	public Respuesta handle(AmigoDTO dto) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

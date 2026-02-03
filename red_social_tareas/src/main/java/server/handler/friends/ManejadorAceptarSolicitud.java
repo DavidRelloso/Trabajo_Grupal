@@ -43,8 +43,4 @@ public class ManejadorAceptarSolicitud implements ManejadorAcciones<ResponderSol
 		return ResponderSolicitudDTO.class;
 	}
 
-	@Override
-	public Respuesta handle(ResponderSolicitudDTO dto) {
-		return new Respuesta(false, "No autenticado");
-	}
 }

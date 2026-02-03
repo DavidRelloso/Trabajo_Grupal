@@ -100,7 +100,8 @@ public class ManejadorCliente implements Runnable {
                         " | accion=" + req.accion +
                         " | usuarioLogueado=" + usuarioLogueado
                     );
-                
+                System.out.println("REQ accion=" + req.accion + " socket=" + socket + " payload=" + req.payload);
+
                 Respuesta resp = procesar(req);
                 //Registrar conexion del usuario al logearse
                 if ("LOGIN".equals(req.accion) && resp.ok && resp.data instanceof UserDTO u) {
@@ -138,7 +139,10 @@ public class ManejadorCliente implements Runnable {
             return invoke(handler, req.payload, usuarioLogueado);
 
         } catch (Exception e) {
-            return new Respuesta(false, "Error interno: " + e.getMessage());
+            e.printStackTrace();
+            Throwable root = e;
+            while (root.getCause() != null) root = root.getCause();
+            return new Respuesta(false, "Error interno: " + root.getMessage(), null);
         }
     }
 

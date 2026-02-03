@@ -11,7 +11,7 @@ import server.service.notes.NotaService;
 import shared.dto.notes.DiaConNotasDTO;
 import shared.protocol.Respuesta;
 
-public class ManejadorCargaDiario implements ManejadorAcciones<String> {
+public class ManejadorCargaDiario implements ManejadorAcciones<Void> {
 
     private final UsuarioService usuarioService;
     private final DiaService diaService;
@@ -24,21 +24,21 @@ public class ManejadorCargaDiario implements ManejadorAcciones<String> {
     }
 
     @Override
-    public Respuesta handle(String nombreUsuario) throws Exception {
+    public Respuesta handle(Void payload, String usuarioLogueado) throws Exception {
 
-        if (nombreUsuario == null || nombreUsuario.trim().isEmpty()) {
-            return new Respuesta(false, "Nombre de usuario vacío");
+        if (usuarioLogueado == null || usuarioLogueado.isBlank()) {
+            return new Respuesta(false, "NO_LOGUEADO", null);
         }
 
-        Usuario u = usuarioService.findByNombre(nombreUsuario);
-        if (u == null) return new Respuesta(false, "Usuario no encontrado");
+        Usuario u = usuarioService.findByNombre(usuarioLogueado);
+        if (u == null) return new Respuesta(false, "Usuario no encontrado", null);
 
-        List<DiaConNotasDTO> diario = diaService.cargarDiario(nombreUsuario, notaService);
+        List<DiaConNotasDTO> diario = diaService.cargarDiario(usuarioLogueado, notaService);
         return new Respuesta(true, "Diario cargado", (Serializable) diario);
     }
 
     @Override
-    public Class<String> payloadType() {
-        return String.class;
+    public Class<Void> payloadType() {
+        return Void.class;
     }
 }

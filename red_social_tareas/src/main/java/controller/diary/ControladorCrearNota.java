@@ -123,7 +123,6 @@ public class ControladorCrearNota extends ControladorFuncionesCompartidas {
         LocalTime fin = finTxt.isEmpty() ? null : LocalTime.parse(finTxt, HORA_FMT);
 
         CrearNotaDTO dto = new CrearNotaDTO(
-                u.nombreUsuario,
                 fecha,
                 categoria,
                 titulo,

@@ -45,8 +45,4 @@ public class ManejadorSolicitudesPendientes implements ManejadorAcciones<Object>
         return Object.class; // aceptará null si ajustas procesar()
     }
 
-    @Override
-    public Respuesta handle(Object dto) {
-        return new Respuesta(false, "No autenticado");
-    }
 }

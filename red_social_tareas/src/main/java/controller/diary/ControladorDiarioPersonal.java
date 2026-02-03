@@ -79,7 +79,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 
         new Thread(() -> {
             try {
-                Respuesta resp = enviar(new Peticion("CARGAR_DIARIO", u.nombreUsuario));
+                Respuesta resp = enviar(new Peticion("CARGAR_DIARIO", null));
 
                 Platform.runLater(() -> {
                     if (!resp.ok) {
@@ -105,15 +105,14 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
                         if (d.notas != null) {
                             for (NotaDiarioDTO n : d.notas) {
                                 CrearNotaDTO fake = new CrearNotaDTO(
-                                    u.nombreUsuario,
-                                    d.fecha,
-                                    d.categoria,
-                                    n.titulo,
-                                    n.texto,
-                                    n.horaInicio,
-                                    n.horaFin,
-                                    n.visibilidad
-                                );
+                                	    d.fecha,
+                                	    d.categoria,
+                                	    n.titulo,
+                                	    n.texto,
+                                	    n.horaInicio,
+                                	    n.horaFin,
+                                	    n.visibilidad
+                                	);
                                 insertarBloqueNota(d.idDia, n.idNota, fake);
                             }
                         }

@@ -15,10 +15,9 @@
         <!-- Mostrar SQL -->
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
+		<property name="hibernate.hbm2ddl.auto">create-drop</property>
 
-        
-        <property name="hibernate.hbm2ddl.auto">update</property>
-
+		<!-- Clases mapeadas -->
         <mapping class="entity.user.Usuario"/>
         <mapping class="entity.user.SolicitudAmistad"/>
         <mapping class="entity.user.Notificacion"/>

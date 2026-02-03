@@ -8,32 +8,40 @@ import shared.protocol.Respuesta;
 
 public class ManejadorCambioCorreo implements ManejadorAcciones<CambioCorreoDTO> {
 
-	private final UsuarioService usuarioService;
-	
-	public ManejadorCambioCorreo(UsuarioService usuarioService) {
-		this.usuarioService = usuarioService;
-	}
-	
-	@Override
-	public Respuesta handle(CambioCorreoDTO payload) throws Exception {
-		System.out.println(payload.nombreUsuario);
-		
-		if (usuarioService.existsByCorreo(payload.correoNuevo))
-			return new Respuesta(false, "Correo ya registrado");
+    private final UsuarioService usuarioService;
 
-		Usuario u = usuarioService.findByNombre(payload.nombreUsuario);
-		if (u == null) {
-			System.err.println("Usuario no encontrado en cambioCorreo");
-			return new Respuesta(false, "Usuario no encontrado");
-		}
-		u.setCorreo(payload.correoNuevo);
-		usuarioService.update(u);
-		return new Respuesta(true, "Correo cambiado correctamente");
-	}
+    public ManejadorCambioCorreo(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
-	@Override
-	public Class<CambioCorreoDTO> payloadType() {
-		return CambioCorreoDTO.class;
-	}
+    @Override
+    public Respuesta handle(CambioCorreoDTO payload, String usuarioLogueado) throws Exception {
 
+        if (usuarioLogueado == null || usuarioLogueado.isBlank()) {
+            return new Respuesta(false, "NO_LOGUEADO", null);
+        }
+
+        if (payload == null || payload.correoNuevo == null || payload.correoNuevo.isBlank()) {
+            return new Respuesta(false, "Correo inválido", null);
+        }
+
+        if (usuarioService.existsByCorreo(payload.correoNuevo)) {
+            return new Respuesta(false, "Correo ya registrado", null);
+        }
+
+        Usuario u = usuarioService.findByNombre(usuarioLogueado);
+        if (u == null) {
+            return new Respuesta(false, "Usuario no encontrado", null);
+        }
+
+        u.setCorreo(payload.correoNuevo);
+        usuarioService.update(u);
+
+        return new Respuesta(true, "Correo cambiado correctamente", null);
+    }
+
+    @Override
+    public Class<CambioCorreoDTO> payloadType() {
+        return CambioCorreoDTO.class;
+    }
 }

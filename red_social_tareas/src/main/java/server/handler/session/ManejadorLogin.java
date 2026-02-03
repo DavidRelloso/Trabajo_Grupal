@@ -6,6 +6,7 @@ import server.service.UsuarioService;
 import shared.dto.auth.LoginDTO;
 import shared.dto.user.UserDTO;
 import shared.protocol.Respuesta;
+import util.PasswordUtil;
 
 public class ManejadorLogin implements ManejadorAcciones<LoginDTO> {
 
@@ -16,18 +17,27 @@ public class ManejadorLogin implements ManejadorAcciones<LoginDTO> {
     }
 
     @Override
-    public Respuesta handle(LoginDTO dto) {
-    	
-        Usuario u = usuarioService.findByNombreAndContra(dto.nombreUsuario, dto.contra);
-        if (u == null) return new Respuesta(false, "Usuario o contraseña incorrectos");
+    public Respuesta handle(LoginDTO dto, String usuarioLogueado) throws Exception {
+
+        if (dto == null || dto.nombreUsuario == null || dto.contra == null) {
+            return new Respuesta(false, "Datos inválidos", null);
+        }
+
+        Usuario u = usuarioService.findByNombre(dto.nombreUsuario);
+        if (u == null) return new Respuesta(false, "Usuario o contraseña incorrectos", null);
+
+        String hashInput = PasswordUtil.hash(dto.contra);
+        if (!hashInput.equals(u.getContraHash()))
+            return new Respuesta(false, "Usuario o contraseña incorrectos", null);
+
 
         UserDTO user = new UserDTO(
-	        		u.getIdUsuario(), 
-	        		u.getNombreUsuario(), 
-	        		u.getCorreo(),
-	                u.getContraHash(), 
-	                u.getAvatarImg()
-        		);
+            u.getIdUsuario(),
+            u.getNombreUsuario(),
+            u.getCorreo(),
+            null,
+            u.getAvatarImg()
+        );
 
         return new Respuesta(true, "Login correcto", user);
     }

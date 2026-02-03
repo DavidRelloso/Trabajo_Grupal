@@ -51,6 +51,7 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
     @FXML private Button btnVolverLogin;
 
     private byte[] avatarBytesSeleccionado;
+    private volatile boolean registrando = false;
 
     @FXML
     private void initialize() {
@@ -193,6 +194,9 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
 
     // REGISTRARSE 
     private void onRegistrarse() {
+
+        if (registrando) return; 
+
         String correoStr = correo.getText() != null ? correo.getText().trim() : "";
         String nombreStr = nombreUsuario.getText() != null ? nombreUsuario.getText().trim() : "";
         String contra1 = contraseñaRegistro.getText() != null ? contraseñaRegistro.getText().trim() : "";
@@ -210,12 +214,15 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
             return;
         }
 
+        registrando = true;
+        btnRegistrarse.setDisable(true);
+
         new Thread(() -> {
             try {
-            	Respuesta resp = enviar(new Peticion(
-            	    "REGISTER",
-            	    new RegistroDTO(correoStr, nombreStr, contra1, avatarBytesSeleccionado)
-            	));
+                Respuesta resp = enviar(new Peticion(
+                    "REGISTER",
+                    new RegistroDTO(correoStr, nombreStr, contra1, avatarBytesSeleccionado)
+                ));
 
                 Platform.runLater(() -> {
                     if (resp.ok) {
@@ -228,9 +235,15 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
 
             } catch (Exception e) {
                 Platform.runLater(() ->
-                        mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage())
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage())
                 );
+            } finally {
+                Platform.runLater(() -> {
+                    registrando = false;
+                    btnRegistrarse.setDisable(false);
+                });
             }
         }).start();
     }
+
 }

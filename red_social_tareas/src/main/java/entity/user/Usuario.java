@@ -15,10 +15,22 @@ public class Usuario {
     @Column(name = "id_usuario")
     private Long idUsuario;
 
-    @Column(name = "nombre_usuario", unique = true, nullable = false)
+    // Case-sensitive + UNIQUE real en MySQL (a != A)
+    @Column(
+        name = "nombre_usuario",
+        nullable = false,
+        unique = true,
+        columnDefinition = "VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin"
+    )
     private String nombreUsuario;
 
-    @Column(unique = true, nullable = false)
+    // Case-sensitive + UNIQUE real en MySQL (a != A)
+    @Column(
+        name = "correo",
+        nullable = false,
+        unique = true,
+        columnDefinition = "VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin"
+    )
     private String correo;
 
     @Column(name = "contra_hash", nullable = false)
@@ -28,8 +40,8 @@ public class Usuario {
     @Column(name = "avatar_img")
     private byte[] avatarImg;
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Categoria> categorias = new ArrayList<>();
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Categoria> categorias = new ArrayList<>();
 
     public Usuario() {}
 
@@ -40,13 +52,12 @@ public class Usuario {
         this.avatarImg = avatarImg;
     }
 
-
-	public void addCategoria(String nombre) {
-		Categoria c = new Categoria();
-		c.setNombre(nombre);
-		c.setUsuario(this); 
-		categorias.add(c);
-	}
+    public void addCategoria(String nombre) {
+        Categoria c = new Categoria();
+        c.setNombre(nombre);
+        c.setUsuario(this);
+        categorias.add(c);
+    }
 
     public List<Categoria> getCategorias() {
         return categorias;

@@ -111,8 +111,4 @@ public class ManejadorAgregarAmigo implements ManejadorAcciones<AgregarAmigoDTO>
         return AgregarAmigoDTO.class;
     }
 
-    @Override
-    public Respuesta handle(AgregarAmigoDTO dto) {
-        return new Respuesta(false, "No autenticado");
-    }
 }

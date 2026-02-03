@@ -32,8 +32,16 @@ public class HibernateUtil {
     }
 
     public static void shutdown() {
-        if (registry != null) {
-            StandardServiceRegistryBuilder.destroy(registry);
+        try {
+            if (sessionFactory != null) {
+                sessionFactory.close();   // 🔥 esto dispara el DROP en create-drop
+                sessionFactory = null;
+            }
+        } finally {
+            if (registry != null) {
+                StandardServiceRegistryBuilder.destroy(registry);
+                registry = null;
+            }
         }
     }
 }
