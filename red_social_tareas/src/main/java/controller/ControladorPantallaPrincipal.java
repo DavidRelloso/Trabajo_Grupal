@@ -13,7 +13,7 @@ public class ControladorPantallaPrincipal {
 
     @FXML private Accordion notificacionesAccordion; 
     @FXML private Accordion recordatoriosAccordion;
-    @FXML private Button btnVerDiario, btnVerAmigos, btnVerAjustes, btnCerrarSesion;
+    @FXML private Button btnVerDiario, btnVerAmigos, btnVerAjustes, btnCerrarSesion, btnGenerarJasper;
     
     @FXML
     public void initialize() {
@@ -56,15 +56,18 @@ public class ControladorPantallaPrincipal {
     
     
     private void configurarBotones() {
-    	
-    	btnVerDiario.setOnAction(e -> {         
-    		VistaYControlador<Object> vc = cargarVista("prueba.fxml");
-    		if (vc == null) return;
-    		Parent vista = vc.getVista();
-    		btnVerDiario.getScene().setRoot(vista);
-    	});
-    	
+
+        btnVerDiario.setOnAction(e -> {         
+            VistaYControlador<Object> vc = cargarVista("prueba.fxml");
+            if (vc == null) return;
+            Parent vista = vc.getVista();
+            btnVerDiario.getScene().setRoot(vista);
+        });
+
+        // 👉 AÑADIR ESTA LÍNEA
+        btnGenerarJasper.setOnAction(e -> generarInformeJasper());
     }
+
     
     public <T> VistaYControlador<T> cargarVista(String rutaFXML) {
         try {
@@ -91,5 +94,46 @@ public class ControladorPantallaPrincipal {
         public Parent getVista() { return vista; }
         public T getControlador() { return controlador; }
     }
+    
+    private void generarInformeJasper() {
+
+        javafx.concurrent.Task<Void> tarea = new javafx.concurrent.Task<>() {
+            @Override
+            protected Void call() throws Exception {
+
+                // Llamada al servidor
+                byte[] pdf = Cliente.ClienteTCP.solicitarInforme();
+
+                // Guardar PDF
+                java.io.FileOutputStream fos = new java.io.FileOutputStream("informe_usuarios.pdf");
+                fos.write(pdf);
+                fos.close();
+
+                return null;
+            }
+        };
+
+        tarea.setOnSucceeded(ev -> {
+            System.out.println("Informe generado correctamente");
+            abrirPDF("informe_usuarios.pdf");
+        });
+
+        tarea.setOnFailed(ev -> {
+            System.out.println("Error al generar el informe");
+            tarea.getException().printStackTrace();
+        });
+
+        new Thread(tarea).start();
+    }
+    
+    private void abrirPDF(String ruta) {
+        try {
+            java.awt.Desktop.getDesktop().open(new java.io.File(ruta));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
 
