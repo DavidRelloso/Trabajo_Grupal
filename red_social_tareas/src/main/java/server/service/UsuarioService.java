@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import entity.user.Usuario;
+import shared.dto.reports.UsuarioInformeDTO;
 import util.HibernateUtil;
 
 import java.util.List;
@@ -205,4 +206,29 @@ public class UsuarioService {
             if (session != null) session.close();
         }
     }
+    
+    public List<UsuarioInformeDTO> listarUsuariosParaInforme() {
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            List<Object[]> rows = session.createQuery(
+                    "select u.idUsuario, u.nombreUsuario, u.correo, u.contraHash " +
+                    "from entity.user.Usuario u " +
+                    "order by u.nombreUsuario",
+                    Object[].class
+            ).getResultList();
+
+            return rows.stream()
+                    .map(r -> new UsuarioInformeDTO(
+                            // idUsuario es Long en la entidad, pero el .jasper quiere Integer
+                            Math.toIntExact((Long) r[0]),
+                            (String) r[1],  // nombreUsuario -> nombre_usuario
+                            (String) r[2],  // correo
+                            "***"           // NO exponer hashes (o (String) r[3] si insistís)
+                    ))
+                    .toList();
+        }
+    }
+
+
 }

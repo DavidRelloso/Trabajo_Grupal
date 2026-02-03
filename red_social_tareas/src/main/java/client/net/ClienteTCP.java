@@ -100,8 +100,20 @@ public class ClienteTCP {
         readerThread.start();
     }
 
+    
+    public byte[] solicitarInformeUsuarios() throws Exception {
+        Respuesta r = enviar(new Peticion("GENERAR_INFORME_USUARIOS", null));
 
-    public Respuesta enviar(Peticion p) throws Exception {
+        if (!r.ok) throw new RuntimeException(r.message);
+
+        if (!(r.data instanceof byte[] pdf)) {
+            throw new RuntimeException("Respuesta inválida: se esperaba byte[] pero llegó " +
+                    (r.data == null ? "null" : r.data.getClass().getName()));
+        }
+        return pdf;
+    }
+
+    public synchronized Respuesta enviar(Peticion p) throws Exception {
         if (!isConectado()) throw new IllegalStateException("No conectado al servidor");
 
         synchronized (out) {

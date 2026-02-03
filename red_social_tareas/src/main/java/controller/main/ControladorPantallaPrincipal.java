@@ -1,14 +1,17 @@
 package controller.main;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.net.ClienteTCP;
 import client.net.Sesion;
 import controller.ControladorFuncionesCompartidas;
 import controller.sceneNavigator.NavegadorVentanas;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -47,6 +50,7 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
     @FXML private Button btnVerPeticiones;
     @FXML private Button btnAgregar;
     @FXML private Button btnVerAjustes;
+    @FXML private Button btnGenerarInforme;
     @FXML private Button btnCerrarSesion;
 
     private LocalDate fechaSeleccionada = LocalDate.now();
@@ -59,6 +63,7 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
         btnVerAmigos.setOnAction(e -> verAmigos());
         btnAgregar.setOnAction(e -> agregarAmigo());
         btnVerPeticiones.setOnAction(e -> verPeticiones());
+        btnGenerarInforme.setOnAction(e -> generarInformeJasper());
         btnVerAjustes.setOnAction(e -> verAjustes());
         btnCerrarSesion.setOnAction(e -> onCerrarSesion());
 
@@ -233,6 +238,7 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
          }
     }
     
+    // BOTN AGREGAR AMIGO
     private void agregarAmigo() {
     	
     	try {
@@ -253,7 +259,7 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
         }
     }
     
-    
+    // BTON VER PETICIONES AMISTAD
     private void verPeticiones() {
     	
     	try {
@@ -273,7 +279,56 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir Amigos: " + e.getMessage());
         }
     }
+    
+    //BOTON GENERAR INFORME
+    private void generarInformeJasper() {
 
+        Task<Void> tarea = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+
+                // 1) asegurar conexión al servidor
+                Sesion.asegurarConexion();
+
+                // 2) pedir PDF por la conexión ya existente (la misma del login)
+                byte[] pdf = Sesion.tcp.solicitarInformeUsuarios();
+
+                // 3) guardar
+                try (FileOutputStream fos = new FileOutputStream("informe_usuarios.pdf")) {
+                    fos.write(pdf);
+                }
+
+                return null;
+            }
+        };
+
+        tarea.setOnSucceeded(ev -> {
+            System.out.println("Informe generado correctamente");
+            abrirPDF("informe_usuarios.pdf");
+        });
+
+        tarea.setOnFailed(ev -> {
+            System.out.println("Error al generar el informe");
+            Throwable ex = tarea.getException();
+            if (ex != null) ex.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Informe",
+                    ex != null ? ex.getMessage() : "Error desconocido");
+        });
+
+        new Thread(tarea, "informe-task").start();
+    }
+
+
+    
+    private void abrirPDF(String ruta) {
+        try {
+            java.awt.Desktop.getDesktop().open(new java.io.File(ruta));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // BOTN ABRIR AJUSTES
     private void verAjustes() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/principal/VentanaAjustes.fxml"));
