@@ -17,6 +17,7 @@ import server.handler.friends.ManejadorObtenerAmigos;
 import server.handler.friends.ManejadorEliminarAmigo;
 import server.handler.notes.ManejadorCargaDiario;
 import server.handler.notes.ManejadorCreacionNota;
+import server.handler.reports.ManejadorGenerarInformeUsuarios;
 import server.handler.session.ManejadorLogin;
 import server.handler.session.ManejadorRegistro;
 import server.handler.user.ManejadorCambioAvatar;
@@ -75,6 +76,10 @@ public class ManejadorCliente implements Runnable {
 		// Diario
 		handlers.put("CARGAR_DIARIO", new ManejadorCargaDiario(usuarioService, diaService, notaService));
 		handlers.put("CREAR_NOTA", new ManejadorCreacionNota(usuarioService, notaService, diaService));
+		
+		// Jasper Informe
+		handlers.put("GENERAR_INFORME_USUARIOS", new ManejadorGenerarInformeUsuarios(usuarioService));
+
 
 		this.handlers = Map.copyOf(handlers); 
 
