@@ -39,6 +39,7 @@ public class ControladorNota {
 		}
 	}
 
+	//DATOS PARA CREAR LA NOTA
 	public void setDatosNota(Long idDia, Long idNota, CrearNotaDTO dto, boolean diarioPropio) {
 		this.idDia = idDia;
 		this.idNota = idNota;
@@ -52,7 +53,7 @@ public class ControladorNota {
 			lblTexto.setText(safe(dto.texto));
 
 		if (lblHora != null) {
-			lblHora.setText(formatHora(dto.horaInicio, dto.horaFin));
+			lblHora.setText(formatoHora(dto.horaInicio, dto.horaFin));
 		}
 
 		if (lblVisibilidad != null) {
@@ -73,7 +74,7 @@ public class ControladorNota {
 		
 	}
 
-	private String formatHora(LocalTime inicio, LocalTime fin) {
+	private String formatoHora(LocalTime inicio, LocalTime fin) {
 		if (inicio == null)
 			return "";
 		String hIni = HORA_FMT.format(inicio);

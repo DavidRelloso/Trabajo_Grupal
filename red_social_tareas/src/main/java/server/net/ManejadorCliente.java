@@ -43,6 +43,7 @@ public class ManejadorCliente implements Runnable {
 
 	private String usuarioLogueado = null;
 
+	//COGE EL SOCKET DEL CLIENTE Y MANEJA TODAS SUS PETICIONES
 	public ManejadorCliente(Socket socket) {
 		this.socket = socket;
 
@@ -143,10 +144,10 @@ public class ManejadorCliente implements Runnable {
 		}
 	}
 
+	//PROCESA LA RESPUESTA
 	private Respuesta procesar(Peticion req) {
 		ManejadorAcciones<?> handler = handlers.get(req.accion);
-		
-		
+
 		if (handler == null)
 			return new Respuesta(false, "Acción no soportada: " + req.accion);
 

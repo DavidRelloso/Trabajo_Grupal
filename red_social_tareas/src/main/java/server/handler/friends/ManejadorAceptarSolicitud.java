@@ -16,6 +16,7 @@ public class ManejadorAceptarSolicitud implements ManejadorAcciones<ResponderSol
 		this.solicitudService = solicitudService;
 	}
 
+	//VALIDAR SOLICITUD AMISTAD
 	@Override
 	public Respuesta handle(ResponderSolicitudDTO dto, String usuarioLogueado) {
 		if (usuarioLogueado == null || usuarioLogueado.isBlank())
@@ -34,6 +35,7 @@ public class ManejadorAceptarSolicitud implements ManejadorAcciones<ResponderSol
 		if (fromUser == null || toUser == null)
 			return new Respuesta(false, "Usuario no encontrado");
 
+		//	si encuentra los dos usuarios al darle a aceptar el clliente se hacen amigos
 		boolean ok = solicitudService.aceptarPendiente(fromUser.getIdUsuario(), toUser.getIdUsuario());
 		return ok ? new Respuesta(true, "Solicitud aceptada") : new Respuesta(false, "No existe solicitud pendiente");
 	}

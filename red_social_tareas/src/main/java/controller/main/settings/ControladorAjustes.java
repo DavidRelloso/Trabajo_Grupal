@@ -132,7 +132,7 @@ public class ControladorAjustes extends ControladorFuncionesCompartidas {
 
     
 
-    // ====== SELECCIONAR AVATAR ======
+    // SELECCIONAR AVATAR 
     @FXML
     private void onElegirAvatar() {
         FileChooser fileChooser = new FileChooser();
@@ -154,7 +154,7 @@ public class ControladorAjustes extends ControladorFuncionesCompartidas {
         }
     }
 
-    // ====== CAMBIAR AVATAR =====
+    // CAMBIAR AVATAR 
     @FXML
     private void onCambiarAvatar() {
 
@@ -177,7 +177,7 @@ public class ControladorAjustes extends ControladorFuncionesCompartidas {
         );
     }
 
-    // ==== PETICIÓN GENÉRICA ======
+    // PETICION GENÉRICA PARA LOS CAMBIOS 
     private void peticionCambioDatos(String accion, Serializable payload, String tituloOk, String tituloError) {
 
         new Thread(() -> {

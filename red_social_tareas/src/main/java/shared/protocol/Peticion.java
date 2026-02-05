@@ -11,6 +11,7 @@ public class Peticion implements Serializable {
 	public Peticion() {
 	}
 
+	// PETICION DEL CLIENTE AL SERVIDOR
 	public Peticion(String accion, Serializable payload) {
 		this.accion = accion;
 		this.payload = payload;

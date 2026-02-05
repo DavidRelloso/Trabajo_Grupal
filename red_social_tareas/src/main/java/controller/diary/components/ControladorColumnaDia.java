@@ -38,6 +38,7 @@ public class ControladorColumnaDia {
         btnEliminarDia.setOnAction(e -> onEliminarDia());
     }
 
+    //DATOS NECESARIOS PARA LA COLUMNA DIA
     public void setDatosDia(Long idDia, LocalDate fecha, String categoria, boolean diarioPropio) {
         this.idDia = idDia;
         this.fecha = fecha;
@@ -77,15 +78,20 @@ public class ControladorColumnaDia {
         );
     }
 
+	// LLAMA EK METODO CREAR NOTA DE CONTROLADOR DIARIO
+	private void onAgregarNota() {
+		if (padre != null)
+			padre.onAgregarNotaEnDia(idDia, fecha, categoria);
+		else
+			System.out.println("Agregar nota en día " + idDia);
+	}
 
-    private void onAgregarNota() {
-          if (padre != null) padre.onAgregarNotaEnDia(idDia, fecha, categoria);
-          else System.out.println("Agregar nota en día " + idDia);
-      }
-
-      private void onEliminarDia() {
-          if (padre != null && root != null) padre.onEliminarDia(idDia, root);
-          else System.out.println("Eliminar día " + idDia);
-      }
-  }
+	// LLAMA EK METODO ELIMINAR NOTA DE CONTROLADOR DIARIO
+	private void onEliminarDia() {
+		if (padre != null && root != null)
+			padre.onEliminarDia(idDia, root);
+		else
+			System.out.println("Eliminar día " + idDia);
+	}
+}
 

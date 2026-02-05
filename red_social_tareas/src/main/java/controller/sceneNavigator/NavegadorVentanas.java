@@ -13,7 +13,7 @@ public class NavegadorVentanas {
 		container = c;
 	}
 
-
+	//FUNCION QUE PARA CAMBIAR LA PANTALLA DENTRO DE LA MISMA VENTANA
 	public static void navegar(String fxmlPath) {
 	    if (container == null) {
 	        throw new IllegalStateException("container es null (falta setContainer)");

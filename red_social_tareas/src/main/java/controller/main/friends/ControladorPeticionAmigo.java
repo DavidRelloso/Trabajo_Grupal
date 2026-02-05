@@ -95,12 +95,5 @@ public class ControladorPeticionAmigo extends ControladorFuncionesCompartidas{
 	    }
 	}
 
-	/**
-	 * Llama a esto cuando cierres pantalla/cambies escena si quieres desuscribirte.
-	 * Si no lo haces, no pasa nada grave, pero es más limpio.
-	 */
-	public void onClose() {
-		Sesion.tcp.removeSolicitudListener(listener);
-	}
 
 }

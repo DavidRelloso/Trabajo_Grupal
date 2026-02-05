@@ -82,6 +82,7 @@ public class ControladorLogin extends ControladorFuncionesCompartidas {
         
     }
 
+    //CAMBIOS DE PANTALLA LOGIN <-> REGISTRO
     private void mostrarLogin() {
         animarCambio(paneLogin, paneRegistro);
     }

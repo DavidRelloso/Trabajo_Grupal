@@ -166,7 +166,7 @@ public class ControladorCrearNota extends ControladorFuncionesCompartidas {
         }).start();
     }
 
-    // VALIDACON 
+    // VALIDACON DE CAMPOS ANTES DE CREAR NOTA
     private static class ValidacionResultado {
         final boolean ok;
         final String mensaje;

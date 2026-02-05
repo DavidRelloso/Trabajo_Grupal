@@ -27,15 +27,18 @@ public class ControladorTarjetaPeticion extends ControladorFuncionesCompartidas 
         btnRechazar.setOnAction(e -> rechazar());
     }
 
+    // NOMBRE DE USUARIO PARA TRABAJAR LA PETICION DE AMISTAD
     public void setDatos(String nombreSolicitud) {
         this.nombreSolicitud = nombreSolicitud;
         nombreAmigo.setText("Solicitud de " + nombreSolicitud);
     }
 
+    // PARA ACEPTAR LA SOLICITUD
     private void aceptar() {
         responder("ACEPTAR_SOLICITUD_AMISTAD");
     }
 
+    // PARA RECHAZAR LA SOLICITUD
     private void rechazar() {
         responder("RECHAZAR_SOLICITUD_AMISTAD");
     }
@@ -47,14 +50,14 @@ public class ControladorTarjetaPeticion extends ControladorFuncionesCompartidas 
                 Sesion.getUsuario().nombreUsuario
             );
 
-            Respuesta r = Sesion.tcp.enviar(new Peticion(accion, dto));
+            Respuesta resp = Sesion.tcp.enviar(new Peticion(accion, dto));
 
-            if (r.ok) {
+            if (resp.ok) {
                 rootTarjetaPeticion.getChildren().clear();
                 rootTarjetaPeticion.setManaged(false);
                 rootTarjetaPeticion.setVisible(false);
             } else {
-                mostrarAlerta(AlertType.ERROR, "Error", r.message);
+                mostrarAlerta(AlertType.ERROR, "Error", resp.message);
             }
 
         } catch (Exception e) {

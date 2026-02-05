@@ -34,12 +34,11 @@ public class ManejadorCambioAvatar implements ManejadorAcciones<CambioAvatarDTO>
         u.setAvatarImg(payload.nuevoAvatar);
         usuarioService.update(u);
 
-        // Recomendado: no mandar contraHash
         UserDTO user = new UserDTO(
                 u.getIdUsuario(),
                 u.getNombreUsuario(),
                 u.getCorreo(),
-                null,              // o elimina este campo del DTO si puedes
+                null,              
                 u.getAvatarImg()
         );
 

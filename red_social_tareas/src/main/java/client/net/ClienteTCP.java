@@ -4,7 +4,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -29,6 +28,8 @@ public class ClienteTCP {
     private final BlockingQueue<Respuesta> respuestas = new LinkedBlockingQueue<>();
     private final List<Consumer<SolicitudAmistadDTO>> solicitudListeners = new CopyOnWriteArrayList<>();
 
+    //METODO PARA QUE EL CLIENTE CONECTE CON EL SERVIDOR
+    //synchronized para que no haya problemas al intentar conectarse varios usuarios al mismo timempo
     public synchronized void conectar(String host, int port) throws Exception {
         cerrar();
 

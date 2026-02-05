@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 
 public class PasswordUtil {
 
+	//CIFRAR CONTRASEÑA DEL USUARIO
     public static String hash(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

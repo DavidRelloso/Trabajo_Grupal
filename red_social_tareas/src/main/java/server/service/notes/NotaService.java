@@ -48,6 +48,7 @@ public class NotaService {
 		}
 	}
 
+	// COMPROBAR SI EXISTE UNA NOTA EN ESA FECHA
 	public boolean existsNotaEnFecha(String nombreUsuario, LocalDate fecha) {
 		Session session = null;
 

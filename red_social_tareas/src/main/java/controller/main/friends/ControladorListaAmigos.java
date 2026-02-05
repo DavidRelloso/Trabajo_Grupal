@@ -28,7 +28,7 @@ public class ControladorListaAmigos extends ControladorFuncionesCompartidas {
         recuperarAmigosAsync();
     }
 
-    // Recuperar amigos
+    // RECUPERAR AMIGSO
     private void recuperarAmigosAsync() {
         new Thread(() -> {
             try {
@@ -54,7 +54,7 @@ public class ControladorListaAmigos extends ControladorFuncionesCompartidas {
                         ? (List<AmigoDTO>) resp.data
                         : Collections.emptyList();
 
-                Platform.runLater(() -> pintarAmigos(amigos));
+                Platform.runLater(() -> mostrarAmigos(amigos));
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -65,7 +65,8 @@ public class ControladorListaAmigos extends ControladorFuncionesCompartidas {
 }, "cargar-amigos").start();
     }
 
-    private void pintarAmigos(List<AmigoDTO> amigos) {
+    // CREAR UNA TARJETA AMIGO POR CADA UNO QUE HAYA
+    private void mostrarAmigos(List<AmigoDTO> amigos) {
         contenedorAmigos.getChildren().clear();
 
         if (amigos == null || amigos.isEmpty()) {
@@ -88,7 +89,6 @@ public class ControladorListaAmigos extends ControladorFuncionesCompartidas {
             Node tarjetaAmigo = loader.load();
 
             ControladorTarjetaAmigos c = loader.getController();
-            // Ajusta esto a tu DTO real (dto.nombreUsuario o dto.getNombreUsuario())
             c.setDatos(dto.nombreUsuario, rootListaAmigos);
 
             contenedorAmigos.getChildren().add(tarjetaAmigo);

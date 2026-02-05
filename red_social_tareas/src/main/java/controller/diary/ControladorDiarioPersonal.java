@@ -70,7 +70,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 		
 	}
 	
-	
+	//COMPROBAR SI MOSTRAR DIARIO PROPIO O DE AMIGO
     public void setDiarioPropio() {
         this.diarioPropio = true;
         this.usuarioDiario = null;
@@ -81,16 +81,16 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
         this.usuarioDiario = (nombreAmigo != null) ? nombreAmigo.trim() : null;
     }
 
-    // ---------- ENTRADA ÚNICA DE CARGA ----------
+    // CARGAR LOS DATOS DEL DIARIO
     public void cargar() {
         if (diarioPropio) {
             btnAgregarDia.setVisible(true);
             btnAgregarDia.setManaged(true);
-            cargarDiarioPropio();          // no pasa nombre
+            cargarDiarioPropio();          
         } else {
             btnAgregarDia.setVisible(false);
             btnAgregarDia.setManaged(false);
-            cargarDiarioAmigo(usuarioDiario); // sí pasa nombre amigo
+            cargarDiarioAmigo(usuarioDiario); 
         }
     }
 
@@ -100,7 +100,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
         new Thread(() -> {
             try {
                 Respuesta resp = enviar(new Peticion("CARGAR_DIARIO", null));
-                Platform.runLater(() -> pintarDiario(resp));
+                Platform.runLater(() -> mostrarDiario(resp));
             } catch (Exception e) {
                 Platform.runLater(() ->
                     mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage())
@@ -109,6 +109,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
         }).start();
     }
 
+    // CARGAR EL DIARIO DEL AMIGO (NOTAS PUBLICAS SOLO)
     private void cargarDiarioAmigo(String nombreAmigo) {
         if (nombreAmigo == null || nombreAmigo.isBlank()) {
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "Nombre de amigo inválido.");
@@ -118,7 +119,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
         new Thread(() -> {
             try {
                 Respuesta resp = enviar(new Peticion("CARGAR_DIARIO_AMIGO", nombreAmigo));
-                Platform.runLater(() -> pintarDiario(resp));
+                Platform.runLater(() -> mostrarDiario(resp));
             } catch (Exception e) {
                 Platform.runLater(() ->
                     mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage())
@@ -127,8 +128,8 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
         }).start();
     }
 	
-    
-    private void pintarDiario(Respuesta resp) {
+    // CREA LOS DIAS Y NOTAS EN LA INTERFAZ
+    private void mostrarDiario(Respuesta resp) {
         if (!resp.ok) {
             mostrarAlerta(Alert.AlertType.ERROR, "Error", resp.message);
             return;
@@ -335,87 +336,103 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 	}
 	
 
-public void onAgregarNotaEnDia(Long idDia, LocalDate fecha, String categoria) {
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/diario/VentanaCrearNota.fxml"));
-        Parent root = loader.load();
+	//ABRIR MODAL PARA CREAR NUEVA NOTRA
+	public void onAgregarNotaEnDia(Long idDia, LocalDate fecha, String categoria) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/diario/VentanaCrearNota.fxml"));
+			Parent root = loader.load();
 
-        ControladorCrearNota ctrl = loader.getController();
-        try { ctrl.prefijarFechaYCategoria(fecha, categoria); } catch (Exception ignored) {}
+			ControladorCrearNota ctrl = loader.getController();
+			try {
+				ctrl.prefijarFechaYCategoria(fecha, categoria);
+			} catch (Exception ignored) {
+			}
 
-        ctrl.setListener((out, dto) -> {
-            if (out.diaCreado) crearColumnaDia(out);
-            if (!contenedoresNotasPorDia.containsKey(out.idDia)) crearColumnaDia(out);
-            insertarBloqueNota(out.idDia, out.idNota, dto);
-        });
+			ctrl.setListener((out, dto) -> {
+				if (out.diaCreado)
+					crearColumnaDia(out);
+				if (!contenedoresNotasPorDia.containsKey(out.idDia))
+					crearColumnaDia(out);
+				insertarBloqueNota(out.idDia, out.idNota, dto);
+			});
 
-        Stage stage = new Stage();
-        stage.initOwner(rootDiario.getScene().getWindow());
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.sizeToScene();
-        stage.showAndWait();
+			Stage stage = new Stage();
+			stage.initOwner(rootDiario.getScene().getWindow());
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setScene(new Scene(root));
+			stage.setResizable(false);
+			stage.sizeToScene();
+			stage.showAndWait();
 
-    } catch (IOException ex) {
-        ex.printStackTrace();
-        mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir 'Crear Nota': " + ex.getMessage());
-    }
-}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir 'Crear Nota': " + ex.getMessage());
+		}
+	}
 
-public void onEliminarNota(Long idDia, Long idNota, Node cardRoot) {
-    if (idDia == null || idNota == null) return;
+	// METODO PARA ELIMINAR LA NOTA
+	public void onEliminarNota(Long idDia, Long idNota, Node cardRoot) {
+		if (idDia == null || idNota == null)
+			return;
 
-    var confirm = new Alert(Alert.AlertType.CONFIRMATION, "¿Eliminar esta nota?", ButtonType.OK, ButtonType.CANCEL);
-    confirm.setHeaderText(null);
-    confirm.showAndWait();
-    if (confirm.getResult() != ButtonType.OK) return;
+		var confirm = new Alert(Alert.AlertType.CONFIRMATION, "¿Eliminar esta nota?", ButtonType.OK, ButtonType.CANCEL);
+		confirm.setHeaderText(null);
+		confirm.showAndWait();
+		if (confirm.getResult() != ButtonType.OK)
+			return;
 
-    new Thread(() -> {
-        try {
-            Respuesta resp = enviar(new Peticion("ELIMINAR_NOTA",
-                    new EliminarNotaDTO(idDia, idNota)));
+		new Thread(() -> {
+			try {
+				Respuesta resp = enviar(new Peticion("ELIMINAR_NOTA", new EliminarNotaDTO(idDia, idNota)));
 
-            Platform.runLater(() -> {
-                if (!resp.ok) { mostrarAlerta(Alert.AlertType.ERROR, "Eliminar nota", resp.message); return; }
-                VBox cont = contenedoresNotasPorDia.get(idDia);
-                if (cont != null) cont.getChildren().remove(cardRoot);
-            });
+				Platform.runLater(() -> {
+					if (!resp.ok) {
+						mostrarAlerta(Alert.AlertType.ERROR, "Eliminar nota", resp.message);
+						return;
+					}
+					VBox cont = contenedoresNotasPorDia.get(idDia);
+					if (cont != null)
+						cont.getChildren().remove(cardRoot);
+				});
 
-        } catch (Exception e) {
-            Platform.runLater(() ->
-                mostrarAlerta(Alert.AlertType.ERROR, "Eliminar nota", "No conecta: " + e.getMessage())
-            );
-        }
-    }).start();
-}
+			} catch (Exception e) {
+				Platform.runLater(
+						() -> mostrarAlerta(Alert.AlertType.ERROR, "Eliminar nota", "No conecta: " + e.getMessage()));
+			}
+		}).start();
+	}
 
-public void onEliminarDia(Long idDia, Node columnaRoot) {
-    if (idDia == null) return;
+	//METOOD PARA ELIMINAR EL DIA CON TODAS SUS NOTAS Y DE LA INTERFAZ
+	public void onEliminarDia(Long idDia, Node columnaRoot) {
+		if (idDia == null)
+			return;
 
-    var confirm = new Alert(Alert.AlertType.CONFIRMATION, "¿Eliminar el día completo y sus notas?", ButtonType.OK, ButtonType.CANCEL);
-    confirm.setHeaderText(null);
-    confirm.showAndWait();
-    if (confirm.getResult() != ButtonType.OK) return;
+		var confirm = new Alert(Alert.AlertType.CONFIRMATION, "¿Eliminar el día completo y sus notas?", ButtonType.OK,
+				ButtonType.CANCEL);
+		confirm.setHeaderText(null);
+		confirm.showAndWait();
+		if (confirm.getResult() != ButtonType.OK)
+			return;
 
-    new Thread(() -> {
-        try {
-            Respuesta resp = enviar(new Peticion("ELIMINAR_DIA",
-                    new EliminarDiaDTO(idDia)));
+		new Thread(() -> {
+			try {
+				Respuesta resp = enviar(new Peticion("ELIMINAR_DIA", new EliminarDiaDTO(idDia)));
 
-            Platform.runLater(() -> {
-                if (!resp.ok) { mostrarAlerta(Alert.AlertType.ERROR, "Eliminar día", resp.message); return; }
-                contenedorColumnas.getChildren().remove(columnaRoot);
-                contenedoresNotasPorDia.remove(idDia);
-            });
+				Platform.runLater(() -> {
+					if (!resp.ok) {
+						mostrarAlerta(Alert.AlertType.ERROR, "Eliminar día", resp.message);
+						return;
+					}
+					contenedorColumnas.getChildren().remove(columnaRoot);
+					contenedoresNotasPorDia.remove(idDia);
+				});
 
-        } catch (Exception e) {
-            Platform.runLater(() ->
-                mostrarAlerta(Alert.AlertType.ERROR, "Eliminar día", "No conecta: " + e.getMessage())
-            );
-        }
-    }).start();
-}
+			} catch (Exception e) {
+				Platform.runLater(
+						() -> mostrarAlerta(Alert.AlertType.ERROR, "Eliminar día", "No conecta: " + e.getMessage()));
+			}
+		}).start();
+	}
 
 
 	

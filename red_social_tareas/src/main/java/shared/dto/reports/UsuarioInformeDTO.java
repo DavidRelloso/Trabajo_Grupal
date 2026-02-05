@@ -3,7 +3,9 @@ package shared.dto.reports;
 import java.io.Serializable;
 
 public class UsuarioInformeDTO implements Serializable {
-    private final Integer id_usuario;
+
+	private static final long serialVersionUID = 1L;
+	private final Integer id_usuario;
     private final String nombre_usuario;
     private final String correo;
     private final String contraseña_hash;

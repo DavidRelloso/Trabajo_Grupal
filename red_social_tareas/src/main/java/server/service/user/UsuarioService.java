@@ -220,11 +220,10 @@ public class UsuarioService {
 
             return rows.stream()
                     .map(r -> new UsuarioInformeDTO(
-                            // idUsuario es Long en la entidad, pero el .jasper quiere Integer
                             Math.toIntExact((Long) r[0]),
-                            (String) r[1],  // nombreUsuario -> nombre_usuario
-                            (String) r[2],  // correo
-                            "***"           // NO exponer hashes (o (String) r[3] si insistís)
+                            (String) r[1],  
+                            (String) r[2],  
+                            "***"           
                     ))
                     .toList();
         }

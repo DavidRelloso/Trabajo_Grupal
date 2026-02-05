@@ -24,12 +24,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import shared.dto.main.NotificacionDTO;
 import shared.dto.notes.DiaConNotasDTO;
 import shared.dto.notes.NotaDiarioDTO;
 import shared.dto.user.UserDTO;
@@ -38,35 +37,22 @@ import shared.protocol.Respuesta;
 
 public class ControladorPantallaPrincipal extends ControladorFuncionesCompartidas {
 
-	@FXML
-	private StackPane rootPrincipal;
+	@FXML private StackPane rootPrincipal;
 
-	@FXML
-	private Label lblNombreUsuario;
-	@FXML
-	private Circle imgAvatarUsuario;
-	@FXML
-	private DatePicker datePickerRecordatorios;
+	@FXML private Label lblNombreUsuario;
+	@FXML private Circle imgAvatarUsuario;
+	@FXML private DatePicker datePickerRecordatorios;
 
-	@FXML
-	private Accordion notificacionesAccordion;
-	@FXML
-	private Accordion recordatoriosAccordion;
+	@FXML private Accordion notificacionesAccordion;
+	@FXML private Accordion recordatoriosAccordion;
 
-	@FXML
-	private Button btnVerDiario;
-	@FXML
-	private Button btnVerAmigos;
-	@FXML
-	private Button btnVerPeticiones;
-	@FXML
-	private Button btnAgregar;
-	@FXML
-	private Button btnVerAjustes;
-	@FXML
-	private Button btnGenerarInforme;
-	@FXML
-	private Button btnCerrarSesion;
+	@FXML private Button btnVerDiario;
+	@FXML private Button btnVerAmigos;
+	@FXML private Button btnVerPeticiones;
+	@FXML private Button btnAgregar;
+	@FXML private Button btnVerAjustes;
+	@FXML private Button btnGenerarInforme;
+	@FXML private Button btnCerrarSesion;
 
 	private LocalDate fechaSeleccionada = LocalDate.now();
 
@@ -97,6 +83,7 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
 		cargarRecordatorios(fechaSeleccionada);
 	}
 
+	//CAMBIO DE DATOS EN PANEL USUARIO
 	private void refrescarHeader(UserDTO u) {
 		if (lblNombreUsuario != null) {
 			lblNombreUsuario.setText(u != null ? u.nombreUsuario : "");
@@ -113,7 +100,7 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
 
 	
 
-	// ---------------- RECORDATORIOS ----------------
+	//  CARGAR RECORDATORIOS 
 	private void cargarRecordatorios(LocalDate fecha) {
 		if (recordatoriosAccordion == null || fecha == null)
 			return;
@@ -160,12 +147,11 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
 								TitledPane tp = loader.load();
 								ControladorRecordatorios c = loader.getController();
 
-								// Encabezado = titulo · fecha · hora (horaInicio)
-								LocalTime hora = n.horaInicio; // si quieres fin, dime y lo cambio
-								c.setInfoRecordatorio(n.titulo, // titulo
-										d.fecha, // fecha
-										hora, // hora
-										n.texto // texto de la nota (lo que querías)
+								LocalTime hora = n.horaInicio; 
+								c.setInfoRecordatorio(n.titulo, 
+										d.fecha, 
+										hora, 
+										n.texto 
 								);
 
 								c.setOnEliminar(() -> recordatoriosAccordion.getPanes().remove(tp));

@@ -22,7 +22,6 @@ public class ManejadorGenerarInformeUsuarios implements ManejadorAcciones<Void> 
 
     private static final String REPORT_PATH = "reports/informe_usuarios.jasper";
 
-    // Caché del reporte compilado (evita re-leer el recurso y reduce riesgo de locks)
     private static volatile JasperReport REPORT_CACHE;
 
     private final UsuarioService usuarioService;
@@ -44,23 +43,18 @@ public class ManejadorGenerarInformeUsuarios implements ManejadorAcciones<Void> 
         }
 
         try {
-            // 1) Cargar/cachar el .jasper (cerrando el InputStream siempre)
             JasperReport report = getReport();
 
-            // 2) Datos (DTO con getters EXACTOS que pide el .jasper)
-            //    Fields del .jasper: id_usuario (Integer), nombre_usuario (String), correo (String), contraseña_hash (String)
             List<UsuarioInformeDTO> usuarios = usuarioService.listarUsuariosParaInforme();
 
             JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(usuarios);
 
-            // 3) Parámetros del informe
             Map<String, Object> params = new HashMap<>();
             params.put("TITULO", "Informe de usuarios");
 
-            // 4) Rellenar informe
             JasperPrint jp = JasperFillManager.fillReport(report, params, ds);
 
-            // 5) Exportar a PDF
+            //genetra un pdf
             byte[] pdfBytes;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 JasperExportManager.exportReportToPdfStream(jp, baos);

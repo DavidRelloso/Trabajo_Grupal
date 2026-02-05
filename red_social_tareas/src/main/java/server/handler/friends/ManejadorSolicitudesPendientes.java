@@ -42,7 +42,7 @@ public class ManejadorSolicitudesPendientes implements ManejadorAcciones<Object>
 
     @Override
     public Class<Object> payloadType() {
-        return Object.class; // aceptará null si ajustas procesar()
+        return Object.class; 
     }
 
 }

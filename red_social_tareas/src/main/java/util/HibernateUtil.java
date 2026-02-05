@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HibernateUtil {
 
+	//CREAR CONEXION CON HIBERNATE
     private static StandardServiceRegistry registry;
     private static SessionFactory sessionFactory;
 
@@ -31,10 +32,11 @@ public class HibernateUtil {
         return sessionFactory;
     }
 
+    //CERRAR CONEXION CON HIBERNATE
     public static void shutdown() {
         try {
             if (sessionFactory != null) {
-                sessionFactory.close();   // 🔥 esto dispara el DROP en create-drop
+                sessionFactory.close();   
                 sessionFactory = null;
             }
         } finally {
