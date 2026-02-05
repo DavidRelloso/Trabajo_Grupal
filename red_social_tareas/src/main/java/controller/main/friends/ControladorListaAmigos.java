@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import shared.dto.friends.AmigoDTO;
 import shared.protocol.Peticion;
@@ -18,8 +19,9 @@ import shared.protocol.Respuesta;
 
 public class ControladorListaAmigos extends ControladorFuncionesCompartidas {
 
-    @FXML
-    private VBox contenedorAmigos;
+	
+	@FXML private StackPane rootListaAmigos;
+    @FXML private VBox contenedorAmigos;
 
     @FXML
     private void initialize() {
@@ -87,7 +89,7 @@ public class ControladorListaAmigos extends ControladorFuncionesCompartidas {
 
             ControladorTarjetaAmigos c = loader.getController();
             // Ajusta esto a tu DTO real (dto.nombreUsuario o dto.getNombreUsuario())
-            c.setDatos(dto.nombreUsuario);
+            c.setDatos(dto.nombreUsuario, rootListaAmigos);
 
             contenedorAmigos.getChildren().add(tarjetaAmigo);
 

@@ -16,6 +16,7 @@ import server.handler.friends.ManejadorSolicitudesPendientes;
 import server.handler.friends.ManejadorObtenerAmigos;
 import server.handler.friends.ManejadorEliminarAmigo;
 import server.handler.notes.ManejadorCargaDiario;
+import server.handler.notes.ManejadorCargaDiarioAmigo;
 import server.handler.notes.ManejadorCreacionNota;
 import server.handler.reports.ManejadorGenerarInformeUsuarios;
 import server.handler.session.ManejadorLogin;
@@ -78,6 +79,7 @@ public class ManejadorCliente implements Runnable {
 
 		// Diario
 		handlers.put("CARGAR_DIARIO", new ManejadorCargaDiario(usuarioService, diaService, notaService));
+		handlers.put("CARGAR_DIARIO_AMIGO", new ManejadorCargaDiarioAmigo(usuarioService, diaService, notaService, amigoService));
 		handlers.put("CREAR_NOTA", new ManejadorCreacionNota(usuarioService, notaService, diaService));
 
 		// Jasper Informe

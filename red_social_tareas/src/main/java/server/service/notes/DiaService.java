@@ -190,4 +190,67 @@ public class DiaService {
 		}
 	}
 
+	  
+	  public List<DiaConNotasDTO> cargarDiarioAmigo(String nombreUsuario, NotaService notaService) {
+		    Session session = null;
+
+		    try {
+		        session = HibernateUtil.getSessionFactory().openSession();
+
+		        List<Dia> dias = session.createQuery("""
+		                SELECT d
+		                FROM Dia d
+		                JOIN d.usuario u
+		                JOIN FETCH d.categoria c
+		                WHERE u.nombreUsuario = :nombreUsuario
+		                ORDER BY d.fecha ASC, c.nombre ASC
+		            """, Dia.class)
+		            .setParameter("nombreUsuario", nombreUsuario)
+		            .list();
+
+		        List<DiaConNotasDTO> out = new ArrayList<>();
+
+		        for (Dia d : dias) {
+
+		            List<Nota> notas = notaService.findByDiaIdOrdenadas(session, d.getIdDia());
+
+		            List<NotaDiarioDTO> notasDTO = new ArrayList<>();
+		            for (Nota n : notas) {
+
+		                String vis = (n.getVisibilidad() != null) ? n.getVisibilidad().name() : null;
+
+		                // ✅ FILTRO: solo PUBLICO + COMPARTIR
+		                if (!"PUBLICO".equals(vis) && !"COMPARTIR".equals(vis)) {
+		                    continue;
+		                }
+
+		                notasDTO.add(new NotaDiarioDTO(
+		                    n.getIdNota(),
+		                    n.getTitulo(),
+		                    n.getTexto(),
+		                    n.getHoraInicio(),
+		                    n.getHoraFin(),
+		                    vis
+		                ));
+		            }
+
+		            // ✅ opcional: no mandar días sin notas visibles
+		            if (notasDTO.isEmpty()) continue;
+
+		            out.add(new DiaConNotasDTO(
+		                d.getIdDia(),
+		                d.getFecha(),
+		                d.getCategoria().getNombre(),
+		                notasDTO
+		            ));
+		        }
+
+		        return out;
+
+		    } finally {
+		        if (session != null) session.close();
+		    }
+		}
+
+
 }

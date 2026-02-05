@@ -7,11 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import client.net.Sesion;
 import controller.ControladorFuncionesCompartidas;
 import controller.diary.components.ControladorColumnaDia;
 import controller.diary.components.ControladorNota;
-import controller.sceneNavigator.NavegadorVentanas;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +31,6 @@ import shared.dto.notes.DiaConNotasDTO;
 import shared.dto.notes.EliminarDiaDTO;
 import shared.dto.notes.EliminarNotaDTO;
 import shared.dto.notes.NotaDiarioDTO;
-import shared.dto.user.UserDTO;
 import shared.protocol.Peticion;
 import shared.protocol.Respuesta;
 
@@ -50,6 +47,9 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 	@FXML private Button openOffcanvas;
 	
 	private final Map<Long, VBox> contenedoresNotasPorDia = new HashMap<>();
+	
+    private boolean diarioPropio = true;
+    private String usuarioDiario = null;
 	
 	@FXML
 	private void initialize() {
@@ -68,60 +68,57 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 		btnLogoImg.setOnAction(e -> volverInicio());
 		btnAgregarDia.setOnAction(e -> pantallaCrearNota());
 		
-		cargarDiario();
 	}
 	
-	// CARGAR NOTAS AL ENTRAR AL DIARIO
-    private void cargarDiario() {
+	
+    public void setDiarioPropio() {
+        this.diarioPropio = true;
+        this.usuarioDiario = null;
+    }
 
-        UserDTO u = Sesion.getUsuario();
-        if (u == null) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Sesión", "No hay usuario logueado.");
+    public void setDiarioAmigo(String nombreAmigo) {
+        this.diarioPropio = false;
+        this.usuarioDiario = (nombreAmigo != null) ? nombreAmigo.trim() : null;
+    }
+
+    // ---------- ENTRADA ÚNICA DE CARGA ----------
+    public void cargar() {
+        if (diarioPropio) {
+            btnAgregarDia.setVisible(true);
+            btnAgregarDia.setManaged(true);
+            cargarDiarioPropio();          // no pasa nombre
+        } else {
+            btnAgregarDia.setVisible(false);
+            btnAgregarDia.setManaged(false);
+            cargarDiarioAmigo(usuarioDiario); // sí pasa nombre amigo
+        }
+    }
+
+	
+	// CARGAR NOTAS AL ENTRAR AL DIARIO
+    private void cargarDiarioPropio() {
+        new Thread(() -> {
+            try {
+                Respuesta resp = enviar(new Peticion("CARGAR_DIARIO", null));
+                Platform.runLater(() -> pintarDiario(resp));
+            } catch (Exception e) {
+                Platform.runLater(() ->
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage())
+                );
+            }
+        }).start();
+    }
+
+    private void cargarDiarioAmigo(String nombreAmigo) {
+        if (nombreAmigo == null || nombreAmigo.isBlank()) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Nombre de amigo inválido.");
             return;
         }
 
         new Thread(() -> {
             try {
-                Respuesta resp = enviar(new Peticion("CARGAR_DIARIO", null));
-
-                Platform.runLater(() -> {
-                    if (!resp.ok) {
-                        mostrarAlerta(Alert.AlertType.ERROR, "Error", resp.message);
-                        return;
-                    }
-
-                    if (!(resp.data instanceof List<?> lista)) {
-                        mostrarAlerta(Alert.AlertType.ERROR, "Error", "Respuesta inválida (no es lista).");
-                        return;
-                    }
-
-                    contenedorColumnas.getChildren().clear();
-                    contenedoresNotasPorDia.clear();
-
-                    @SuppressWarnings("unchecked")
-                    List<DiaConNotasDTO> dias = (List<DiaConNotasDTO>) lista;
-
-                    for (DiaConNotasDTO d : dias) {
-                        CrearDiaDTO diaUi = new CrearDiaDTO(true, d.idDia, null, d.fecha, d.categoria);
-                        crearColumnaDia(diaUi);
-
-                        if (d.notas != null) {
-                            for (NotaDiarioDTO n : d.notas) {
-                                CrearNotaDTO fake = new CrearNotaDTO(
-                                	    d.fecha,
-                                	    d.categoria,
-                                	    n.titulo,
-                                	    n.texto,
-                                	    n.horaInicio,
-                                	    n.horaFin,
-                                	    n.visibilidad
-                                	);
-                                insertarBloqueNota(d.idDia, n.idNota, fake);
-                            }
-                        }
-                    }
-                });
-
+                Respuesta resp = enviar(new Peticion("CARGAR_DIARIO_AMIGO", nombreAmigo));
+                Platform.runLater(() -> pintarDiario(resp));
             } catch (Exception e) {
                 Platform.runLater(() ->
                     mostrarAlerta(Alert.AlertType.ERROR, "Error", "No conecta: " + e.getMessage())
@@ -130,6 +127,46 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
         }).start();
     }
 	
+    
+    private void pintarDiario(Respuesta resp) {
+        if (!resp.ok) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", resp.message);
+            return;
+        }
+
+        if (!(resp.data instanceof List<?> lista)) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Respuesta inválida (no es lista).");
+            return;
+        }
+
+        contenedorColumnas.getChildren().clear();
+        contenedoresNotasPorDia.clear();
+
+        @SuppressWarnings("unchecked")
+        List<DiaConNotasDTO> dias = (List<DiaConNotasDTO>) lista;
+
+        for (DiaConNotasDTO d : dias) {
+            CrearDiaDTO diaUi = new CrearDiaDTO(true, d.idDia, null, d.fecha, d.categoria);
+            crearColumnaDia(diaUi);
+
+            if (d.notas != null) {
+                for (NotaDiarioDTO n : d.notas) {
+                    CrearNotaDTO fake = new CrearNotaDTO(
+                        d.fecha,
+                        d.categoria,
+                        n.titulo,
+                        n.texto,
+                        n.horaInicio,
+                        n.horaFin,
+                        n.visibilidad
+                    );
+                    insertarBloqueNota(d.idDia, n.idNota, fake);
+                }
+            }
+        }
+    }
+
+    
 	// ABRIR PANTALLA CREAR NOTA
 	private void pantallaCrearNota() {
 		
@@ -248,14 +285,17 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 	
 	// VUELVE PANTALLA INICIO
 	private void volverInicio() {
-		
-		try {
-			NavegadorVentanas.navegar("/escenas/principal/VentanaPantallaPrincipal.fxml");
-		} catch (Exception ex) {
+	System.out.println("volviendo a nicio");
+	try {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/principal/VentanaPantallaPrincipal.fxml"));
+		Parent root = loader.load();
+
+		Stage stage = (Stage) rootDiario.getScene().getWindow();
+		stage.getScene().setRoot(root);
+	} catch (Exception ex) {
 		    mostrarAlerta(Alert.AlertType.ERROR, "Error",
 		        "No se pudo abrir la pantalla principal: " + ex.getMessage());
 		}
-
 	}
 	
 	// FILTRAR NOTAS POR CATEGORIA
