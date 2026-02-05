@@ -33,8 +33,4 @@ public class NavegadorVentanas {
 	        e.printStackTrace();
 	    }
 	}
-
-	
-	
-
 }

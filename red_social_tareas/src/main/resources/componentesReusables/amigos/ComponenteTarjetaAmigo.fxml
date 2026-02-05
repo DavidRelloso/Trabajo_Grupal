@@ -12,6 +12,7 @@
  	styleClass="amigo-item"
 	xmlns="http://javafx.com/javafx/21"
 	xmlns:fx="http://javafx.com/fxml/1"
+	fx:id="rootTarjetaAmigo"
 	fx:controller="controller.main.friends.components.ControladorTarjetaAmigos">
 	<children>
 		<Label fx:id="nombreAmigo" text="Carlos Ruiz" styleClass="amigo-nombre" />

@@ -10,6 +10,7 @@ import java.util.List;
 import client.net.ClienteTCP;
 import client.net.Sesion;
 import controller.ControladorFuncionesCompartidas;
+import controller.diary.ControladorDiarioPersonal;
 import controller.sceneNavigator.NavegadorVentanas;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -207,10 +208,17 @@ public class ControladorPantallaPrincipal extends ControladorFuncionesCompartida
     // BOTON VER DIARIO
     private void verDiario() {
 
-        try {
-            Stage stage = (Stage) rootPrincipal.getScene().getWindow();
-            NavegadorVentanas.navegar("/escenas/diario/VentanaDiarioPersonal.fxml");
-            Scene sceneNueva = stage.getScene();
+    	try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/diario/VentanaDiarioPersonal.fxml"));
+    		Parent root = loader.load();
+
+    		ControladorDiarioPersonal ctrl = loader.getController();
+    		ctrl.setDiarioPropio();      
+    		ctrl.cargar();
+
+    		Stage stage = (Stage) btnVerDiario.getScene().getWindow();
+    		stage.getScene().setRoot(root);
+
         } catch (Exception ex) {
             ex.printStackTrace();
             mostrarAlerta(Alert.AlertType.ERROR, "Error",
