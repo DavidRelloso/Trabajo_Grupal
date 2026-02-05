@@ -130,7 +130,7 @@
 								</Button>
 
 								<Button fx:id="btnVerAjustes" prefHeight="50.0"
-									prefWidth="200.0" styleClass="boton-principal" text="AMIGOS">
+									prefWidth="200.0" styleClass="boton-principal" text="AJ-´-´-USTES">
 									<VBox.margin>
 										<Insets bottom="5.0" top="5.0" />
 									</VBox.margin>

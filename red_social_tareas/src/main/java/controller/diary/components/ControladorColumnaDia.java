@@ -3,6 +3,7 @@ package controller.diary.components;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import controller.diary.ControladorDiarioPersonal;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -11,6 +12,7 @@ import javafx.scene.layout.VBox;
 
 public class ControladorColumnaDia {
 
+	@FXML private VBox root;
     @FXML private Label lblTituloDia;
     @FXML private Button btnAddNota;
     @FXML private Button btnEliminarDia;
@@ -19,8 +21,16 @@ public class ControladorColumnaDia {
     private Long idDia;
     private LocalDate fecha;
     private String categoria;
+    
+    private ControladorDiarioPersonal padre;
 
     private static final DateTimeFormatter FECHA_FMT = DateTimeFormatter.ofPattern("dd/MM");
+    
+
+    public void setPadre(ControladorDiarioPersonal padre) { 
+           this.padre = padre;
+       }
+
 
     @FXML
     private void initialize() {
@@ -44,6 +54,7 @@ public class ControladorColumnaDia {
     public Long getIdDia() { return idDia;}
     public LocalDate getFecha() { return fecha;}
     public String getCategoria() { return categoria;}
+    public VBox getRoot() { return root; }
 
 
     private void actualizarTitulo() {
@@ -54,11 +65,15 @@ public class ControladorColumnaDia {
         );
     }
 
-    private void onAgregarNota() {
-        System.out.println("Agregar nota en día " + idDia);
-    }
 
-    private void onEliminarDia() {
-        System.out.println("Eliminar día " + idDia);
-    }
-}
+    private void onAgregarNota() {
+          if (padre != null) padre.onAgregarNotaEnDia(idDia, fecha, categoria);
+          else System.out.println("Agregar nota en día " + idDia);
+      }
+
+      private void onEliminarDia() {
+          if (padre != null && root != null) padre.onEliminarDia(idDia, root);
+          else System.out.println("Eliminar día " + idDia);
+      }
+  }
+

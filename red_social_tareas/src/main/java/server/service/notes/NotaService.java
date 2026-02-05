@@ -14,9 +14,7 @@ import util.HibernateUtil;
 public class NotaService {
 
 	// CREAR NOTA
-	public Nota crearNota(Dia dia, 
-			String titulo, String texto, 
-			LocalTime horaInicio, LocalTime horaFin,
+	public Nota crearNota(Dia dia, String titulo, String texto, LocalTime horaInicio, LocalTime horaFin,
 			VisibilidadNota visibilidad) {
 
 		Session session = null;
@@ -27,12 +25,12 @@ public class NotaService {
 			tx = session.beginTransaction();
 
 			Nota nota = new Nota();
-				nota.setDia(dia);
-				nota.setTitulo(titulo);
-				nota.setTexto(texto);
-				nota.setHoraInicio(horaInicio);
-				nota.setHoraFin(horaFin);
-				nota.setVisibilidad(visibilidad);
+			nota.setDia(dia);
+			nota.setTitulo(titulo);
+			nota.setTexto(texto);
+			nota.setHoraInicio(horaInicio);
+			nota.setHoraFin(horaFin);
+			nota.setVisibilidad(visibilidad);
 
 			session.persist(nota);
 
@@ -63,9 +61,7 @@ public class NotaService {
 					    JOIN d.usuario u
 					    WHERE u.nombreUsuario = :nombreUsuario
 					      AND d.fecha = :fecha
-					""", Integer.class)
-					.setParameter("nombreUsuario", nombreUsuario)
-					.setParameter("fecha", fecha)
+					""", Integer.class).setParameter("nombreUsuario", nombreUsuario).setParameter("fecha", fecha)
 					.setMaxResults(1).uniqueResult();
 
 			return one != null;
@@ -75,18 +71,49 @@ public class NotaService {
 				session.close();
 		}
 	}
-	
-	
-    public List<Nota> findByDiaIdOrdenadas(Session session, Long idDia) {
-        return session.createQuery("""
-                SELECT n
-                FROM Nota n
-                WHERE n.dia.idDia = :idDia
-                ORDER BY n.horaInicio ASC
-            """, Nota.class)
-            .setParameter("idDia", idDia)
-            .list();
-    }
 
-	
+	public List<Nota> findByDiaIdOrdenadas(Session session, Long idDia) {
+		return session.createQuery("""
+				    SELECT n
+				    FROM Nota n
+				    WHERE n.dia.idDia = :idDia
+				    ORDER BY n.horaInicio ASC
+				""", Nota.class).setParameter("idDia", idDia).list();
+	}
+
+	public Nota findById(Long idNota) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			return session.get(Nota.class, idNota);
+		} finally {
+			if (session != null)
+				session.close();
+		}
+	}
+
+	public void eliminarNota(Nota n) {
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+
+			Nota managed = (n != null && session.contains(n)) ? n
+					: (n != null ? session.get(Nota.class, n.getIdNota()) : null);
+
+			if (managed != null) {
+				session.remove(managed);
+			}
+
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			throw e;
+		} finally {
+			if (session != null)
+				session.close();
+		}
+	}
 }

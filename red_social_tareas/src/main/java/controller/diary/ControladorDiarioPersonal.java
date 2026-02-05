@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -29,6 +30,8 @@ import javafx.stage.Stage;
 import shared.dto.notes.CrearDiaDTO;
 import shared.dto.notes.CrearNotaDTO;
 import shared.dto.notes.DiaConNotasDTO;
+import shared.dto.notes.EliminarDiaDTO;
+import shared.dto.notes.EliminarNotaDTO;
 import shared.dto.notes.NotaDiarioDTO;
 import shared.dto.user.UserDTO;
 import shared.protocol.Peticion;
@@ -172,6 +175,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 
 	       
 	        ControladorNota c = loader.getController();
+	        c.setPadre(this);
 	        c.setDatosNota(idDia, idNota, dto);
 
 	        VBox contenedor = contenedoresNotasPorDia.get(idDia);
@@ -208,6 +212,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 	        columna.getProperties().put("categoria", dto.categoria);
 
 	        ControladorColumnaDia c = loader.getController();
+	        c.setPadre(this);
 	        c.setDatosDia(dto.idDia, dto.fecha, dto.categoria);
 
 	        contenedoresNotasPorDia.put(dto.idDia, c.getContenedorNotas());
@@ -288,6 +293,90 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 
 	    contenedorColumnas.getChildren().setAll(ordenadas);
 	}
+	
+
+public void onAgregarNotaEnDia(Long idDia, LocalDate fecha, String categoria) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenas/diario/VentanaCrearNota.fxml"));
+        Parent root = loader.load();
+
+        ControladorCrearNota ctrl = loader.getController();
+        try { ctrl.prefijarFechaYCategoria(fecha, categoria); } catch (Exception ignored) {}
+
+        ctrl.setListener((out, dto) -> {
+            if (out.diaCreado) crearColumnaDia(out);
+            if (!contenedoresNotasPorDia.containsKey(out.idDia)) crearColumnaDia(out);
+            insertarBloqueNota(out.idDia, out.idNota, dto);
+        });
+
+        Stage stage = new Stage();
+        stage.initOwner(rootDiario.getScene().getWindow());
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.sizeToScene();
+        stage.showAndWait();
+
+    } catch (IOException ex) {
+        ex.printStackTrace();
+        mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir 'Crear Nota': " + ex.getMessage());
+    }
+}
+
+public void onEliminarNota(Long idDia, Long idNota, Node cardRoot) {
+    if (idDia == null || idNota == null) return;
+
+    var confirm = new Alert(Alert.AlertType.CONFIRMATION, "¿Eliminar esta nota?", ButtonType.OK, ButtonType.CANCEL);
+    confirm.setHeaderText(null);
+    confirm.showAndWait();
+    if (confirm.getResult() != ButtonType.OK) return;
+
+    new Thread(() -> {
+        try {
+            Respuesta resp = enviar(new Peticion("ELIMINAR_NOTA",
+                    new EliminarNotaDTO(idDia, idNota)));
+
+            Platform.runLater(() -> {
+                if (!resp.ok) { mostrarAlerta(Alert.AlertType.ERROR, "Eliminar nota", resp.message); return; }
+                VBox cont = contenedoresNotasPorDia.get(idDia);
+                if (cont != null) cont.getChildren().remove(cardRoot);
+            });
+
+        } catch (Exception e) {
+            Platform.runLater(() ->
+                mostrarAlerta(Alert.AlertType.ERROR, "Eliminar nota", "No conecta: " + e.getMessage())
+            );
+        }
+    }).start();
+}
+
+public void onEliminarDia(Long idDia, Node columnaRoot) {
+    if (idDia == null) return;
+
+    var confirm = new Alert(Alert.AlertType.CONFIRMATION, "¿Eliminar el día completo y sus notas?", ButtonType.OK, ButtonType.CANCEL);
+    confirm.setHeaderText(null);
+    confirm.showAndWait();
+    if (confirm.getResult() != ButtonType.OK) return;
+
+    new Thread(() -> {
+        try {
+            Respuesta resp = enviar(new Peticion("ELIMINAR_DIA",
+                    new EliminarDiaDTO(idDia)));
+
+            Platform.runLater(() -> {
+                if (!resp.ok) { mostrarAlerta(Alert.AlertType.ERROR, "Eliminar día", resp.message); return; }
+                contenedorColumnas.getChildren().remove(columnaRoot);
+                contenedoresNotasPorDia.remove(idDia);
+            });
+
+        } catch (Exception e) {
+            Platform.runLater(() ->
+                mostrarAlerta(Alert.AlertType.ERROR, "Eliminar día", "No conecta: " + e.getMessage())
+            );
+        }
+    }).start();
+}
+
 
 	
 }

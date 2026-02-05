@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+
 import client.net.Sesion;
 import controller.ControladorFuncionesCompartidas;
 import javafx.application.Platform;
@@ -274,4 +275,31 @@ public class ControladorCrearNota extends ControladorFuncionesCompartidas {
 
         btnGuardar.setDisable(true);
     }
+    
+
+public void prefijarFechaYCategoria(LocalDate fecha, String categoria) {
+    Runnable r = () -> {
+        if (fecha != null) {
+            dpFecha.setValue(fecha);
+            quitarError(dpFecha);
+        }
+        if (categoria != null) {
+            if (cbCategoria.getItems().contains(categoria)) {
+                cbCategoria.getSelectionModel().select(categoria);
+                quitarError(cbCategoria);
+            } else {
+                // si desde la columna llega "TRABAJO" y no estuviera cargado (abasicaomente seguridad)
+                cbCategoria.getSelectionModel().selectFirst();
+            }
+        }
+
+        // enfocar al titulo para escribir rápido, te lo manda al principio el titulo lo primero
+        if (txtTitulo != null) txtTitulo.requestFocus();
+    };
+
+    // Asegura que se ejecuta en el hilo, es para por si llamas desde otro hilo diferente
+    if (Platform.isFxApplicationThread()) r.run();
+    else Platform.runLater(r);
+}
+
 }

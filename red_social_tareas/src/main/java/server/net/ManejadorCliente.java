@@ -35,22 +35,22 @@ import shared.protocol.Respuesta;
 
 public class ManejadorCliente implements Runnable {
 
-    private final Socket socket;
+	private final Socket socket;
 
-    private final Map<String, ManejadorAcciones<?>> handlers;
-    
-    private String usuarioLogueado = null;
-    
-    public ManejadorCliente(Socket socket) {
-        this.socket = socket;
+	private final Map<String, ManejadorAcciones<?>> handlers;
 
-        UsuarioService usuarioService = new UsuarioService();
+	private String usuarioLogueado = null;
 
-        SolicitudAmistadService solicitudAmistadService = new SolicitudAmistadService();
-        AmigoService amigoService = new AmigoService();
-        
-        NotaService notaService = new NotaService();
-        DiaService diaService = new DiaService();
+	public ManejadorCliente(Socket socket) {
+		this.socket = socket;
+
+		UsuarioService usuarioService = new UsuarioService();
+
+		SolicitudAmistadService solicitudAmistadService = new SolicitudAmistadService();
+		AmigoService amigoService = new AmigoService();
+
+		NotaService notaService = new NotaService();
+		DiaService diaService = new DiaService();
 
 		// Registro de acciones
 		Map<String, ManejadorAcciones<?>> handlers = new HashMap<>();
@@ -69,93 +69,104 @@ public class ManejadorCliente implements Runnable {
 		handlers.put("OBTENER_AMIGOS", new ManejadorObtenerAmigos(usuarioService, amigoService));
 		handlers.put("AGREGAR_AMIGO", new ManejadorAgregarAmigo(usuarioService, solicitudAmistadService, amigoService));
 		handlers.put("ELIMINAR_AMIGO", new ManejadorEliminarAmigo(usuarioService, amigoService));
-		handlers.put("OBTENER_SOLICITUDES_PENDIENTES", new ManejadorSolicitudesPendientes(usuarioService, solicitudAmistadService));
-		handlers.put("ACEPTAR_SOLICITUD_AMISTAD", new ManejadorAceptarSolicitud(usuarioService, solicitudAmistadService));
-		handlers.put("RECHAZAR_SOLICITUD_AMISTAD", new ManejadorRechazarSolicitud(usuarioService, solicitudAmistadService));
-		
+		handlers.put("OBTENER_SOLICITUDES_PENDIENTES",
+				new ManejadorSolicitudesPendientes(usuarioService, solicitudAmistadService));
+		handlers.put("ACEPTAR_SOLICITUD_AMISTAD",
+				new ManejadorAceptarSolicitud(usuarioService, solicitudAmistadService));
+		handlers.put("RECHAZAR_SOLICITUD_AMISTAD",
+				new ManejadorRechazarSolicitud(usuarioService, solicitudAmistadService));
+
 		// Diario
 		handlers.put("CARGAR_DIARIO", new ManejadorCargaDiario(usuarioService, diaService, notaService));
 		handlers.put("CREAR_NOTA", new ManejadorCreacionNota(usuarioService, notaService, diaService));
-		
+
 		// Jasper Informe
 		handlers.put("GENERAR_INFORME_USUARIOS", new ManejadorGenerarInformeUsuarios(usuarioService));
 
+		// 04/02 - ELIMINACION DE NOTAS
 
-		this.handlers = Map.copyOf(handlers); 
+		handlers.put("ELIMINAR_NOTA",
+				new server.handler.notes.ManejadorEliminarNota(usuarioService, notaService, diaService));
+		handlers.put("ELIMINAR_DIA", new server.handler.notes.ManejadorEliminarDia(usuarioService, diaService));
 
+		this.handlers = Map.copyOf(handlers);
 
-    }
+	}
 
-    @Override
-    public void run() {
-        try (ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-             ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+	@Override
+	public void run() {
+		try (ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+				ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
 
-            while (true) {
-                Object obj = in.readObject();
+			while (true) {
+				Object obj = in.readObject();
 
-                if (!(obj instanceof Peticion req)) {
-                    out.writeObject(new Respuesta(false, "Request inválida"));
-                    out.flush();
-                    continue;
-                }
+				if (!(obj instanceof Peticion req)) {
+					out.writeObject(new Respuesta(false, "Request inválida"));
+					out.flush();
+					continue;
+				}
 
-                System.out.println(
-                        "SOCKET=" + socket +
-                        " | accion=" + req.accion +
-                        " | usuarioLogueado=" + usuarioLogueado
-                    );
-                System.out.println("REQ accion=" + req.accion + " socket=" + socket + " payload=" + req.payload);
+				System.out.println(
+						"SOCKET=" + socket + " | accion=" + req.accion + " | usuarioLogueado=" + usuarioLogueado);
+				System.out.println("REQ accion=" + req.accion + " socket=" + socket + " payload=" + req.payload);
 
-                Respuesta resp = procesar(req);
-                //Registrar conexion del usuario al logearse
-                if ("LOGIN".equals(req.accion) && resp.ok && resp.data instanceof UserDTO u) {
-                    usuarioLogueado = u.nombreUsuario;   // o u.getUsername() según tu DTO
-                    RegistroClientes.registrar(usuarioLogueado, out);
-                }
-                System.out.println("Registrado ONLINE key=" + usuarioLogueado);
+				Respuesta resp = procesar(req);
+				// Registrar conexion del usuario al logearse
+				if ("LOGIN".equals(req.accion) && resp.ok && resp.data instanceof UserDTO u) {
+					usuarioLogueado = u.nombreUsuario; // o u.getUsername() según tu DTO
+					RegistroClientes.registrar(usuarioLogueado, out);
+				}
+				System.out.println("Registrado ONLINE key=" + usuarioLogueado);
 
-                synchronized (out) {
-                    out.writeObject(resp);
-                    out.flush();
-                }
+				synchronized (out) {
+					out.writeObject(resp);
+					out.flush();
+				}
 
-            }
+			}
 
-        } catch (EOFException e) {
-            // cliente cerró conexión
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            RegistroClientes.desregistrar(usuarioLogueado);
-            try { socket.close(); } catch (Exception ignored) {}
-        }
-    }
+		} catch (EOFException e) {
+			// cliente cerró conexión
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			RegistroClientes.desregistrar(usuarioLogueado);
+			try {
+				socket.close();
+			} catch (Exception ignored) {
+			}
+		}
+	}
 
-    private Respuesta procesar(Peticion req) {
-        ManejadorAcciones<?> handler = handlers.get(req.accion);
-        if (handler == null) return new Respuesta(false, "Acción no soportada: " + req.accion);
+	private Respuesta procesar(Peticion req) {
+		ManejadorAcciones<?> handler = handlers.get(req.accion);
+		
+		
+		if (handler == null)
+			return new Respuesta(false, "Acción no soportada: " + req.accion);
 
-        try {
-        	if (req.payload != null && !handler.payloadType().isInstance(req.payload)) {
-        	    return new Respuesta(false, "Payload incorrecto para acción " + req.accion);
-        	}
+		try {
+			if (req.payload != null && !handler.payloadType().isInstance(req.payload)) {
+				return new Respuesta(false, "Payload incorrecto para acción " + req.accion);
+			}
 
-            return invoke(handler, req.payload, usuarioLogueado);
+			return invoke(handler, req.payload, usuarioLogueado);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            Throwable root = e;
-            while (root.getCause() != null) root = root.getCause();
-            return new Respuesta(false, "Error interno: " + root.getMessage(), null);
-        }
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			Throwable root = e;
+			while (root.getCause() != null)
+				root = root.getCause();
+			return new Respuesta(false, "Error interno: " + root.getMessage(), null);
+		}
+	}
 
-
-    @SuppressWarnings("unchecked")
-    private static <T> Respuesta invoke(ManejadorAcciones<?> handler, Object payload, String usuarioLogueado) throws Exception {
-        ManejadorAcciones<T> h = (ManejadorAcciones<T>) handler;
-        return h.handle((T) payload, usuarioLogueado);
-    }
+	@SuppressWarnings("unchecked")
+	private static <T> Respuesta invoke(ManejadorAcciones<?> handler, Object payload, String usuarioLogueado)
+			throws Exception {
+		ManejadorAcciones<T> h = (ManejadorAcciones<T>) handler;
+		return h.handle((T) payload, usuarioLogueado);
+	}
 
 }
