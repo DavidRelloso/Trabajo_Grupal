@@ -5,10 +5,10 @@ import java.util.List;
 
 import entity.user.Usuario;
 import server.handler.ManejadorAcciones;
-import server.service.UsuarioService;
 import server.service.friends.AmigoService;
 import server.service.notes.DiaService;
 import server.service.notes.NotaService;
+import server.service.user.UsuarioService;
 import shared.dto.notes.DiaConNotasDTO;
 import shared.protocol.Respuesta;
 

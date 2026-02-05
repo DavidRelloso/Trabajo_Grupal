@@ -9,43 +9,55 @@
 
 <!-- TARJETA NOTA -->
 
-<VBox 
-fx:id="root"
-maxWidth="Infinity" 
-spacing="6.0" 
-styleClass="card" 
-xmlns="http://javafx.com/javafx/25" 
-xmlns:fx="http://javafx.com/fxml/1" 
-fx:controller="controller.diary.components.ControladorNota">
+<VBox fx:id="root" maxWidth="Infinity" spacing="6.0"
+	styleClass="card" xmlns="http://javafx.com/javafx/25"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.diary.components.ControladorNota">
 
-    <children>
-        <!-- Fila superior: título / categoría / hora -->
-        <HBox spacing="8.0">
-            <children>
-                <Label fx:id="lblTitulo" styleClass="card-title" text="Título">
-               <font>
-                  <Font size="24.0" />
-               </font></Label>
-                <Label fx:id="lblCategoria" styleClass="card-title" text="Categoría" />
-                <Region HBox.hgrow="ALWAYS" />
-                <Label fx:id="lblHora" styleClass="card-hour" text="Hora">
-               <font>
-                  <Font size="14.0" />
-               </font></Label>
-            </children>
-        </HBox>
+	<children>
+		<!-- Fila superior: título / categoría / hora -->
+		<HBox spacing="8.0">
+			<children>
 
-        <!-- Texto -->
-        <Label fx:id="lblTexto" maxWidth="Infinity" styleClass="card-text" text="Texto..." wrapText="true">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
+				<Label fx:id="lblTitulo" text="Título" styleClass="card-title">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
 
-        <!-- Botón eliminar -->
-        <HBox alignment="BOTTOM_RIGHT">
-            <children>
-                <Button fx:id="btnEliminar" styleClass="delete-btn" text="Eliminar" />
-            </children>
-        </HBox>
-    </children>
+				<Label fx:id="lblCategoria" text="Categoría"
+					styleClass="card-title" />
+
+
+
+				<Region HBox.hgrow="ALWAYS" />
+				<Label fx:id="lblHora" text="Hora" styleClass="card-hour" />
+
+
+				<Label fx:id="lblVisibilidad" text="Visibilidad"
+					styleClass="card-hour">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</Label>
+
+			</children>
+		</HBox>
+
+		<!-- Texto -->
+		<Label fx:id="lblTexto" maxWidth="Infinity"
+			styleClass="card-text" text="Texto..." wrapText="true">
+			<font>
+				<Font size="14.0" />
+			</font>
+		</Label>
+
+		<!-- Botón eliminar -->
+		<HBox alignment="BOTTOM_RIGHT">
+			<children>
+				<Button fx:id="btnEliminar" styleClass="delete-btn"
+					text="Eliminar" />
+			</children>
+		</HBox>
+	</children>
 </VBox>

@@ -1,4 +1,4 @@
-package server.service;
+package server.service.user;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;

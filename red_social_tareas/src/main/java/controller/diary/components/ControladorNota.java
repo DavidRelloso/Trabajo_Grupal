@@ -12,22 +12,18 @@ import shared.dto.notes.CrearNotaDTO;
 
 public class ControladorNota {
 
-	@FXML
-	private VBox root;
-	@FXML
-	private Label lblTitulo;
-	@FXML
-	private Label lblCategoria;
-	@FXML
-	private Label lblHora;
-	@FXML
-	private Label lblTexto;
-	@FXML
-	private Button btnEliminar;
+	@FXML private VBox root;
+	@FXML private Label lblTitulo;
+	@FXML private Label lblCategoria;
+	@FXML private Label lblHora;
+	@FXML private Label lblVisibilidad;
+
+	@FXML private Label lblTexto;
+	@FXML private Button btnEliminar;
 
 	private Long idNota;
 	private Long idDia;
-
+	
 	private ControladorDiarioPersonal padre;
 
 	private static final DateTimeFormatter HORA_FMT = DateTimeFormatter.ofPattern("HH:mm");
@@ -43,14 +39,15 @@ public class ControladorNota {
 		}
 	}
 
-	public void setDatosNota(Long idDia, Long idNota, CrearNotaDTO dto) {
+	public void setDatosNota(Long idDia, Long idNota, CrearNotaDTO dto, boolean diarioPropio) {
 		this.idDia = idDia;
 		this.idNota = idNota;
-
 		if (lblTitulo != null)
 			lblTitulo.setText(safe(dto.titulo));
+		
 		if (lblCategoria != null)
 			lblCategoria.setText(safe(dto.categoria));
+		
 		if (lblTexto != null)
 			lblTexto.setText(safe(dto.texto));
 
@@ -58,11 +55,22 @@ public class ControladorNota {
 			lblHora.setText(formatHora(dto.horaInicio, dto.horaFin));
 		}
 
-		// para guardar atambien la hora
+		if (lblVisibilidad != null) {
+			lblVisibilidad.setText(safe(dto.visibilidad));
+		}
+
 		if (root != null && dto.horaInicio != null) {
 			root.getProperties().put("horaInicio", dto.horaInicio);
 		}
 
+		if(!diarioPropio) {
+			btnEliminar.setVisible(false);
+			btnEliminar.setManaged(false);
+		}else {
+			btnEliminar.setVisible(true);
+			btnEliminar.setManaged(true);
+		}
+		
 	}
 
 	private String formatHora(LocalTime inicio, LocalTime fin) {
@@ -86,11 +94,6 @@ public class ControladorNota {
 		}
 	}
 
-	public Long getIdNota() {
-		return idNota;
-	}
-
-	public Long getIdDia() {
-		return idDia;
-	}
+	public Long getIdNota() { return idNota;}
+	public Long getIdDia() { return idDia;}
 }

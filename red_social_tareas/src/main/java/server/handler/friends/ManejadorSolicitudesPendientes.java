@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import server.handler.ManejadorAcciones;
-import server.service.UsuarioService;
 import server.service.friends.SolicitudAmistadService;
+import server.service.user.UsuarioService;
 import shared.dto.friends.SolicitudAmistadDTO;
 import shared.protocol.Respuesta;
 

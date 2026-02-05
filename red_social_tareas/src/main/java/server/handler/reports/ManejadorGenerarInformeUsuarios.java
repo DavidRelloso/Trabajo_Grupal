@@ -14,7 +14,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import server.handler.ManejadorAcciones;
-import server.service.UsuarioService;
+import server.service.user.UsuarioService;
 import shared.dto.reports.UsuarioInformeDTO;
 import shared.protocol.Respuesta;
 

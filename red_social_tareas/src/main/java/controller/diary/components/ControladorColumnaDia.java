@@ -38,11 +38,23 @@ public class ControladorColumnaDia {
         btnEliminarDia.setOnAction(e -> onEliminarDia());
     }
 
-    public void setDatosDia(Long idDia, LocalDate fecha, String categoria) {
+    public void setDatosDia(Long idDia, LocalDate fecha, String categoria, boolean diarioPropio) {
         this.idDia = idDia;
         this.fecha = fecha;
         this.categoria = categoria;
 
+        if(!diarioPropio) {
+        	btnAddNota.setVisible(false);
+        	btnAddNota.setManaged(false);
+        	btnEliminarDia.setVisible(false);
+        	btnEliminarDia.setManaged(false);
+        }else {
+        	btnAddNota.setVisible(true);
+        	btnAddNota.setManaged(true);
+        	btnEliminarDia.setVisible(true);
+        	btnEliminarDia.setManaged(true);
+        }
+        
         actualizarTitulo();
     }
 

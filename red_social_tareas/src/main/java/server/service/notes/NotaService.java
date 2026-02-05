@@ -91,6 +91,29 @@ public class NotaService {
 				session.close();
 		}
 	}
+	
+
+	public List<Nota> obtenerNotasUsuarioPorFecha(String nombreUsuario, LocalDate fecha) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+
+			return session.createQuery("""
+					    SELECT n
+					    FROM Nota n
+					    JOIN n.dia d
+					    JOIN d.usuario u
+					    WHERE u.nombreUsuario = :nombre
+					      AND d.fecha = :fecha
+					    ORDER BY n.horaInicio ASC
+					""", Nota.class).setParameter("nombre", nombreUsuario).setParameter("fecha", fecha).list();
+
+		} finally {
+			if (session != null)
+				session.close();
+		}
+	}
+
 
 	public void eliminarNota(Nota n) {
 		Session session = null;

@@ -25,11 +25,12 @@ import server.handler.user.ManejadorCambioAvatar;
 import server.handler.user.ManejadorCambioContra;
 import server.handler.user.ManejadorCambioCorreo;
 import server.handler.user.ManejadorCambioNombre;
-import server.service.UsuarioService;
+import server.handler.main.ManejadorObtenerRecordatorios;
 import server.service.friends.AmigoService;
 import server.service.friends.SolicitudAmistadService;
 import server.service.notes.DiaService;
 import server.service.notes.NotaService;
+import server.service.user.UsuarioService;
 import shared.dto.user.UserDTO;
 import shared.protocol.Peticion;
 import shared.protocol.Respuesta;
@@ -46,9 +47,10 @@ public class ManejadorCliente implements Runnable {
 		this.socket = socket;
 
 		UsuarioService usuarioService = new UsuarioService();
-
+		
 		SolicitudAmistadService solicitudAmistadService = new SolicitudAmistadService();
 		AmigoService amigoService = new AmigoService();
+
 
 		NotaService notaService = new NotaService();
 		DiaService diaService = new DiaService();
@@ -59,6 +61,10 @@ public class ManejadorCliente implements Runnable {
 		// Inicio sesión
 		handlers.put("LOGIN", new ManejadorLogin(usuarioService));
 		handlers.put("REGISTER", new ManejadorRegistro(usuarioService));
+		
+		// Recuperar notas notis y record
+		handlers.put("OBTENER_RECORDATORIOS", new ManejadorObtenerRecordatorios(usuarioService, notaService));
+
 
 		// Cambio datos user
 		handlers.put("CAMBIO_NOMBRE", new ManejadorCambioNombre(usuarioService));
@@ -70,12 +76,9 @@ public class ManejadorCliente implements Runnable {
 		handlers.put("OBTENER_AMIGOS", new ManejadorObtenerAmigos(usuarioService, amigoService));
 		handlers.put("AGREGAR_AMIGO", new ManejadorAgregarAmigo(usuarioService, solicitudAmistadService, amigoService));
 		handlers.put("ELIMINAR_AMIGO", new ManejadorEliminarAmigo(usuarioService, amigoService));
-		handlers.put("OBTENER_SOLICITUDES_PENDIENTES",
-				new ManejadorSolicitudesPendientes(usuarioService, solicitudAmistadService));
-		handlers.put("ACEPTAR_SOLICITUD_AMISTAD",
-				new ManejadorAceptarSolicitud(usuarioService, solicitudAmistadService));
-		handlers.put("RECHAZAR_SOLICITUD_AMISTAD",
-				new ManejadorRechazarSolicitud(usuarioService, solicitudAmistadService));
+		handlers.put("OBTENER_SOLICITUDES_PENDIENTES", new ManejadorSolicitudesPendientes(usuarioService, solicitudAmistadService));
+		handlers.put("ACEPTAR_SOLICITUD_AMISTAD", new ManejadorAceptarSolicitud(usuarioService, solicitudAmistadService));
+		handlers.put("RECHAZAR_SOLICITUD_AMISTAD", new ManejadorRechazarSolicitud(usuarioService, solicitudAmistadService));
 
 		// Diario
 		handlers.put("CARGAR_DIARIO", new ManejadorCargaDiario(usuarioService, diaService, notaService));
@@ -86,7 +89,6 @@ public class ManejadorCliente implements Runnable {
 		handlers.put("GENERAR_INFORME_USUARIOS", new ManejadorGenerarInformeUsuarios(usuarioService));
 
 		// 04/02 - ELIMINACION DE NOTAS
-
 		handlers.put("ELIMINAR_NOTA",
 				new server.handler.notes.ManejadorEliminarNota(usuarioService, notaService, diaService));
 		handlers.put("ELIMINAR_DIA", new server.handler.notes.ManejadorEliminarDia(usuarioService, diaService));

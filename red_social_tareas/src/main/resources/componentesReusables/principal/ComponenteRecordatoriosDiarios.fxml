@@ -3,10 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TitledPane fx:id="tpPrincipalNoti"
+<TitledPane fx:id="tpPrincipalRecordatorio"
 	xmlns:fx="http://javafx.com/fxml" animated="false" prefWidth="600.0"
 	text="NOMBRE_AMIGO"
-	fx:controller="controller.main.ControladorNotificaciones">
+	fx:controller="controller.main.ControladorRecordatorios">
 	<content>
 	
 		<VBox fillWidth="true" spacing="10">
@@ -18,7 +18,7 @@
 		            <content>
 		                <VBox fillWidth="true"  prefWidth="10.0">
 		                    <children>
-		                        <Label fx:id="lblTextoNoti"
+		                        <Label fx:id="lblTextoRecordatorio"
 		                               styleClass="etiqueta-campo"
 		                               wrapText="true"
 		                               maxWidth="Infinity"
@@ -32,7 +32,7 @@
 		
 		        <StackPane alignment="CENTER_RIGHT">
 		            <children>
-		                <Button fx:id="btnBorrarNoti"
+		                <Button fx:id="btnBorrarRecordatorio"
 		                        alignment="CENTER"
 		                        contentDisplay="RIGHT"
 		                        mnemonicParsing="false"

@@ -151,7 +151,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 
             if (d.notas != null) {
                 for (NotaDiarioDTO n : d.notas) {
-                    CrearNotaDTO fake = new CrearNotaDTO(
+                    CrearNotaDTO nota = new CrearNotaDTO(
                         d.fecha,
                         d.categoria,
                         n.titulo,
@@ -160,7 +160,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
                         n.horaFin,
                         n.visibilidad
                     );
-                    insertarBloqueNota(d.idDia, n.idNota, fake);
+                    insertarBloqueNota(d.idDia, n.idNota, nota);
                 }
             }
         }
@@ -213,7 +213,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 	       
 	        ControladorNota c = loader.getController();
 	        c.setPadre(this);
-	        c.setDatosNota(idDia, idNota, dto);
+	        c.setDatosNota(idDia, idNota, dto, diarioPropio);
 
 	        VBox contenedor = contenedoresNotasPorDia.get(idDia);
 	        if (contenedor == null) {
@@ -250,7 +250,7 @@ public class ControladorDiarioPersonal extends ControladorFuncionesCompartidas{
 
 	        ControladorColumnaDia c = loader.getController();
 	        c.setPadre(this);
-	        c.setDatosDia(dto.idDia, dto.fecha, dto.categoria);
+	        c.setDatosDia(dto.idDia, dto.fecha, dto.categoria, diarioPropio);
 
 	        contenedoresNotasPorDia.put(dto.idDia, c.getContenedorNotas());
 	        contenedorColumnas.getChildren().add(columna);

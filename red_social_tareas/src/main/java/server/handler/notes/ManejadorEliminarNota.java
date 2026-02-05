@@ -4,9 +4,9 @@ import entity.notes.Dia;
 import entity.notes.Nota;
 import entity.user.Usuario;
 import server.handler.ManejadorAcciones;
-import server.service.UsuarioService;
 import server.service.notes.DiaService;
 import server.service.notes.NotaService;
+import server.service.user.UsuarioService;
 import shared.dto.notes.EliminarNotaDTO;
 import shared.protocol.Respuesta;
 

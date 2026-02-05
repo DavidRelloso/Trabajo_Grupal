@@ -3,8 +3,8 @@ package server.handler.notes;
 import entity.notes.Dia;
 import entity.user.Usuario;
 import server.handler.ManejadorAcciones;
-import server.service.UsuarioService;
 import server.service.notes.DiaService;
+import server.service.user.UsuarioService;
 import shared.dto.notes.EliminarDiaDTO;
 import shared.protocol.Respuesta;
 

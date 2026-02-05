@@ -130,7 +130,7 @@
 								</Button>
 
 								<Button fx:id="btnVerAjustes" prefHeight="50.0"
-									prefWidth="200.0" styleClass="boton-principal" text="AJ-´-´-USTES">
+									prefWidth="200.0" styleClass="boton-principal" text="AJUSTES">
 									<VBox.margin>
 										<Insets bottom="5.0" top="5.0" />
 									</VBox.margin>
@@ -180,35 +180,6 @@
 					styleClass="tarjeta-ajustes" HBox.hgrow="ALWAYS">
 
 					<children>
-
-						<!-- SECCIÓN NOTIFICACIONES -->
-						<VBox maxHeight="500.0" maxWidth="Infinity" minWidth="150.0"
-							spacing="10" styleClass="seccion" VBox.vgrow="NEVER">
-
-
-							<children>
-
-								<Label styleClass="titulo-seccion" text="NOTIFICACIONES">
-									<VBox.margin>
-										<Insets bottom="8.0" />
-									</VBox.margin>
-								</Label>
-
-								<ScrollPane fitToWidth="true" hbarPolicy="NEVER"
-									styleClass="scroll-pane" vbarPolicy="AS_NEEDED"
-									VBox.vgrow="ALWAYS">
-									<content>
-										<VBox fillWidth="true" maxWidth="Infinity">
-											<children>
-												<Accordion fx:id="notificacionesAccordion"
-													maxWidth="Infinity" />
-											</children>
-										</VBox>
-									</content>
-								</ScrollPane>
-
-							</children>
-						</VBox>
 
 						<Separator maxWidth="Infinity" />
 

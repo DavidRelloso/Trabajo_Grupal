@@ -2,7 +2,7 @@ package server.handler.user;
 
 import entity.user.Usuario;
 import server.handler.ManejadorAcciones;
-import server.service.UsuarioService;
+import server.service.user.UsuarioService;
 import shared.dto.user.CambioCorreoDTO;
 import shared.protocol.Respuesta;
 

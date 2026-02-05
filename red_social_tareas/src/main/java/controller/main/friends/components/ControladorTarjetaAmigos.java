@@ -58,9 +58,11 @@ public class ControladorTarjetaAmigos extends ControladorFuncionesCompartidas {
 			ctrl.setDiarioAmigo(nombreUsuario);
 			ctrl.cargar();
 
-			Stage stage = (Stage) btnVerDiario.getScene().getWindow();
-			stage.getScene().setRoot(root);
-
+			Stage modalStage  = (Stage) btnVerDiario.getScene().getWindow();
+			Stage mainStage = (Stage) modalStage.getOwner();
+	        mainStage.getScene().setRoot(root);
+	        modalStage.close();
+		
 		} catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir el diario: " + e.getMessage());

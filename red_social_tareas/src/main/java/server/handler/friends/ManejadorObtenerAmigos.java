@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import entity.user.Usuario;
 import server.handler.ManejadorAcciones;
-import server.service.UsuarioService;
 import server.service.friends.AmigoService;
+import server.service.user.UsuarioService;
 import shared.dto.friends.AmigoDTO;
 import shared.protocol.Respuesta;
 
